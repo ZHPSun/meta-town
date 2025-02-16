@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [tsconfigPaths(), react()],
   test: {
     coverage: {
+      enabled: true,
       include: ["src/**"],
       thresholds: {
         statements: 100,
