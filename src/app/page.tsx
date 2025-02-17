@@ -3,7 +3,7 @@ const Home = () => {
     <div>
       <h1>Hello Meta Town</h1>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
