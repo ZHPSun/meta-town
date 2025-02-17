@@ -1,9 +1,10 @@
 import { FC } from 'react'
+import Button from '@/app/_components/Button'
 
 const Home: FC = () => {
   return (
     <div>
-      <h1>Hello Meta Town</h1>
+      <Button>Create Spaces</Button>
     </div>
   )
 }
