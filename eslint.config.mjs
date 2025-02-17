@@ -16,7 +16,18 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   includeIgnoreFile(gitignorePath),
-  ...compat.extends('next/core-web-vitals', 'next/typescript', 'prettier'),
+  ...compat.config({
+    extends: ['next/core-web-vitals', 'next/typescript', 'prettier'],
+    rules: {
+      'react/function-component-definition': [
+        'error',
+        {
+          namedComponents: 'arrow-function',
+          unnamedComponents: 'arrow-function',
+        },
+      ],
+    },
+  }),
   ...tseslint.config(
     eslint.configs.recommended,
     tseslint.configs.stylisticTypeChecked,
@@ -26,6 +37,12 @@ const eslintConfig = [
         parserOptions: {
           projectService: true,
         },
+      },
+    },
+    {
+      files: ['**/*.ts', '**/*.tsx'],
+      rules: {
+        '@typescript-eslint/explicit-function-return-type': 'error',
       },
     },
     {
