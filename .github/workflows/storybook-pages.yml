@@ -1,12 +1,12 @@
-name: Unit Test
+name: Stroybook Pages
 
 on:
   push:
     branches:
-      - '**'
+      - main
 
 jobs:
-  unit-test:
+  build-deploy-storybook:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,6 +22,12 @@ jobs:
         run: |
           npm ci
 
-      - name: Run unit test
+      - name: Build Storybook
         run: |
-          npm run test
+          npm run build-storybook
+
+      - name: Deploy Storybook to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./storybook-static
