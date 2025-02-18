@@ -1,10 +1,10 @@
 import { FC } from 'react'
-import Button from '@/app/_components/Button'
+import Header from './_components/Header'
 
 const Home: FC = () => {
   return (
     <div>
-      <Button>Create Spaces</Button>
+      <Header />
     </div>
   )
 }

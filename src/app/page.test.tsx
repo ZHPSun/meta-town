@@ -2,9 +2,11 @@ import { render, screen } from '@testing-library/react'
 import Home from './page'
 
 describe('Home', () => {
-  test('renders Create Spaces button', () => {
+  test('renders Header', () => {
     render(<Home />)
 
-    expect(screen.getByText('Create Spaces')).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Meta Town' })
+    ).toBeInTheDocument()
   })
 })

@@ -3,17 +3,27 @@ import { FC } from 'react'
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode
+  behavior?: string
+  icon?: React.ReactNode
 }
 
-const Button: FC<Props> = ({ children, className, ...rest }) => {
+const Button: FC<Props> = ({
+  children,
+  className,
+  behavior,
+  icon,
+  ...rest
+}) => {
   return (
     <button
       className={clsx(
         'rounded-xl border-4 border-solid px-4 py-2 font-bold text-black hover:bg-black hover:text-white',
-        className
+        className,
+        behavior
       )}
       {...rest}
     >
+      {icon}
       {children}
     </button>
   )
