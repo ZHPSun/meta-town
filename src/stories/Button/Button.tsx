@@ -69,7 +69,7 @@ const Button: FC = () => (
       <tr>
         <td>With prefix Icon</td>
         <td>
-          <button className="flex h-12 items-center gap-2 rounded-lg border border-neutral-900 bg-neutral-900 px-4 text-white outline-offset-4 hover:bg-neutral-700">
+          <button className="inline-flex h-12 items-center gap-2 rounded-lg border border-neutral-900 bg-neutral-900 px-4 text-white outline-offset-4 hover:bg-neutral-700">
             <Nut />
             Button
           </button>
@@ -78,7 +78,7 @@ const Button: FC = () => (
       <tr>
         <td>With suffix Icon</td>
         <td>
-          <button className="flex h-12 items-center gap-2 rounded-lg border border-neutral-900 bg-neutral-900 px-4 text-white outline-offset-4 hover:bg-neutral-700">
+          <button className="inline-flex h-12 items-center gap-2 rounded-lg border border-neutral-900 bg-neutral-900 px-4 text-white outline-offset-4 hover:bg-neutral-700">
             Button
             <Ham />
           </button>

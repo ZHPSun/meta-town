@@ -17,8 +17,8 @@ const Configurable: FC = () => (
       <tr>
         <td>Default</td>
         <td>
-          <div className="relative flex h-12 w-20 text-white">
-            <button className="relative z-10 w-12 rounded-2xl bg-neutral-900 outline-offset-4 hover:bg-neutral-700">
+          <div className="relative inline-flex h-12 text-white">
+            <button className="relative z-10 mr-8 rounded-2xl bg-neutral-900 px-4 outline-offset-4 hover:bg-neutral-700">
               <Webcam className="mx-auto" />
             </button>
             <div className="absolute bottom-0 right-0 top-0 w-16 rounded-2xl bg-neutral-500 text-right hover:bg-neutral-700">
@@ -29,8 +29,8 @@ const Configurable: FC = () => (
           </div>
         </td>
         <td>
-          <div className="relative flex h-12 w-20">
-            <button className="relative z-10 w-12 rounded-2xl border border-neutral-900 bg-white outline-offset-4 hover:bg-neutral-200">
+          <div className="relative inline-flex h-12">
+            <button className="relative z-10 mr-8 rounded-2xl border border-neutral-900 bg-white px-4 outline-offset-4 hover:bg-neutral-200">
               <Webcam className="mx-auto" />
             </button>
             <div className="absolute bottom-0 right-0 top-0 w-16 rounded-2xl bg-neutral-300 text-right hover:bg-neutral-400">
@@ -41,8 +41,8 @@ const Configurable: FC = () => (
           </div>
         </td>
         <td>
-          <div className="relative flex h-12 w-20 text-white">
-            <button className="relative z-10 w-12 rounded-2xl bg-emerald-500 outline-offset-4 hover:bg-emerald-700">
+          <div className="relative inline-flex h-12 text-white">
+            <button className="relative z-10 mr-8 rounded-2xl bg-emerald-500 px-4 outline-offset-4 hover:bg-emerald-700">
               <Webcam className="mx-auto" />
             </button>
             <div className="absolute bottom-0 right-0 top-0 w-16 rounded-2xl bg-emerald-800 text-right hover:bg-emerald-600">
@@ -53,8 +53,8 @@ const Configurable: FC = () => (
           </div>
         </td>
         <td>
-          <div className="relative flex h-12 w-20 text-white">
-            <button className="relative z-10 w-12 rounded-2xl bg-amber-500 outline-offset-4 hover:bg-amber-700">
+          <div className="relative inline-flex h-12 text-white">
+            <button className="relative z-10 mr-8 rounded-2xl bg-amber-500 px-4 outline-offset-4 hover:bg-amber-700">
               <Webcam className="mx-auto" />
             </button>
             <div className="absolute bottom-0 right-0 top-0 w-16 rounded-2xl bg-amber-800 text-right hover:bg-amber-600">
@@ -65,9 +65,9 @@ const Configurable: FC = () => (
           </div>
         </td>
         <td>
-          <div className="relative flex h-12 w-20 text-white">
-            <button className="relative z-10 w-12 rounded-2xl bg-rose-500 outline-offset-4 hover:bg-rose-700">
-              <Webcam className="mx-auto" />
+          <div className="relative inline-flex h-12 text-white">
+            <button className="relative z-10 mr-8 rounded-2xl bg-rose-500 px-4 outline-offset-4 hover:bg-rose-700">
+              <Webcam />
             </button>
             <div className="absolute bottom-0 right-0 top-0 w-16 rounded-2xl bg-rose-800 text-right hover:bg-rose-600">
               <button className="h-full px-2 outline-offset-4">
@@ -98,11 +98,11 @@ const Configurable: FC = () => (
       <tr>
         <td>Large</td>
         <td>
-          <div className="relative flex h-14 w-24 text-white">
-            <button className="relative z-10 w-14 rounded-2xl bg-neutral-900 outline-offset-4 hover:bg-neutral-700">
+          <div className="relative inline-flex h-14 text-white">
+            <button className="relative z-10 mr-10 rounded-2xl bg-neutral-900 px-6 outline-offset-4 hover:bg-neutral-700">
               <Webcam size={28} className="mx-auto" />
             </button>
-            <div className="absolute bottom-0 right-0 top-0 w-16 rounded-2xl bg-neutral-500 text-right hover:bg-neutral-700">
+            <div className="absolute bottom-0 right-0 top-0 w-20 rounded-2xl bg-neutral-500 text-right hover:bg-neutral-700">
               <button className="h-full px-3 outline-offset-4">
                 <ChevronUp size={22} />
               </button>
