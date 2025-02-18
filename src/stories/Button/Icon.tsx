@@ -49,20 +49,20 @@ const Icon: FC = () => (
         </td>
       </tr>
       <tr>
+        <td>Circle</td>
+        <td>
+          <button className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-neutral-900 bg-neutral-900 text-white outline-offset-4 hover:bg-neutral-700">
+            <Beer />
+          </button>
+        </td>
+      </tr>
+      <tr>
         <td>Hover</td>
         <td colSpan={6}>
           <p className="flex h-12 items-center justify-center">
             Please use the Mouse to hover onto the button to check the hover
             style.
           </p>
-        </td>
-      </tr>
-      <tr>
-        <td>Circle</td>
-        <td>
-          <button className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-neutral-900 bg-neutral-900 text-white outline-offset-4 hover:bg-neutral-700">
-            <Beer />
-          </button>
         </td>
       </tr>
       <tr>
