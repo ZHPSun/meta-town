@@ -5,6 +5,7 @@ import tseslint from 'typescript-eslint'
 import eslint from '@eslint/js'
 import vitest from 'eslint-plugin-vitest'
 import { includeIgnoreFile } from '@eslint/compat'
+import stylistic from '@stylistic/eslint-plugin'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -19,11 +20,22 @@ const eslintConfig = [
   ...compat.config({
     extends: ['next/core-web-vitals', 'next/typescript', 'prettier'],
     rules: {
+      // Common rules
+      'arrow-body-style': 'error',
+
+      // React rules
       'react/function-component-definition': [
         'error',
         {
           namedComponents: 'arrow-function',
           unnamedComponents: 'arrow-function',
+        },
+      ],
+      'react/self-closing-comp': [
+        'error',
+        {
+          component: true,
+          html: true,
         },
       ],
     },
@@ -42,14 +54,8 @@ const eslintConfig = [
     {
       files: ['**/*.ts', '**/*.tsx'],
       rules: {
+        // TypeScript rules
         '@typescript-eslint/explicit-function-return-type': 'error',
-        'react/self-closing-comp': [
-          'error',
-          {
-            component: true,
-            html: true,
-          },
-        ],
       },
     },
     {
@@ -58,12 +64,31 @@ const eslintConfig = [
     }
   ),
   {
+    plugins: {
+      '@stylistic': stylistic,
+    },
+    rules: {
+      // Stylistic rules
+      '@stylistic/padding-line-between-statements': [
+        'error',
+        { blankLine: 'always', prev: '*', next: 'interface' },
+        { blankLine: 'always', prev: 'interface', next: '*' },
+        { blankLine: 'always', prev: 'import', next: '*' },
+        { blankLine: 'never', prev: 'import', next: 'import' },
+        { blankLine: 'always', prev: '*', next: 'export' },
+        { blankLine: 'always', prev: '*', next: 'multiline-const' },
+        { blankLine: 'always', prev: '*', next: 'return' },
+      ],
+    },
+  },
+  {
     files: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx'],
     plugins: {
       vitest,
     },
     rules: {
       ...vitest.configs.recommended.rules,
+      // Test rules
       'vitest/consistent-test-it': ['error', { fn: 'test' }],
       'vitest/consistent-test-filename': 'error',
     },
