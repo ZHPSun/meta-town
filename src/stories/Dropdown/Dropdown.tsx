@@ -31,7 +31,7 @@ const Dropdown: FC = () => (
               <ul className="space-y-2">
                 <li className="px-2">Title</li>
                 <li>
-                  <button className="inline-flex h-12 w-full items-center justify-between rounded-lg border border-neutral-900 bg-white px-4 text-right text-neutral-900 outline-offset-4 hover:bg-neutral-200">
+                  <button className="inline-flex h-12 w-full items-center justify-between rounded-lg border border-neutral-400 bg-white px-4 text-right text-neutral-900 outline-offset-4 hover:bg-neutral-200">
                     Button
                     <Ham />
                   </button>
@@ -72,7 +72,7 @@ const Dropdown: FC = () => (
               <ul className="space-y-2">
                 <li className="px-2">Title</li>
                 <li>
-                  <button className="inline-flex h-12 w-full items-center justify-between rounded-lg border border-neutral-900 bg-white px-4 text-right text-neutral-900 outline-offset-4 hover:bg-neutral-200">
+                  <button className="inline-flex h-12 w-full items-center justify-between rounded-lg border border-neutral-400 bg-white px-4 text-right text-neutral-900 outline-offset-4 hover:bg-neutral-200">
                     Button
                     <Ham />
                   </button>
@@ -109,7 +109,7 @@ const Dropdown: FC = () => (
               <ul className="space-y-2">
                 <li className="px-2">Title</li>
                 <li>
-                  <button className="inline-flex h-12 w-full items-center justify-between rounded-lg border border-neutral-900 bg-white px-4 text-right text-neutral-900 outline-offset-4 hover:bg-neutral-200">
+                  <button className="inline-flex h-12 w-full items-center justify-between rounded-lg border border-neutral-400 bg-white px-4 text-right text-neutral-900 outline-offset-4 hover:bg-neutral-200">
                     Button
                     <Ham />
                   </button>
@@ -156,7 +156,7 @@ const Dropdown: FC = () => (
               <ul className="space-y-2">
                 <li className="px-2">Title</li>
                 <li>
-                  <button className="inline-flex h-12 w-full items-center justify-between rounded-lg border border-neutral-900 bg-white px-4 text-right text-neutral-900 outline-offset-4 hover:bg-neutral-200">
+                  <button className="inline-flex h-12 w-full items-center justify-between rounded-lg border border-neutral-400 bg-white px-4 text-right text-neutral-900 outline-offset-4 hover:bg-neutral-200">
                     Button
                     <Ham />
                   </button>

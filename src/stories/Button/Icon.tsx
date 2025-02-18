@@ -23,7 +23,7 @@ const Icon: FC = () => (
           </button>
         </td>
         <td>
-          <button className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-neutral-900 bg-white text-neutral-900 outline-offset-4 hover:bg-neutral-200">
+          <button className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-neutral-400 bg-white text-neutral-900 outline-offset-4 hover:bg-neutral-200">
             <Beer />
           </button>
         </td>

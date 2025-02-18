@@ -23,7 +23,7 @@ const Button: FC = () => (
           </button>
         </td>
         <td>
-          <button className="h-12 rounded-lg border border-neutral-900 bg-white px-4 text-neutral-900 outline-offset-4 hover:bg-neutral-200">
+          <button className="h-12 rounded-lg border border-neutral-400 bg-white px-4 text-neutral-900 outline-offset-4 hover:bg-neutral-200">
             Button
           </button>
         </td>

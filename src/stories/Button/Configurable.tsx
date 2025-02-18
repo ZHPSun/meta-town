@@ -30,7 +30,7 @@ const Configurable: FC = () => (
         </td>
         <td>
           <div className="relative inline-flex h-12">
-            <button className="relative z-10 mr-8 rounded-2xl border border-neutral-900 bg-white px-4 outline-offset-4 hover:bg-neutral-200">
+            <button className="relative z-10 mr-8 rounded-2xl border border-neutral-400 bg-white px-4 outline-offset-4 hover:bg-neutral-200">
               <Webcam className="mx-auto" />
             </button>
             <div className="absolute bottom-0 right-0 top-0 w-16 rounded-2xl bg-neutral-300 text-right hover:bg-neutral-400">
