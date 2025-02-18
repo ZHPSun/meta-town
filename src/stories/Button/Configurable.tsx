@@ -5,7 +5,7 @@ const Configurable: FC = () => (
   <table className="border-separate border-spacing-4 text-center">
     <thead>
       <tr>
-        <th></th>
+        <th />
         <th>Primary</th>
         <th>Secondary</th>
         <th>Success</th>

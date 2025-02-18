@@ -43,6 +43,13 @@ const eslintConfig = [
       files: ['**/*.ts', '**/*.tsx'],
       rules: {
         '@typescript-eslint/explicit-function-return-type': 'error',
+        'react/self-closing-comp': [
+          'error',
+          {
+            component: true,
+            html: true,
+          },
+        ],
       },
     },
     {
