@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import Button from '@/app/_components/Button'
+import Button from '@/components/Button'
 import { Grape, Calendar, Sparkles } from 'lucide-react'
 
 const Navigation: FC = () => (
