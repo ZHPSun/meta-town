@@ -71,6 +71,11 @@ const eslintConfig = [
       // Stylistic rules
       '@stylistic/padding-line-between-statements': [
         'error',
+        {
+          blankLine: 'always',
+          prev: 'multiline-expression',
+          next: 'multiline-expression',
+        },
         { blankLine: 'always', prev: '*', next: 'interface' },
         { blankLine: 'always', prev: 'interface', next: '*' },
         { blankLine: 'always', prev: 'import', next: '*' },

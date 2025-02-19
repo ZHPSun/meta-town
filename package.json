@@ -17,6 +17,9 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
+  "engines": {
+    "node": "22"
+  },
   "dependencies": {
     "clsx": "^2.1.1",
     "lucide-react": "^0.475.0",
