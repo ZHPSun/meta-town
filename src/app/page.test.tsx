@@ -9,4 +9,10 @@ describe('Home', () => {
       screen.getByRole('button', { name: 'Meta Town' })
     ).toBeInTheDocument()
   })
+
+  test('renders Input', () => {
+    render(<Home />)
+
+    expect(screen.getByRole('textbox')).toBeInTheDocument()
+  })
 })
