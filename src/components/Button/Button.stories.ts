@@ -29,7 +29,7 @@ export const Suffix: Story = {
 
 export const Prefix: Story = {
   args: {
-    children: 'Button with Suffix',
+    children: 'Button with Prefix',
     prefix: {
       label: 'Camera',
       icon: 'camera',
