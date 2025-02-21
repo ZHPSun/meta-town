@@ -92,6 +92,14 @@ const Button: FC = () => (
           </button>
         </td>
       </tr>
+      <tr>
+        <td>Small</td>
+        <td>
+          <button className="h-10 rounded-lg border border-neutral-900 bg-neutral-900 px-2 text-sm text-white outline-offset-4 hover:bg-neutral-700">
+            Button
+          </button>
+        </td>
+      </tr>
     </tbody>
   </table>
 )

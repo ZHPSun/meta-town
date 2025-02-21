@@ -82,6 +82,14 @@ const Icon: FC = () => (
           </button>
         </td>
       </tr>
+      <tr>
+        <td>Small</td>
+        <td>
+          <button className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-neutral-900 bg-neutral-900 text-white outline-offset-4 hover:bg-neutral-700">
+            <Beer />
+          </button>
+        </td>
+      </tr>
     </tbody>
   </table>
 )
