@@ -26,9 +26,10 @@ export const VARIANT = {
 export const SIZE = {
   default: clsx('h-12 px-4'),
   large: clsx('h-14 px-8 text-lg'),
+  small: clsx('h-10 px-2 text-sm'),
 }
 
-export type Size = 'default' | 'large'
+export type Size = 'default' | 'large' | 'small'
 
 export type Variant =
   | 'primary'

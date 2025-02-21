@@ -43,14 +43,6 @@ describe('Button', () => {
     )
   })
 
-  test('renders large size button', () => {
-    render(<Button size="large">Large Button</Button>)
-
-    expect(screen.getByRole('button', { name: /Large Button/i })).toHaveClass(
-      SIZE.large
-    )
-  })
-
   test('renders button with default size', () => {
     render(<Button>Button</Button>)
 
@@ -58,6 +50,17 @@ describe('Button', () => {
       SIZE.default
     )
   })
+
+  test.each(['small', 'default', 'large'] as const)(
+    'renders button with %s size',
+    (size) => {
+      render(<Button size={size}>Size</Button>)
+
+      expect(screen.getByRole('button', { name: /Size/i })).toHaveClass(
+        SIZE[size]
+      )
+    }
+  )
 
   test('renders button with default primary variant', () => {
     render(<Button>Variant</Button>)
