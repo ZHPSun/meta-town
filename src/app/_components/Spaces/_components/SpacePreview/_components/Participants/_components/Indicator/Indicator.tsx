@@ -11,12 +11,7 @@ export const STATUS = {
 }
 
 const Indicator: FC<Props> = ({ status }) => (
-  <div className="inline-block pl-2 pr-1">
-    <span
-      role="status"
-      className={clsx('inline-block h-2 w-2 rounded-full', STATUS[status])}
-    />
-  </div>
+  <div role="status" className={clsx('h-2 w-2 rounded-full', STATUS[status])} />
 )
 
 export default Indicator
