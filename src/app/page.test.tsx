@@ -10,10 +10,12 @@ describe('Home', () => {
     ).toBeInTheDocument()
   })
 
-  test('renders Input', () => {
+  test('renders Filter', () => {
     render(<Home />)
 
-    expect(screen.getByRole('textbox')).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Last Visited' })
+    ).toBeInTheDocument()
   })
 
   test('renders Spaces', () => {
