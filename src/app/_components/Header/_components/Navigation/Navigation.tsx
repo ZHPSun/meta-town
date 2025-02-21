@@ -1,18 +1,14 @@
-import React, { FC } from 'react'
 import Button from '@/components/Button'
-import { Grape, Calendar, Sparkles } from 'lucide-react'
+import { Grape } from 'lucide-react'
+import { FC } from 'react'
 
 const Navigation: FC = () => (
   <div className="mx-2 my-2 flex">
-    <Button className="flex py-2.5" behavior="icon">
+    <Button>
       <Grape aria-label="Meta Town" />
     </Button>
-    <Button className="flex py-2.5" behavior="prefix-icon" icon={<Calendar />}>
-      Events
-    </Button>
-    <Button className="flex py-2.5" behavior="prefix-icon" icon={<Sparkles />}>
-      My Spaces
-    </Button>
+    <Button prefix={{ icon: 'calendar' }}>Events</Button>
+    <Button prefix={{ icon: 'sparkles' }}>My Spaces</Button>
   </div>
 )
 
