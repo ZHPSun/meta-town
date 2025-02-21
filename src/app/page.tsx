@@ -1,7 +1,6 @@
-import Input from '@/components/Input'
 import { FC } from 'react'
-import Filter from './_components/Filter'
 import Header from './_components/Header'
+import Filter from './_components/Filter'
 import Spaces from './_components/Spaces'
 
 const Home: FC = () => (
@@ -10,9 +9,6 @@ const Home: FC = () => (
 
     <Filter />
 
-    <div className="m-6 w-60">
-      <Input prefix={{ name: 'search', label: 'Search' }} />
-    </div>
     <Spaces />
   </div>
 )
