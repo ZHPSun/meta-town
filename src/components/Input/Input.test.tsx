@@ -17,18 +17,13 @@ describe('Input', () => {
     )
   })
 
-  test('passes the native value property to the attribute', () => {
-    render(<Input value="Hello, World!" />)
-
-    expect(screen.getByRole('textbox')).toHaveValue('Hello, World!')
-  })
-
-  test('passes the native onChange property to the attribute', async () => {
+  test('passes the native value and onChange properties to the attributes', async () => {
     const onChange = vi.fn()
     const user = userEvent.setup()
     render(<Input onChange={onChange} />)
 
     await user.type(screen.getByRole('textbox'), 'Hello, World!')
+    expect(screen.getByRole('textbox')).toHaveValue('Hello, World!')
     expect(onChange).toHaveBeenLastCalledWith(
       expect.objectContaining({
         target: expect.objectContaining({
