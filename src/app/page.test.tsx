@@ -15,4 +15,9 @@ describe('Home', () => {
 
     expect(screen.getByRole('textbox')).toBeInTheDocument()
   })
+
+  test('renders Spaces', () => {
+    render(<Home />)
+    expect(screen.getAllByRole('status')).toHaveLength(6)
+  })
 })
