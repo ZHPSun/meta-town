@@ -24,6 +24,7 @@ const eslintConfig = [
       'arrow-body-style': 'error',
 
       // React rules
+      'no-restricted-globals': ['error', 'React'],
       'react/function-component-definition': [
         'error',
         {
