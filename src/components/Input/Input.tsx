@@ -1,9 +1,8 @@
-import { FC } from 'react'
+import { FC, InputHTMLAttributes } from 'react'
 import { DynamicIcon, type IconName } from 'lucide-react/dynamic'
 import clsx from 'clsx'
 
-interface Props
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix'> {
+interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, 'prefix'> {
   prefix?: {
     name: IconName
     label?: string

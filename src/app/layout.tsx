@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
+import { FC, ReactNode } from 'react'
 import './globals.css'
-import { FC } from 'react'
 
 export const metadata: Metadata = {
   title: 'Meta Town',
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 }
 
 interface Props {
-  children: React.ReactNode
+  children: ReactNode
 }
 
 const RootLayout: FC<Props> = ({ children }) => (

@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { FC } from 'react'
+import { ButtonHTMLAttributes, FC, ReactNode } from 'react'
 import { DynamicIcon, type IconName } from 'lucide-react/dynamic'
 
 export const VARIANT = {
@@ -40,11 +40,8 @@ export type Variant =
   | 'danger'
 
 interface Props
-  extends Omit<
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    'prefix' | 'suffix'
-  > {
-  children: React.ReactNode
+  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'prefix' | 'suffix'> {
+  children: ReactNode
   size?: Size
   variant?: Variant
   prefix?: {
