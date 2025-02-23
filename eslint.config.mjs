@@ -43,6 +43,7 @@ const eslintConfig = [
   }),
   ...tseslint.config(
     eslint.configs.recommended,
+    tseslint.configs.recommendedTypeChecked,
     tseslint.configs.stylisticTypeChecked,
     {
       languageOptions: {
@@ -58,6 +59,13 @@ const eslintConfig = [
         // TypeScript rules
         '@typescript-eslint/explicit-function-return-type': 'error',
         '@typescript-eslint/no-unnecessary-condition': 'error',
+      },
+    },
+    {
+      files: ['**/*.test.ts', '**/*.test.tsx'],
+      rules: {
+        // Test rules
+        '@typescript-eslint/no-unsafe-assignment': 'off',
       },
     },
     {
