@@ -9,4 +9,12 @@ describe('Space', () => {
       screen.getByRole('button', { name: 'All-Hands' })
     ).toBeInTheDocument()
   })
+
+  test('renders Footer', () => {
+    render(<Space />)
+
+    expect(
+      screen.getByLabelText('Participant Status: Available')
+    ).toBeInTheDocument()
+  })
 })
