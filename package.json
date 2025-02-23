@@ -13,6 +13,7 @@
     "commitlint": "commitlint --edit",
     "test": "vitest",
     "test:ui": "vitest --ui",
+    "type-check": "tsc --noEmit",
     "prepare": "husky",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"

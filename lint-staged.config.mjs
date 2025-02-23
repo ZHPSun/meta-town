@@ -7,6 +7,7 @@ const buildEslintCommand = (filenames) =>
 
 const config = {
   '*.{js,jsx,ts,tsx}': [buildEslintCommand],
+  '**/*.ts?(x)': () => 'tsc -p tsconfig.json --noEmit',
   '*': ['prettier --check --ignore-unknown'],
 }
 
