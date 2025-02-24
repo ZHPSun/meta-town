@@ -6,7 +6,7 @@ import { FC } from 'react'
 const Header: FC = () => (
   <div className="flex justify-between border-b border-neutral-200 px-6 py-2">
     <div className="flex gap-1">
-      <Tooltip text="Copy Link" position="left">
+      <Tooltip text="Copy invite link" position="left">
         <Button size="small" variant="naked">
           <Link aria-label="Copy invite link" size={16} />
         </Button>
@@ -20,7 +20,7 @@ const Header: FC = () => (
     </div>
 
     <div>
-      <Tooltip text="Meeting Info" position="center">
+      <Tooltip text="Spaces" position="center">
         <Button
           size="small"
           variant="naked"
@@ -33,15 +33,9 @@ const Header: FC = () => (
     </div>
 
     <div className="flex gap-1">
-      <Tooltip text="Meeting Info" position="center">
-        <Button
-          size="small"
-          variant="secondary"
-          prefix={{ icon: 'layout-grid' }}
-        >
-          Meeting view
-        </Button>
-      </Tooltip>
+      <Button size="small" variant="secondary" prefix={{ icon: 'layout-grid' }}>
+        Meeting view
+      </Button>
       <Tooltip text="More options" position="right">
         <Button variant="naked" size="small">
           <EllipsisVertical aria-label="More options" />

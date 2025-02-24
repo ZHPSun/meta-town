@@ -12,7 +12,7 @@ describe('Home', () => {
     render(<Home />)
 
     expect(
-      screen.getByRole('button', { name: 'Last Visited' })
+      screen.getByRole('button', { name: 'Last visited' })
     ).toBeInTheDocument()
   })
 
