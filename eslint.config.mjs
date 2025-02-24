@@ -22,9 +22,9 @@ const eslintConfig = [
     rules: {
       // Common rules
       'arrow-body-style': 'error',
+      'no-restricted-globals': ['error', 'React'],
 
       // React rules
-      'no-restricted-globals': ['error', 'React'],
       'react/function-component-definition': [
         'error',
         {
