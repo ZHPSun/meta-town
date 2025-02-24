@@ -5,9 +5,7 @@ describe('Navigation', () => {
   test('renders logo', () => {
     render(<Navigation />)
 
-    expect(
-      screen.getByRole('button', { name: 'Meta Town' })
-    ).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Meta Town' })).toBeInTheDocument()
   })
 
   test('renders Events button', () => {
