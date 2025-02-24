@@ -1,5 +1,5 @@
 import Button from '@/components/Button'
-import Tooltip from '../Tooltip'
+import Tooltip from '@/components/Tooltip'
 import { EllipsisVertical, Link, Lock } from 'lucide-react'
 import { FC } from 'react'
 

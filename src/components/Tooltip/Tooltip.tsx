@@ -21,7 +21,7 @@ const Tooltip: FC<Props> = ({ children, text, position = 'center' }) => (
     {children}
     <span
       className={clsx(
-        'absolute top-full mt-2 hidden whitespace-nowrap rounded bg-black px-2 py-1 text-xs text-white group-hover:block',
+        'absolute top-full z-50 mt-2 hidden whitespace-nowrap rounded bg-black px-2 py-1 text-xs text-white group-hover:block',
         POSITION[position]
       )}
     >

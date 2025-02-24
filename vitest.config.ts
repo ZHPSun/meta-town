@@ -8,7 +8,7 @@ export default defineConfig({
     coverage: {
       enabled: true,
       include: ['src/**'],
-      exclude: ['**/*.stories.ts', 'src/stories/**'],
+      exclude: ['**/*.stories.ts', '**/*.stories.tsx', 'src/stories/**'],
       thresholds: {
         statements: 100,
         branches: 100,
