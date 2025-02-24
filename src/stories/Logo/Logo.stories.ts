@@ -9,6 +9,4 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const LogoDefault: Story = {
-  name: 'Logo',
-}
+export const Default: Story = {}

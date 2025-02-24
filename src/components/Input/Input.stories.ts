@@ -11,7 +11,7 @@ export default meta
 
 type Story = StoryObj<typeof Input>
 
-export const InputDefault: Story = {}
+export const Default: Story = {}
 
 export const WithPrefix: Story = {
   args: {

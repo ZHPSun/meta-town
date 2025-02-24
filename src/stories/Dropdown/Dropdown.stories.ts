@@ -9,6 +9,4 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const DropdownDefault: Story = {
-  name: 'Dropdown',
-}
+export const Default: Story = {}

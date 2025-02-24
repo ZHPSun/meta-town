@@ -10,17 +10,14 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const ButtonDefault: Story = {
-  name: 'Button',
+export const Default: Story = {
   render: Button,
 }
 
 export const ButtonIcon: Story = {
-  name: 'Button.Icon',
   render: Icon,
 }
 
 export const ButtonConfigurable: Story = {
-  name: 'Button.Configurable',
   render: Configurable,
 }
