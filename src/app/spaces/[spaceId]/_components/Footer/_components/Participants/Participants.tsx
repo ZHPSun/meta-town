@@ -20,7 +20,7 @@ const PARTICIPANT_STATUS = {
 }
 
 const Participants: FC<Props> = ({ count, status }) => (
-  <Button prefix={{ label: 'Users', icon: 'users' }}>
+  <Button variant="secondary" prefix={{ label: 'Users', icon: 'users' }}>
     <span
       className={clsx(
         STATUS[status],

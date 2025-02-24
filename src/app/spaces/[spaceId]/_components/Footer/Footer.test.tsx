@@ -5,17 +5,13 @@ describe('Footer', () => {
   test('renders the Main menu button', () => {
     render(<Footer />)
 
-    expect(
-      screen.getByRole('button', { name: 'Main menu' })
-    ).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Meta Town' })).toBeInTheDocument()
   })
 
   test('renders the Chat button', () => {
     render(<Footer />)
 
-    expect(
-      screen.getByRole('button', { name: 'Main menu' })
-    ).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Chat' })).toBeInTheDocument()
   })
 
   test('renders participants', () => {

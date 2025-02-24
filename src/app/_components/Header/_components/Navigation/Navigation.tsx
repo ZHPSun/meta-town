@@ -4,7 +4,9 @@ import { FC } from 'react'
 
 const Navigation: FC = () => (
   <div className="flex gap-4">
-    <Logo />
+    <div className="pr-12">
+      <Logo />
+    </div>
     <Button variant="secondary" prefix={{ icon: 'calendar' }}>
       Events
     </Button>
