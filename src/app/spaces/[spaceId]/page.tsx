@@ -1,6 +1,6 @@
 import { FC } from 'react'
-import Footer from './_components/Footer'
 import Header from './_components/Header'
+import Footer from './_components/Footer'
 
 const Space: FC = () => (
   <div className="flex min-h-screen flex-col">
