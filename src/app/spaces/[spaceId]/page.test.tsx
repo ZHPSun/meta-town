@@ -10,6 +10,12 @@ describe('Space', () => {
     ).toBeInTheDocument()
   })
 
+  test('renders Stage', () => {
+    render(<Space />)
+
+    expect(screen.getByRole('grid', { name: 'Tiled Map' })).toBeInTheDocument()
+  })
+
   test('renders Footer', () => {
     render(<Space />)
 
