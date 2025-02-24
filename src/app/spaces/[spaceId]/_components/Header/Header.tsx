@@ -20,11 +20,11 @@ const Header: FC = () => (
     </div>
 
     <div>
-      <Tooltip text="Spaces" position="center">
+      <Tooltip text="My Spaces" position="center">
         <Button
           size="small"
           variant="naked"
-          prefix={{ icon: 'map-pin' }}
+          prefix={{ icon: 'sparkles' }}
           suffix={{ icon: 'chevron-down' }}
         >
           All-Hands
