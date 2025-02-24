@@ -1,1 +1,1 @@
-export { default, DIMENSIONS } from './Stage'
+export { default } from './Stage'

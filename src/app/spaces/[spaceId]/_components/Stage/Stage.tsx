@@ -2,8 +2,7 @@ import { FC } from 'react'
 import Placement from './_components/Placement'
 import Character from './_components/Character'
 import TiledMap from './_components/TiledMap'
-
-export const DIMENSIONS = { rows: 30, columns: 30 }
+import { DIMENSIONS } from './consts'
 
 const Stage: FC = () => (
   <div className="relative">
