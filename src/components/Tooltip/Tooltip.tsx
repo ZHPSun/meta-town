@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { FC } from 'react'
+import { FC, useId } from 'react'
 import { ReactNode } from 'react'
 
 export const POSITION = {
@@ -16,18 +16,24 @@ interface Props {
   children: ReactNode
 }
 
-const Tooltip: FC<Props> = ({ children, text, position = 'center' }) => (
-  <div className="group relative inline-block">
-    {children}
-    <span
-      className={clsx(
-        'absolute top-full z-50 mt-2 hidden whitespace-nowrap rounded bg-black px-2 py-1 text-xs text-white group-hover:block',
-        POSITION[position]
-      )}
-    >
-      {text}
-    </span>
-  </div>
-)
+const Tooltip: FC<Props> = ({ children, text, position = 'center' }) => {
+  const describedbyId = useId()
+
+  return (
+    <div className="group relative inline-block">
+      <div aria-describedby={describedbyId}>{children}</div>
+      <span
+        id={describedbyId}
+        role="tooltip"
+        className={clsx(
+          'absolute top-full z-50 mt-2 hidden whitespace-nowrap rounded bg-black px-2 py-1 text-xs text-white group-hover:block',
+          POSITION[position]
+        )}
+      >
+        {text}
+      </span>
+    </div>
+  )
+}
 
 export default Tooltip

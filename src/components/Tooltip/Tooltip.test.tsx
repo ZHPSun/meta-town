@@ -10,7 +10,14 @@ describe('Tooltip', () => {
 
   test('renders tooltip text', () => {
     render(<Tooltip text="Tooltip text">Hover me</Tooltip>)
-    expect(screen.getByText('Tooltip text')).toBeInTheDocument()
+
+    expect(screen.getByRole('tooltip', { name: 'Tooltip text' })).toHaveClass(
+      'hidden group-hover:block'
+    )
+
+    expect(
+      screen.getByRole('tooltip', { name: 'Tooltip text' })
+    ).toBeInTheDocument()
   })
 
   test.each(['left', 'right', 'center'] as const)(
@@ -22,7 +29,9 @@ describe('Tooltip', () => {
         </Tooltip>
       )
       await userEvent.hover(screen.getByRole('button', { name: 'Hover me' }))
-      expect(screen.getByText('Tooltip text')).toHaveClass(POSITION[position])
+      expect(screen.getByRole('tooltip', { name: 'Tooltip text' })).toHaveClass(
+        POSITION[position]
+      )
     }
   )
 
@@ -32,7 +41,10 @@ describe('Tooltip', () => {
         <button>Hover me</button>
       </Tooltip>
     )
+
     await userEvent.hover(screen.getByRole('button', { name: 'Hover me' }))
-    expect(screen.getByText('Tooltip text')).toHaveClass(POSITION.center)
+    expect(screen.getByRole('tooltip', { name: 'Tooltip text' })).toHaveClass(
+      POSITION.center
+    )
   })
 })
