@@ -1,22 +1,25 @@
 import Button from '@/components/Button'
+import IconButton from '@/components/IconButton'
 import Tooltip from '@/components/Tooltip'
-import { EllipsisVertical, Link, Lock } from 'lucide-react'
 import { FC } from 'react'
 
 const Header: FC = () => (
   <div className="flex justify-between border-b border-neutral-200 px-6 py-2">
     <div className="flex gap-1">
-      <Tooltip text="Copy invite link" position="left">
-        <Button size="small" variant="naked">
-          <Link aria-label="Copy invite link" size={16} />
-        </Button>
-      </Tooltip>
+      <IconButton
+        size="small"
+        variant="naked"
+        icon="link"
+        label="Copy invite link"
+        tooltip={{ position: 'left' }}
+      />
 
-      <Tooltip text="Lock meeting area" position="left">
-        <Button size="small" variant="secondary">
-          <Lock aria-label="Lock meeting area" />
-        </Button>
-      </Tooltip>
+      <IconButton
+        size="small"
+        variant="secondary"
+        icon="lock"
+        label="Lock meeting area"
+      />
     </div>
 
     <div>
@@ -36,11 +39,13 @@ const Header: FC = () => (
       <Button size="small" variant="secondary" prefix={{ icon: 'layout-grid' }}>
         Meeting view
       </Button>
-      <Tooltip text="More options" position="right">
-        <Button variant="naked" size="small">
-          <EllipsisVertical aria-label="More options" />
-        </Button>
-      </Tooltip>
+      <IconButton
+        size="small"
+        variant="naked"
+        icon="ellipsis-vertical"
+        label="More options"
+        tooltip={{ position: 'right' }}
+      />
     </div>
   </div>
 )

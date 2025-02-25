@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import Tooltip, { POSITION } from './Tooltip'
 
 describe('Tooltip', () => {
@@ -22,27 +21,26 @@ describe('Tooltip', () => {
 
   test.each(['left', 'right', 'center'] as const)(
     'renders tooltip in %s position',
-    async (position) => {
+    (position) => {
       render(
         <Tooltip text="Tooltip text" position={position}>
           <button>Hover me</button>
         </Tooltip>
       )
-      await userEvent.hover(screen.getByRole('button', { name: 'Hover me' }))
+
       expect(screen.getByRole('tooltip', { name: 'Tooltip text' })).toHaveClass(
         POSITION[position]
       )
     }
   )
 
-  test('renders tooltip with default center position', async () => {
+  test('renders tooltip with default center position', () => {
     render(
       <Tooltip text="Tooltip text">
         <button>Hover me</button>
       </Tooltip>
     )
 
-    await userEvent.hover(screen.getByRole('button', { name: 'Hover me' }))
     expect(screen.getByRole('tooltip', { name: 'Tooltip text' })).toHaveClass(
       POSITION.center
     )

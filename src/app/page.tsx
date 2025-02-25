@@ -1,6 +1,6 @@
 import { FC } from 'react'
-import Header from './_components/Header'
 import Filter from './_components/Filter'
+import Header from './_components/Header'
 import Spaces from './_components/Spaces'
 
 const Home: FC = () => (
