@@ -1,1 +1,1 @@
-export { default } from './Placement'
+export { default, type Direction, type Coordinates } from './Placement'

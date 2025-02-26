@@ -1,8 +1,9 @@
 import { render, screen } from '@testing-library/react'
-import Stage from './Stage'
+import userEvent from '@testing-library/user-event'
+import Stage, { INITIAL_COORDINATES } from './Stage'
 import * as consts from './consts'
 
-const { DIMENSIONS } = consts
+const { DIMENSIONS, TILE_SIZE } = consts
 
 vi.mock('./consts', async (importOriginal) => {
   const actual = await importOriginal<typeof consts>()
@@ -29,5 +30,18 @@ describe('Stage', () => {
     expect(screen.getAllByRole('gridcell')).toHaveLength(
       DIMENSIONS.rows * DIMENSIONS.columns
     )
+  })
+
+  test('moves character', async () => {
+    const user = userEvent.setup()
+    render(<Stage />)
+
+    await user.keyboard('{arrowdown}')
+
+    expect(screen.getByTestId('placement')).toHaveStyle({
+      top: `${(INITIAL_COORDINATES.y + 1) * TILE_SIZE}px`,
+      left: `${INITIAL_COORDINATES.x * TILE_SIZE}px`,
+      transform: 'rotate(180deg)',
+    })
   })
 })

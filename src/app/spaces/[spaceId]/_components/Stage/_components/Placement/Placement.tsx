@@ -8,12 +8,16 @@ const FACE_ROTATION = {
   W: 270,
 }
 
+export type Direction = 'N' | 'E' | 'S' | 'W'
+
+export interface Coordinates {
+  x: number
+  y: number
+  direction: Direction
+}
+
 interface Props {
-  coordinates: {
-    x: number
-    y: number
-    direction: 'N' | 'E' | 'S' | 'W'
-  }
+  coordinates: Coordinates
   children: ReactNode
 }
 
