@@ -15,6 +15,7 @@ interface Props {
 const RootLayout: FC<Props> = ({ children }) => (
   <html lang="en">
     <body>{children}</body>
+    <div id="modal-root" />
   </html>
 )
 

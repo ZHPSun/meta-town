@@ -1,5 +1,7 @@
+'use client'
 import Button from '@/components/Button'
 import { FC } from 'react'
+import CreateSpace from './_components/CreateSpace'
 
 const Actions: FC = () => (
   <div className="flex gap-4">
@@ -12,9 +14,7 @@ const Actions: FC = () => (
     <Button variant="secondary" prefix={{ icon: 'globe' }}>
       English
     </Button>
-    <Button variant="success" prefix={{ icon: 'circle-plus' }}>
-      Create Spaces
-    </Button>
+    <CreateSpace />
   </div>
 )
 
