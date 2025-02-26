@@ -4,10 +4,10 @@ import Stage from './_components/Stage'
 import Footer from './_components/Footer'
 
 const Space: FC = () => (
-  <div className="flex min-h-screen flex-col">
+  <div className="flex h-screen flex-col">
     <Header />
 
-    <main className="flex-1">
+    <main className="flex flex-1 items-center justify-center overflow-hidden bg-black bg-opacity-50">
       <Stage />
     </main>
 

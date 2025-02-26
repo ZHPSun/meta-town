@@ -13,7 +13,7 @@ const Stage: FC = () => {
   const characterCoordinates = useMovement(INITIAL_COORDINATES)
 
   return (
-    <div className="relative">
+    <div className="relative bg-white">
       <Placement coordinates={characterCoordinates}>
         <Character />
       </Placement>
