@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import Footer from './Footer'
 
 describe('Footer', () => {
@@ -6,6 +6,24 @@ describe('Footer', () => {
     render(<Footer />)
 
     expect(screen.getByRole('link', { name: 'Meta Town' })).toBeInTheDocument()
+  })
+
+  test('renders video ButtonConfigurable', async () => {
+    render(<Footer />)
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'Camera' })).toBeInTheDocument()
+    })
+  })
+
+  test('renders microphone ButtonConfigurable', async () => {
+    render(<Footer />)
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: 'Microphone' })
+      ).toBeInTheDocument()
+    })
   })
 
   test('renders the Chat button', () => {

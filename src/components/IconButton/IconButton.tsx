@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { DynamicIcon, type IconName } from 'lucide-react/dynamic'
-import React, { FC } from 'react'
+import React, { ComponentProps, FC } from 'react'
 import Button from '../Button'
 import Tooltip from '../Tooltip'
 
@@ -10,12 +10,12 @@ export const SIZE = {
   small: clsx('w-10'),
 }
 
-interface Props extends Omit<React.ComponentProps<typeof Button>, 'children'> {
+interface Props extends Omit<ComponentProps<typeof Button>, 'children'> {
   icon: IconName
   label: string
   circle?: boolean
   tooltip?: {
-    position: React.ComponentProps<typeof Tooltip>['position']
+    position: ComponentProps<typeof Tooltip>['position']
   }
 }
 

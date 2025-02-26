@@ -77,7 +77,7 @@ describe('Button', () => {
     'success',
     'danger',
     'warning',
-  ] as const)('renders %s variant', (variant) => {
+  ] as const)('renders button with %s variant', (variant) => {
     render(<Button variant={variant}>Variant</Button>)
 
     expect(screen.getByRole('button', { name: /Variant/i })).toHaveClass(
