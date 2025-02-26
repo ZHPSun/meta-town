@@ -4,22 +4,22 @@ import { DynamicIcon, type IconName } from 'lucide-react/dynamic'
 
 export const VARIANT = {
   primary: clsx(
-    'border border-neutral-900 bg-neutral-900 text-white hover:bg-neutral-700'
+    'border border-neutral-900 bg-neutral-900 text-white hover:border-neutral-700 hover:bg-neutral-700'
   ),
   secondary: clsx(
-    'border border-neutral-400 bg-white text-neutral-900 hover:bg-neutral-200'
+    'border border-neutral-400 bg-white text-neutral-900 hover:border-neutral-200 hover:bg-neutral-200'
   ),
   naked: clsx(
-    'border border-transparent text-neutral-900 hover:bg-neutral-200'
+    'border border-transparent text-neutral-900 hover:border-neutral-200 hover:bg-neutral-200'
   ),
   success: clsx(
-    'border border-emerald-500 bg-emerald-500 text-white hover:bg-emerald-700'
+    'border border-emerald-500 bg-emerald-500 text-white hover:border-emerald-700 hover:bg-emerald-700'
   ),
   warning: clsx(
-    'border border-amber-500 bg-amber-500 text-white hover:bg-amber-700'
+    'border border-amber-500 bg-amber-500 text-white hover:border-amber-700 hover:bg-amber-700'
   ),
   danger: clsx(
-    'border border-rose-500 bg-rose-500 text-white hover:bg-rose-700'
+    'border border-rose-500 bg-rose-500 text-white hover:border-rose-700 hover:bg-rose-700'
   ),
 }
 
