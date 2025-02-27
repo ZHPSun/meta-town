@@ -6,7 +6,7 @@ interface Props {
 }
 
 const Participants: FC<Props> = ({ count }) => (
-  <div className="relative">
+  <div className="relative z-50">
     <div className="absolute left-2 top-2 flex items-center gap-1 rounded-2xl bg-neutral-300 px-2 py-0.5">
       <Indicator status={count > 0 ? 'online' : 'offline'} />
       <span className="text-xs">{count}</span>

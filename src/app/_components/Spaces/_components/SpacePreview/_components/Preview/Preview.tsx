@@ -1,11 +1,12 @@
 import { FC } from 'react'
+import LinkToSpace from './_components/LinkToSpace'
+
+const spaceID = '12345'
 
 const Preview: FC = () => (
-  <div>
-    <div className="flex h-40 items-center justify-center rounded-2xl border-4 bg-gray-200">
-      Placeholder
-    </div>
-  </div>
+  <LinkToSpace spaceID={spaceID}>
+    <div className="flex h-40 items-center justify-center">Placeholder</div>
+  </LinkToSpace>
 )
 
 export default Preview
