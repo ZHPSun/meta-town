@@ -23,4 +23,10 @@ describe('Space', () => {
       screen.getByLabelText('Participant Status: Available')
     ).toBeInTheDocument()
   })
+
+  test('renders Sidewindow', () => {
+    render(<Space />)
+
+    expect(screen.getByText('Chat')).toBeInTheDocument()
+  })
 })
