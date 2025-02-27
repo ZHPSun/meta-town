@@ -1,13 +1,12 @@
 'use client'
 
 import { FC } from 'react'
-import Placement from './_components/Placement'
-import { type Coordinates } from './_components/Placement'
 import Character from './_components/Character'
 import OtherCharacter from './_components/OtherCharacter'
+import Placement, { type Coordinates } from './_components/Placement'
 import TiledMap from './_components/TiledMap'
-import useMovement from './hooks/useMovement'
 import { DIMENSIONS } from './consts'
+import useMovement from './hooks/useMovement'
 
 export const INITIAL_COORDINATES: Coordinates = {
   x: 0,

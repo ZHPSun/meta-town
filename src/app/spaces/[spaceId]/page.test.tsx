@@ -34,4 +34,10 @@ describe('Space', () => {
       })
     ).toBeInTheDocument()
   })
+
+  test('renders Meeting', () => {
+    render(<Space />)
+
+    expect(screen.getByText('Jack')).toBeInTheDocument()
+  })
 })
