@@ -26,10 +26,12 @@ describe('Footer', () => {
     })
   })
 
-  test('renders the Chat button', () => {
+  test('renders the Chat button', async () => {
     render(<Footer />)
 
-    expect(screen.getByRole('button', { name: 'Chat' })).toBeInTheDocument()
+    await waitFor(() =>
+      expect(screen.getByRole('button', { name: 'Chat' })).toBeInTheDocument()
+    )
   })
 
   test('renders participants', () => {
@@ -40,11 +42,13 @@ describe('Footer', () => {
     ).toBeInTheDocument()
   })
 
-  test('renders the Leave space button', () => {
+  test('renders the Leave space button', async () => {
     render(<Footer />)
 
-    expect(
-      screen.getByRole('button', { name: 'Leave space' })
-    ).toBeInTheDocument()
+    await waitFor(() =>
+      expect(
+        screen.getByRole('button', { name: 'Leave space' })
+      ).toBeInTheDocument()
+    )
   })
 })

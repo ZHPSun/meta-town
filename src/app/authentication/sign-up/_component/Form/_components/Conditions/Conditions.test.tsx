@@ -6,7 +6,7 @@ describe('Conditions', () => {
     render(<Conditions />)
 
     expect(
-      screen.getByText('By signing up, you agree to our')
+      screen.getByText('By signing up, you agree to our:')
     ).toBeInTheDocument()
   })
 

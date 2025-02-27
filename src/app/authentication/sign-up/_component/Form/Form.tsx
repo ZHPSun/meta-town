@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import Input from '@/components/Input'
 import Button from '@/components/Button'
+import Conditions from './_components/Conditions'
 
 const Form: FC = () => (
   <form className="space-y-4">
@@ -16,7 +17,19 @@ const Form: FC = () => (
       </label>
       <Input type="password" id="password" />
     </div>
-    <Button className="w-full">Login</Button>
+    <div>
+      <label
+        className="mb-1 block text-sm text-neutral-600"
+        htmlFor="confirmPassword"
+      >
+        Confirm password
+      </label>
+      <Input type="password" id="confirmPassword" />
+    </div>
+    <div className="py-2">
+      <Conditions />
+    </div>
+    <Button className="w-full">Join Meta Town</Button>
   </form>
 )
 

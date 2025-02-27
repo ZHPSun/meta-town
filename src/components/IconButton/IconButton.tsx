@@ -11,6 +11,12 @@ export const SIZE = {
   small: clsx('w-10'),
 } as const
 
+export const ICON_SIZE = {
+  small: 20,
+  default: 24,
+  large: 28,
+} as const
+
 interface Props extends Omit<ComponentProps<typeof Button>, 'children'> {
   icon: IconName
   label: string
@@ -42,7 +48,7 @@ const IconButton: FC<Props> = ({
       )}
       {...rest}
     >
-      <DynamicIcon name={icon} aria-label={label} />
+      <DynamicIcon size={ICON_SIZE[size]} name={icon} aria-label={label} />
     </Button>
   </Tooltip>
 )

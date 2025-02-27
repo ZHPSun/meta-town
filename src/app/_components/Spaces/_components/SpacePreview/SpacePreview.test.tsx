@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import SpacePreview from './SpacePreview'
 
 describe('SpacePreview', () => {
@@ -7,9 +7,13 @@ describe('SpacePreview', () => {
     expect(screen.getByText('0')).toBeInTheDocument()
   })
 
-  test('renders Info', () => {
+  test('renders Info', async () => {
     render(<SpacePreview />)
-    expect(screen.getByRole('button', { name: 'Options' })).toBeInTheDocument()
+    await waitFor(() =>
+      expect(
+        screen.getByRole('button', { name: 'Options' })
+      ).toBeInTheDocument()
+    )
   })
 
   test('renders Preview', () => {

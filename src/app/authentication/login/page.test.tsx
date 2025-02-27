@@ -19,7 +19,7 @@ describe('Login', () => {
 
     expect(screen.getByRole('link', { name: 'Sign up now!' })).toHaveAttribute(
       'href',
-      '/authentication/signUp'
+      '/authentication/sign-up'
     )
   })
 })

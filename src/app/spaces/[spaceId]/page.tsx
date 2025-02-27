@@ -8,9 +8,9 @@ const Space: FC = () => (
   <div className="flex h-screen flex-col">
     <Header />
 
-    <main className="relative flex flex-1 items-center justify-center overflow-hidden bg-black bg-opacity-50">
+    <main className="relative flex flex-1 items-center justify-center overflow-hidden bg-neutral-400">
       <Stage />
-      <SideWindow header="Chat">Content</SideWindow>
+      <SideWindow header={<h2>Chat</h2>}>Content</SideWindow>
     </main>
     <div>
       <Footer />

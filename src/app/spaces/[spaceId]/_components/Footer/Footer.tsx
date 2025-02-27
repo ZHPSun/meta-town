@@ -1,7 +1,6 @@
-import { LogOut, MessageCircle } from 'lucide-react'
 import { FC } from 'react'
-import Button from '@/components/Button'
 import ButtonConfigurable from '@/components/ButtonConfigurable'
+import IconButton from '@/components/IconButton'
 import Logo from '@/components/Logo'
 import Participants from './_components/Participants'
 
@@ -16,16 +15,12 @@ const Footer: FC = () => (
     </div>
 
     <div className="flex gap-2">
-      <Button variant="naked">
-        <MessageCircle aria-label="Chat" />
-      </Button>
+      <IconButton variant="naked" icon="message-circle" label="Chat" />
 
       <Participants count={1} status="online" />
 
       <div className="ml-12">
-        <Button variant="danger">
-          <LogOut aria-label="Leave space" />
-        </Button>
+        <IconButton variant="danger" icon="log-out" label="Leave space" />
       </div>
     </div>
   </footer>

@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { SIZE as BUTTON_SIZE, VARIANT as BUTTON_VARIANT } from '../Button'
 import { POSITION as TOOLTIP_POSITION } from '../Tooltip'
-import IconButton, { SIZE } from './IconButton'
+import IconButton, { ICON_SIZE, SIZE } from './IconButton'
 
 describe('IconButton', () => {
   test('renders icon', async () => {
@@ -122,6 +122,27 @@ describe('IconButton', () => {
 
       expect(screen.getByRole('tooltip', { name: 'Beer' })).toHaveClass(
         TOOLTIP_POSITION[position]
+      )
+    }
+  )
+
+  test.each(['small', 'default', 'large'] as const)(
+    'renders icon with %s size',
+    async (size) => {
+      render(<IconButton size={size} icon="beer" label="Beer" />)
+
+      await waitFor(() =>
+        expect(screen.getByLabelText('Beer')).toBeInTheDocument()
+      )
+
+      expect(screen.getByLabelText('Beer')).toHaveAttribute(
+        'width',
+        ICON_SIZE[size].toString()
+      )
+
+      expect(screen.getByLabelText('Beer')).toHaveAttribute(
+        'height',
+        ICON_SIZE[size].toString()
       )
     }
   )

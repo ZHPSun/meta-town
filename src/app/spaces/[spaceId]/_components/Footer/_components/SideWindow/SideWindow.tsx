@@ -7,13 +7,11 @@ interface Props {
 }
 
 const SideWindow: FC<Props> = ({ children, header }) => (
-  <div className="absolute bottom-0 right-0 top-0 w-80 overflow-hidden bg-black text-white">
-    <div className="flex items-center justify-between">
+  <div className="absolute bottom-0 right-0 top-0 w-96 overflow-hidden bg-gray-100">
+    <div className="flex items-center justify-between px-6 py-4">
       {header}
 
-      <div>
-        <IconButton icon="x" label="Close" />
-      </div>
+      <IconButton variant="secondary" size="small" icon="x" label="Close" />
     </div>
 
     <div className="flex items-center justify-center overflow-auto">

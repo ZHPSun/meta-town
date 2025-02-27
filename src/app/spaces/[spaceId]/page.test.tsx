@@ -24,9 +24,14 @@ describe('Space', () => {
     ).toBeInTheDocument()
   })
 
-  test('renders Sidewindow', () => {
+  test('renders SideWindow', () => {
     render(<Space />)
 
-    expect(screen.getByText('Chat')).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', {
+        level: 2,
+        name: 'Chat',
+      })
+    ).toBeInTheDocument()
   })
 })

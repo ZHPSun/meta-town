@@ -12,7 +12,7 @@ describe('SignUp', () => {
     render(<SignUp />)
 
     expect(
-      screen.getByText('By signing up, you agree to our')
+      screen.getByText('By signing up, you agree to our:')
     ).toBeInTheDocument()
   })
 

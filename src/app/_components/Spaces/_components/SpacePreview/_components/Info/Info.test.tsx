@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import Info from './Info'
 
 describe('Info', () => {
@@ -12,8 +12,12 @@ describe('Info', () => {
     expect(screen.getByText('Test Time')).toBeInTheDocument()
   })
 
-  test('renders Option button', () => {
+  test('renders Option button', async () => {
     render(<Info name="Test Name" time="Test Time" />)
-    expect(screen.getByRole('button', { name: 'Options' })).toBeInTheDocument()
+    await waitFor(() =>
+      expect(
+        screen.getByRole('button', { name: 'Options' })
+      ).toBeInTheDocument()
+    )
   })
 })
