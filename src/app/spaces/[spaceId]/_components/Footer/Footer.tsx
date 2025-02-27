@@ -1,8 +1,8 @@
+import { LogOut, MessageCircle } from 'lucide-react'
+import { FC } from 'react'
 import Button from '@/components/Button'
 import ButtonConfigurable from '@/components/ButtonConfigurable'
 import Logo from '@/components/Logo'
-import { LogOut, MessageCircle } from 'lucide-react'
-import { FC } from 'react'
 import Participants from './_components/Participants'
 
 const Footer: FC = () => (

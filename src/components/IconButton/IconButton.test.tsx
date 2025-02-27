@@ -1,8 +1,8 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { SIZE as BUTTON_SIZE, VARIANT as BUTTON_VARIANT } from '../Button'
-import IconButton, { SIZE } from './IconButton'
 import { POSITION as TOOLTIP_POSITION } from '../Tooltip'
+import IconButton, { SIZE } from './IconButton'
 
 describe('IconButton', () => {
   test('renders icon', async () => {

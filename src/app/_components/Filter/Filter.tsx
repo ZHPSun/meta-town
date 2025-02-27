@@ -1,5 +1,5 @@
-import Input from '@/components/Input'
 import { FC } from 'react'
+import Input from '@/components/Input'
 import CreatedSpaces from './_components/CreatedSpaces'
 import LastVisited from './_components/LastVisited'
 

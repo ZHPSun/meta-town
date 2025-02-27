@@ -1,8 +1,8 @@
 import { FC } from 'react'
+import { createPortal } from 'react-dom'
 import Overlay from './_components/Overlay'
 import Header from './_components/Header'
 import Form from './_components/Form'
-import { createPortal } from 'react-dom'
 
 interface Props {
   onClose: () => void

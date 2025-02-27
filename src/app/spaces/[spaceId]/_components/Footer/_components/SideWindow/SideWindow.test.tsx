@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react'
-import SideWindow from './SideWindow'
-import Button from '@/components/Button'
 import { UserPlus, Contact } from 'lucide-react'
+import Button from '@/components/Button'
+import SideWindow from './SideWindow'
 
 describe('SideWindow', () => {
   test('renders header', () => {

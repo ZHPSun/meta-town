@@ -1,5 +1,6 @@
 import { FC, InputHTMLAttributes } from 'react'
-import { DynamicIcon, type IconName } from 'lucide-react/dynamic'
+import { DynamicIcon } from 'lucide-react/dynamic'
+import { type IconName } from 'lucide-react/dynamic'
 import clsx from 'clsx'
 
 interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, 'prefix'> {

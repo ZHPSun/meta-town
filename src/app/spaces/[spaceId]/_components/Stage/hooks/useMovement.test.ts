@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import useMovement from './useMovement'
 import { DIMENSIONS } from '../consts'
+import useMovement from './useMovement'
 
 describe('useMovement', () => {
   test('initializes with given coordinates', () => {

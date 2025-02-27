@@ -1,7 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react'
-import Button from './Button'
 import userEvent from '@testing-library/user-event'
-import { VARIANT, SIZE } from './Button'
+import Button, { VARIANT, SIZE } from './Button'
 
 describe('Button', () => {
   test('renders button with provided children', () => {

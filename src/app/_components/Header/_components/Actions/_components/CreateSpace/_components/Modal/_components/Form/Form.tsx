@@ -1,7 +1,6 @@
-import React, { FC } from 'react'
+import React, { FC, useId } from 'react'
 import Input from '@/components/Input'
 import Button from '@/components/Button'
-import { useId } from 'react'
 
 const Form: FC = () => {
   const spaceNameId = useId()

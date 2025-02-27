@@ -6,9 +6,9 @@ interface Props {
 }
 
 export const STATUS = {
-  online: 'bg-green-500',
-  offline: 'bg-red-500',
-}
+  online: clsx('bg-green-500'),
+  offline: clsx('bg-red-500'),
+} as const
 
 const Indicator: FC<Props> = ({ status }) => (
   <div role="status" className={clsx('h-2 w-2 rounded-full', STATUS[status])} />

@@ -1,6 +1,6 @@
 import { FC } from 'react'
-import Button from '@/components/Button'
 import { X } from 'lucide-react'
+import Button from '@/components/Button'
 
 interface Props {
   onClose: () => void

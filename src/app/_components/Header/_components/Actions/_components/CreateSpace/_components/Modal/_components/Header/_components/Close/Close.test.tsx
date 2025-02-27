@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
-import Close from './Close'
 import userEvent from '@testing-library/user-event'
+import Close from './Close'
 
 describe('Close', () => {
   test('renders button', () => {

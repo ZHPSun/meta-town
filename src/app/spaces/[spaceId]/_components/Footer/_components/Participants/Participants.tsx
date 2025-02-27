@@ -1,6 +1,6 @@
-import Button from '@/components/Button'
 import clsx from 'clsx'
 import { FC } from 'react'
+import Button from '@/components/Button'
 
 export type Status = 'online' | 'offline'
 
@@ -12,12 +12,12 @@ interface Props {
 export const STATUS = {
   online: clsx('bg-green-500'),
   offline: clsx('bg-gray-500'),
-}
+} as const
 
 const PARTICIPANT_STATUS = {
   online: 'Available',
   offline: 'Unavailable',
-}
+} as const
 
 const Participants: FC<Props> = ({ count, status }) => (
   <Button variant="secondary" prefix={{ label: 'Users', icon: 'users' }}>

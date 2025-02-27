@@ -1,6 +1,6 @@
 import clsx from 'clsx'
-import { ButtonHTMLAttributes, FC, ReactNode } from 'react'
 import { DynamicIcon, type IconName } from 'lucide-react/dynamic'
+import { ButtonHTMLAttributes, FC, ReactNode } from 'react'
 
 export const VARIANT = {
   primary: clsx(
@@ -21,13 +21,13 @@ export const VARIANT = {
   danger: clsx(
     'border border-rose-500 bg-rose-500 text-white hover:border-rose-700 hover:bg-rose-700'
   ),
-}
+} as const
 
 export const SIZE = {
   default: clsx('h-12 px-4'),
   large: clsx('h-14 px-8 text-lg'),
   small: clsx('h-10 px-2 text-sm'),
-}
+} as const
 
 export type Size = 'default' | 'large' | 'small'
 

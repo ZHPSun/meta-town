@@ -1,7 +1,7 @@
+import { FC } from 'react'
 import Button from '@/components/Button'
 import IconButton from '@/components/IconButton'
 import Tooltip from '@/components/Tooltip'
-import { FC } from 'react'
 
 const Header: FC = () => (
   <div className="flex justify-between border-b border-neutral-200 px-6 py-2">

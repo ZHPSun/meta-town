@@ -1,7 +1,7 @@
-import Form from './_component/Form'
-import Logo from '@/components/Logo'
 import { FC } from 'react'
 import Link from 'next/link'
+import Logo from '@/components/Logo'
+import Form from './_component/Form'
 
 const SignUp: FC = () => (
   <div className="flex h-screen items-center justify-center">

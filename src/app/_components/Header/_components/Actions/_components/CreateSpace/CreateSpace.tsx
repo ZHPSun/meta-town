@@ -1,6 +1,5 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import Button from '@/components/Button'
-import { useState } from 'react'
 import Modal from './_components/Modal'
 
 const CreateSpace: FC = () => {

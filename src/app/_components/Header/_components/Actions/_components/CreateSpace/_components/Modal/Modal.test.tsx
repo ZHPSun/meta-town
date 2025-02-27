@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
-import Modal from './Modal'
 import userEvent from '@testing-library/user-event'
+import Modal from './Modal'
 
 describe('Modal', () => {
   test('renders overlay', () => {

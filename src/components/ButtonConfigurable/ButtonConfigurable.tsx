@@ -1,7 +1,7 @@
-import Button from '@/components/Button'
 import { ComponentProps, FC } from 'react'
-import Configuration from './_components/Configuration'
+import Button from '@/components/Button'
 import IconButton from '@/components/IconButton'
+import Configuration from './_components/Configuration'
 
 export type Variant = Exclude<ComponentProps<typeof Button>['variant'], 'naked'>
 

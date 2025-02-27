@@ -1,6 +1,6 @@
 'use client'
-import Button from '@/components/Button'
 import { FC } from 'react'
+import Button from '@/components/Button'
 import CreateSpace from './_components/CreateSpace'
 
 const Actions: FC = () => (

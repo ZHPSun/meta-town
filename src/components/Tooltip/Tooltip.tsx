@@ -1,11 +1,10 @@
 import clsx from 'clsx'
-import { FC, useId } from 'react'
-import { ReactNode } from 'react'
+import { FC, useId, ReactNode } from 'react'
 
 export const POSITION = {
-  left: 'left-1',
-  right: 'right-1',
-  center: 'left-1/2 -translate-x-1/2',
+  left: clsx('left-1'),
+  right: clsx('right-1'),
+  center: clsx('left-1/2 -translate-x-1/2'),
 } as const
 
 export type Position = 'left' | 'right' | 'center'

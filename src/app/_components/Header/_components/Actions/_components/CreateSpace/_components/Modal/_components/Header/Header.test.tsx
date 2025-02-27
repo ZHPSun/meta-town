@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
-import Header from './Header'
 import userEvent from '@testing-library/user-event'
+import Header from './Header'
 
 describe('Header', () => {
   test('renders title', () => {

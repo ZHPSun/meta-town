@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
-import CreateSpace from './CreateSpace'
 import userEvent from '@testing-library/user-event'
+import CreateSpace from './CreateSpace'
 
 describe('CreateSpace', () => {
   test('renders button', () => {

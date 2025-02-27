@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
-import Placement from './Placement'
 import { TILE_SIZE } from '../../consts'
+import Placement from './Placement'
 
 describe('Placement', () => {
   test('renders placement', () => {

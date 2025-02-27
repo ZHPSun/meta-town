@@ -1,6 +1,6 @@
+import { FC } from 'react'
 import Button from '@/components/Button'
 import Logo from '@/components/Logo'
-import { FC } from 'react'
 
 const Navigation: FC = () => (
   <div className="flex gap-4">

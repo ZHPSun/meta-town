@@ -1,5 +1,6 @@
 import clsx from 'clsx'
-import { DynamicIcon, type IconName } from 'lucide-react/dynamic'
+import { DynamicIcon } from 'lucide-react/dynamic'
+import { type IconName } from 'lucide-react/dynamic'
 import React, { ComponentProps, FC } from 'react'
 import Button from '../Button'
 import Tooltip from '../Tooltip'
@@ -8,7 +9,7 @@ export const SIZE = {
   default: clsx('w-12'),
   large: clsx('w-14'),
   small: clsx('w-10'),
-}
+} as const
 
 interface Props extends Omit<ComponentProps<typeof Button>, 'children'> {
   icon: IconName

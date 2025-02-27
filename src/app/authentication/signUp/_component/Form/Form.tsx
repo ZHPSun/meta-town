@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import Input from '@/components/Input'
-import Conditions from './_components/Conditions'
 import Button from '@/components/Button'
+import Conditions from './_components/Conditions'
 
 const Form: FC = () => (
   <div className="max-w-sm space-y-4">
