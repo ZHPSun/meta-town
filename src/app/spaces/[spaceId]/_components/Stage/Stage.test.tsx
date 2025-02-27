@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Stage, { INITIAL_COORDINATES } from './Stage'
 import * as consts from './consts'
@@ -38,10 +38,30 @@ describe('Stage', () => {
 
     await user.keyboard('{arrowdown}')
 
-    expect(screen.getByTestId('placement')).toHaveStyle({
+    expect(
+      screen
+        .getAllByTestId('placement')
+        .find((placement) => within(placement).queryByLabelText('Character'))
+    ).toHaveStyle({
       top: `${(INITIAL_COORDINATES.y + 1) * TILE_SIZE}px`,
       left: `${INITIAL_COORDINATES.x * TILE_SIZE}px`,
       transform: 'rotate(180deg)',
+    })
+  })
+
+  test('renders OtherCharacter', () => {
+    render(<Stage />)
+
+    expect(
+      screen
+        .getAllByTestId('placement')
+        .find((placement) =>
+          within(placement).queryByLabelText('OtherCharacter')
+        )
+    ).toHaveStyle({
+      top: `${20 * TILE_SIZE}px`,
+      left: `${20 * TILE_SIZE}px`,
+      transform: 'rotate(0deg)',
     })
   })
 })

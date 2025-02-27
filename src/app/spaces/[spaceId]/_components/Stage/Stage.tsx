@@ -4,6 +4,7 @@ import { FC } from 'react'
 import Placement from './_components/Placement'
 import { type Coordinates } from './_components/Placement'
 import Character from './_components/Character'
+import OtherCharacter from './_components/OtherCharacter'
 import TiledMap from './_components/TiledMap'
 import useMovement from './hooks/useMovement'
 import { DIMENSIONS } from './consts'
@@ -21,6 +22,9 @@ const Stage: FC = () => {
     <div className="relative bg-white">
       <Placement coordinates={characterCoordinates}>
         <Character />
+      </Placement>
+      <Placement coordinates={{ x: 20, y: 20, direction: 'N' }}>
+        <OtherCharacter />
       </Placement>
       <TiledMap dimensions={DIMENSIONS} />
     </div>
