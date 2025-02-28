@@ -8,7 +8,7 @@ const FACE_ROTATION = {
   W: 270,
 }
 
-export type Direction = 'N' | 'E' | 'S' | 'W'
+type Direction = 'N' | 'E' | 'S' | 'W'
 
 export interface Coordinates {
   x: number

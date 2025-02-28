@@ -14,6 +14,12 @@ describe('useMovement', () => {
 
   test.each([
     {
+      name: 'does not move',
+      initial: { x: 1, y: 1, direction: 'S' },
+      key: 'a',
+      expected: { x: 1, y: 1, direction: 'S' },
+    },
+    {
       name: 'moves up',
       initial: { x: 0, y: 1, direction: 'S' },
       key: '{arrowup}',
@@ -76,5 +82,19 @@ describe('useMovement', () => {
     }
 
     expect(result.current).toEqual(expected)
+  })
+
+  test('stops at block', async () => {
+    const user = userEvent.setup()
+
+    const { result } = renderHook(() =>
+      useMovement({ x: 1, y: 1, direction: 'S' }, [
+        { x: 2, y: 1, direction: 'N' },
+      ])
+    )
+
+    await user.keyboard('{arrowright}')
+
+    expect(result.current).toEqual({ x: 1, y: 1, direction: 'E' })
   })
 })

@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import Stage, { INITIAL_COORDINATES } from './Stage'
+import Stage, { INITIAL_COORDINATES, WALLS } from './Stage'
 import * as consts from './consts'
 
 const { DIMENSIONS, TILE_SIZE } = consts
@@ -22,6 +22,12 @@ describe('Stage', () => {
     render(<Stage />)
 
     expect(screen.getByLabelText('Character')).toBeInTheDocument()
+  })
+
+  test('renders walls', () => {
+    render(<Stage />)
+
+    expect(screen.getAllByLabelText('Wall')).toHaveLength(WALLS.length)
   })
 
   test('renders TiledMap', () => {
