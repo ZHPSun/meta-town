@@ -11,7 +11,7 @@ const Header: FC = () => (
         variant="naked"
         icon="link"
         label="Copy invite link"
-        tooltip={{ position: 'left' }}
+        tooltip={{ position: 'bottom-left' }}
       />
 
       <IconButton
@@ -23,7 +23,7 @@ const Header: FC = () => (
     </div>
 
     <div>
-      <Tooltip text="My Spaces" position="center">
+      <Tooltip text="My Spaces" position="bottom">
         <Button
           size="small"
           variant="naked"
@@ -44,7 +44,7 @@ const Header: FC = () => (
         variant="naked"
         icon="ellipsis-vertical"
         label="More options"
-        tooltip={{ position: 'right' }}
+        tooltip={{ position: 'bottom-right' }}
       />
     </div>
   </div>

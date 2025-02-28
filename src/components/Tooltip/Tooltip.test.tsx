@@ -19,20 +19,26 @@ describe('Tooltip', () => {
     ).toBeInTheDocument()
   })
 
-  test.each(['left', 'right', 'center'] as const)(
-    'renders tooltip in %s position',
-    (position) => {
-      render(
-        <Tooltip text="Tooltip text" position={position}>
-          <button>Hover me</button>
-        </Tooltip>
-      )
+  test.each([
+    'top-left',
+    'top',
+    'top-right',
+    'left',
+    'right',
+    'bottom-left',
+    'bottom',
+    'bottom-right',
+  ] as const)('renders tooltip in %s position', (position) => {
+    render(
+      <Tooltip text="Tooltip text" position={position}>
+        <button>Hover me</button>
+      </Tooltip>
+    )
 
-      expect(screen.getByRole('tooltip', { name: 'Tooltip text' })).toHaveClass(
-        POSITION[position]
-      )
-    }
-  )
+    expect(screen.getByRole('tooltip', { name: 'Tooltip text' })).toHaveClass(
+      POSITION[position]
+    )
+  })
 
   test('renders tooltip with default center position', () => {
     render(
@@ -42,7 +48,7 @@ describe('Tooltip', () => {
     )
 
     expect(screen.getByRole('tooltip', { name: 'Tooltip text' })).toHaveClass(
-      POSITION.center
+      POSITION.bottom
     )
   })
 })

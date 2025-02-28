@@ -15,7 +15,7 @@ type Story = StoryObj<typeof Tooltip>
 export const Default: Story = {
   args: {
     text: 'Tooltip',
-    position: 'center',
+    position: 'bottom',
   },
   render: (args) => (
     <Tooltip {...args}>

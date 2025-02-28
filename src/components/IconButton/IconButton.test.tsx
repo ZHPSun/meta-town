@@ -107,24 +107,30 @@ describe('IconButton', () => {
     expect(screen.getByRole('tooltip', { name: 'Beer' })).toBeInTheDocument()
   })
 
-  test('renders Tooltip with default center position', () => {
+  test('renders Tooltip with default bottom position', () => {
     render(<IconButton icon="beer" label="Beer" />)
 
     expect(screen.getByRole('tooltip', { name: 'Beer' })).toHaveClass(
-      TOOLTIP_POSITION.center
+      TOOLTIP_POSITION.bottom
     )
   })
 
-  test.each(['left', 'center', 'right'] as const)(
-    'renders Tooltip with %s position',
-    (position) => {
-      render(<IconButton icon="beer" label="Beer" tooltip={{ position }} />)
+  test.each([
+    'top-left',
+    'top',
+    'top-right',
+    'left',
+    'right',
+    'bottom-left',
+    'bottom',
+    'bottom-right',
+  ] as const)('renders Tooltip with %s position', (position) => {
+    render(<IconButton icon="beer" label="Beer" tooltip={{ position }} />)
 
-      expect(screen.getByRole('tooltip', { name: 'Beer' })).toHaveClass(
-        TOOLTIP_POSITION[position]
-      )
-    }
-  )
+    expect(screen.getByRole('tooltip', { name: 'Beer' })).toHaveClass(
+      TOOLTIP_POSITION[position]
+    )
+  })
 
   test.each(['small', 'default', 'large'] as const)(
     'renders icon with %s size',
