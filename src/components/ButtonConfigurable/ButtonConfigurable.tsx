@@ -30,17 +30,15 @@ const ButtonConfigurable: FC<Props> = ({
   <div className="relative inline-flex">
     <div className="relative z-10 mr-8">
       {isButtonProps(props) && (
-        <Button className="!rounded-2xl" size={size} variant={variant}>
-          {props.children}
-        </Button>
-      )}
-      {isIconButtonProps(props) && (
-        <IconButton
-          icon={props.icon}
-          label={props.label}
+        <Button
+          {...props}
           size={size}
           variant={variant}
+          className="!rounded-2xl"
         />
+      )}
+      {isIconButtonProps(props) && (
+        <IconButton {...props} size={size} variant={variant} />
       )}
     </div>
     <Configuration size={size} variant={variant} />

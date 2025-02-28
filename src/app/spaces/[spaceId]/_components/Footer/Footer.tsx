@@ -10,17 +10,37 @@ const Footer: FC = () => (
       <div className="mr-12">
         <Logo />
       </div>
-      <ButtonConfigurable variant="success" icon="video" label="Camera" />
-      <ButtonConfigurable variant="success" icon="mic" label="Microphone" />
+      <ButtonConfigurable
+        tooltip={{ position: 'top' }}
+        variant="success"
+        icon="video"
+        label="Camera"
+      />
+      <ButtonConfigurable
+        tooltip={{ position: 'top' }}
+        variant="success"
+        icon="mic"
+        label="Microphone"
+      />
     </div>
 
     <div className="flex gap-2">
-      <IconButton variant="naked" icon="message-circle" label="Chat" />
+      <IconButton
+        tooltip={{ position: 'top' }}
+        variant="naked"
+        icon="message-circle"
+        label="Chat"
+      />
 
       <Participants count={1} status="online" />
 
       <div className="ml-12">
-        <IconButton variant="danger" icon="log-out" label="Leave space" />
+        <IconButton
+          tooltip={{ position: 'top-right' }}
+          variant="danger"
+          icon="log-out"
+          label="Leave space"
+        />
       </div>
     </div>
   </footer>
