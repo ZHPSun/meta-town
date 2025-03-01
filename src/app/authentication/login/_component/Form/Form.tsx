@@ -1,7 +1,7 @@
 'use client'
 
 import { FC, useState, FormEvent } from 'react'
-import Input from '@/components/Input'
+import TextField from '@/components/TextField'
 import Button from '@/components/Button'
 import login from './_utils/login'
 
@@ -19,29 +19,18 @@ const Form: FC = () => {
 
   return (
     <form className="space-y-4" onSubmit={(event) => void handleSubmit(event)}>
-      <div>
-        <label className="mb-1 block text-sm text-neutral-600" htmlFor="email">
-          Email
-        </label>
-        <Input
-          type="email"
-          id="email"
-          onChange={(event) => setEmail(event.target.value)}
-        />
-      </div>
-      <div>
-        <label
-          className="mb-1 block text-sm text-neutral-600"
-          htmlFor="password"
-        >
-          Password
-        </label>
-        <Input
-          type="password"
-          id="password"
-          onChange={(event) => setPassword(event.target.value)}
-        />
-      </div>
+      <TextField
+        label="Email"
+        type="email"
+        onChange={(event) => setEmail(event.target.value)}
+      />
+
+      <TextField
+        label="Password"
+        type="password"
+        onChange={(event) => setPassword(event.target.value)}
+      />
+
       <Button className="w-full">Login</Button>
     </form>
   )
