@@ -38,6 +38,6 @@ describe('Space', () => {
   test('renders Meeting', () => {
     render(<Space />)
 
-    expect(screen.getByText('Jack')).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Map View' })).toBeInTheDocument()
   })
 })
