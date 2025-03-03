@@ -33,4 +33,15 @@ describe('createSupabaseClient', () => {
 
     expect(client).toBe(supabaseClient)
   })
+
+  test('renders singleton client when called multiple times', () => {
+    const supabaseClient = {} as unknown as ReturnType<typeof createClient>
+
+    createClientMock.mockReturnValue(supabaseClient)
+
+    const client1 = createSupabaseClient()
+    const client2 = createSupabaseClient()
+
+    expect(client1).toBe(client2)
+  })
 })

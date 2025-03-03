@@ -2,8 +2,8 @@ name: Code Check
 
 on:
   push:
-    branches:
-      - '**'
+    branches-ignore:
+      - main
 
 jobs:
   code-check:
@@ -21,6 +21,32 @@ jobs:
       - name: Install dependencies
         run: |
           npm ci
+
+      - name: Set Doppler Token Based on Branch
+        run: |
+          BRANCH_NAME="${GITHUB_REF#refs/heads/}"
+          if [[ "$BRANCH_NAME" == "main" ]]; then
+            echo "DOPPLER_TOKEN=${{ secrets.DOPPLER_TOKEN_PROD }}" >> $GITHUB_ENV
+          else
+            echo "DOPPLER_TOKEN=${{ secrets.DOPPLER_TOKEN_STG }}" >> $GITHUB_ENV
+          fi
+
+      - name: Install Doppler CLI
+        uses: dopplerhq/cli-action@v3
+
+      - name: Load Doppler Secrets into ENV
+        run: |
+          doppler secrets download --no-file --format env > .env
+        env:
+          DOPPLER_TOKEN: ${{ env.DOPPLER_TOKEN }}
+
+      - name: Deploy DB Migrations
+        run: |
+          npx prisma migrate deploy
+
+      - name: Generate DB types
+        run: |
+          doppler run -- npm run gen-types
 
       - name: Run ESLint
         run: |

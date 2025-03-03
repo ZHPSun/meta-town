@@ -1,3 +1,5 @@
+'use client'
+
 import { FC, useState } from 'react'
 import Button from '@/components/Button'
 import Modal from './_components/Modal'

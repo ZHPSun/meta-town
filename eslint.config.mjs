@@ -72,6 +72,7 @@ const eslintConfig = [
       rules: {
         // Test rules
         '@typescript-eslint/no-unsafe-assignment': 'off',
+        '@typescript-eslint/unbound-method': 'off',
       },
     },
     {
