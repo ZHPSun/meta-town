@@ -1,10 +1,7 @@
-import { redirect } from 'next/navigation'
 import createSupabaseClient from '@/utils/createSupabaseClient'
 import signUp from './signUp'
 
 vi.mock('@/utils/createSupabaseClient')
-vi.mock('next/navigation')
-
 const createSupabaseClientMock = vi.mocked(createSupabaseClient)
 
 describe('signUp', () => {
@@ -12,7 +9,7 @@ describe('signUp', () => {
     vi.resetAllMocks()
   })
 
-  test('redirects user to homepage after successful sign up', async () => {
+  test('calls supabase auth signUp', async () => {
     const supabaseClient = {
       auth: {
         signUp: vi.fn().mockResolvedValue({
@@ -33,8 +30,6 @@ describe('signUp', () => {
       email: 'test@example.com',
       password: 'password123',
     })
-
-    expect(redirect).toHaveBeenCalledWith('/')
   })
 
   test('returns error after unsuccessful login', async () => {

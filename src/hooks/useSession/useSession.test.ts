@@ -1,13 +1,13 @@
 import { renderHook } from '@testing-library/react'
 import useSWR from 'swr'
+import navigate from '@/utils/navigate'
 import useSession from './useSession'
 import getSession from './utils/getSession'
-import login from './utils/login'
 
 vi.mock('swr')
 const useSWRMock = vi.mocked(useSWR)
 
-vi.mock('./utils/login')
+vi.mock('@/utils/navigate')
 
 describe('useSession', () => {
   afterEach(() => {
@@ -47,6 +47,17 @@ describe('useSession', () => {
 
     renderHook(() => useSession())
 
-    expect(login).toHaveBeenCalled()
+    expect(navigate).toHaveBeenCalledWith('/authentication/login')
+  })
+
+  test('does not call login if session does not exist with skipCheck', () => {
+    useSWRMock.mockReturnValue({
+      data: false,
+      isLoading: false,
+    } as unknown as ReturnType<typeof useSWR>)
+
+    renderHook(() => useSession(true))
+
+    expect(navigate).not.toHaveBeenCalledWith('/authentication/login')
   })
 })

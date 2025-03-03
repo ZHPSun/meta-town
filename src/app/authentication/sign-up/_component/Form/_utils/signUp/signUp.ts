@@ -1,4 +1,3 @@
-import { redirect } from 'next/navigation'
 import { AuthResponse } from '@supabase/supabase-js'
 import createSupabaseClient from '@/utils/createSupabaseClient'
 
@@ -24,7 +23,7 @@ const signUp = async ({ email, password }: Data): Promise<Result> => {
     return { error }
   }
 
-  return redirect('/')
+  return {}
 }
 
 export default signUp

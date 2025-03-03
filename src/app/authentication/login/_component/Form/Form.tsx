@@ -1,11 +1,13 @@
 'use client'
 
+import { zodResolver } from '@hookform/resolvers/zod'
 import { FC } from 'react'
 import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import TextField from '@/components/TextField'
 import Button from '@/components/Button'
+import TextField from '@/components/TextField'
+import useSession from '@/hooks/useSession'
+import navigate from '@/utils/navigate'
 import login from './_utils/login'
 
 const schema = z.object({
@@ -19,6 +21,8 @@ const schema = z.object({
 type Schema = z.infer<typeof schema>
 
 const Form: FC = () => {
+  const { mutate } = useSession(true)
+
   const {
     register,
     handleSubmit,
@@ -29,6 +33,9 @@ const Form: FC = () => {
 
   const onSubmit = async ({ email, password }: Schema): Promise<void> => {
     await login({ email, password })
+    await mutate()
+
+    navigate('/')
   }
 
   return (

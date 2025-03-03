@@ -1,15 +1,15 @@
 import { redirect } from 'next/navigation'
-import login from './login'
+import navigate from './navigate'
 
 vi.mock('next/navigation')
 
-describe('login', () => {
+describe('navigate', () => {
   afterEach(() => {
     vi.resetAllMocks()
   })
 
   test('redirects to /authentication/login', () => {
-    login()
+    navigate('/authentication/login')
 
     expect(redirect).toHaveBeenCalledWith('/authentication/login')
   })

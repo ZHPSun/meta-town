@@ -1,43 +1,55 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import Form from './Form'
+import useSession from '@/hooks/useSession'
+import navigate from '@/utils/navigate'
 import signUp from './_utils/signUp'
+import Form from './Form'
 
 vi.mock('./_utils/signUp')
+const signUpMock = vi.mocked(signUp)
+
+vi.mock('@/hooks/useSession')
+const useSessionMock = vi.mocked(useSession)
+
+vi.mock('@/utils/navigate')
 
 describe('Form', () => {
   afterEach(() => {
     vi.resetAllMocks()
   })
 
-  test('renders input email', () => {
+  test('renders form', () => {
+    useSessionMock.mockReturnValue({
+      mutate: vi.fn(),
+    } as unknown as ReturnType<typeof useSession>)
+
     render(<Form />)
 
     expect(screen.getByLabelText('Email')).toBeInTheDocument()
-  })
-
-  test('renders input password', () => {
-    render(<Form />)
-
     expect(screen.getByLabelText('Password')).toBeInTheDocument()
-  })
-
-  test('renders input confirm password', () => {
-    render(<Form />)
-
     expect(screen.getByLabelText('Confirm password')).toBeInTheDocument()
-  })
-
-  test('renders Join Meta Town button', () => {
-    render(<Form />)
-
     expect(
       screen.getByRole('button', { name: 'Join Meta Town' })
     ).toBeInTheDocument()
   })
 
-  test('authenticates sign up on form submit', async () => {
-    vi.mocked(signUp).mockResolvedValue({ error: null })
+  test('calls useSession with skipCheck', () => {
+    useSessionMock.mockReturnValue({
+      mutate: vi.fn(),
+    } as unknown as ReturnType<typeof useSession>)
+
+    render(<Form />)
+
+    expect(useSessionMock).toHaveBeenCalledWith(true)
+  })
+
+  test('authenticates user on form submit', async () => {
+    const mutate = vi.fn()
+    useSessionMock.mockReturnValue({
+      mutate,
+    } as unknown as ReturnType<typeof useSession>)
+
+    signUpMock.mockResolvedValue({ error: null })
 
     const user = userEvent.setup()
 
@@ -55,9 +67,16 @@ describe('Form', () => {
       email: 'test@example.com',
       password: 'password',
     })
+
+    expect(mutate).toHaveBeenCalled()
+    expect(navigate).toHaveBeenCalledWith('/')
   })
 
   test('shows validation errors message when form is submitted with empty fields', async () => {
+    useSessionMock.mockReturnValue({
+      mutate: vi.fn(),
+    } as unknown as ReturnType<typeof useSession>)
+
     const user = userEvent.setup()
     render(<Form />)
 
@@ -71,6 +90,10 @@ describe('Form', () => {
   })
 
   test('shows validation error message when email format is invalid', async () => {
+    useSessionMock.mockReturnValue({
+      mutate: vi.fn(),
+    } as unknown as ReturnType<typeof useSession>)
+
     const user = userEvent.setup()
     render(<Form />)
 
@@ -84,6 +107,10 @@ describe('Form', () => {
   })
 
   test('shows validation error message when password is too short', async () => {
+    useSessionMock.mockReturnValue({
+      mutate: vi.fn(),
+    } as unknown as ReturnType<typeof useSession>)
+
     const user = userEvent.setup()
     render(<Form />)
 
@@ -97,6 +124,10 @@ describe('Form', () => {
   })
 
   test('shows validation errors message when passwords do not match', async () => {
+    useSessionMock.mockReturnValue({
+      mutate: vi.fn(),
+    } as unknown as ReturnType<typeof useSession>)
+
     const user = userEvent.setup()
     render(<Form />)
 
