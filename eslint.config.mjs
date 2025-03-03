@@ -1,16 +1,17 @@
 import path, { dirname } from 'path'
 import { fileURLToPath } from 'url'
+import cspellPlugin from '@cspell/eslint-plugin'
+import { includeIgnoreFile } from '@eslint/compat'
 import { FlatCompat } from '@eslint/eslintrc'
+import eslint from '@eslint/js'
+import stylistic from '@stylistic/eslint-plugin'
+import pluginRegex from 'eslint-plugin-regex'
+import vitest from 'eslint-plugin-vitest'
 import {
   config as tseslintConfig,
   configs as tseslintConfigs,
   parser as tseslintParser,
 } from 'typescript-eslint'
-import eslint from '@eslint/js'
-import vitest from 'eslint-plugin-vitest'
-import { includeIgnoreFile } from '@eslint/compat'
-import stylistic from '@stylistic/eslint-plugin'
-import pluginRegex from 'eslint-plugin-regex'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -158,6 +159,20 @@ const eslintConfig = [
             },
           },
         ],
+      ],
+    },
+  },
+  {
+    plugins: { '@cspell': cspellPlugin },
+    rules: {
+      '@cspell/spellchecker': [
+        'error',
+        {
+          configFile: new URL(
+            './cspell.config.yaml',
+            import.meta.url
+          ).toString(),
+        },
       ],
     },
   },

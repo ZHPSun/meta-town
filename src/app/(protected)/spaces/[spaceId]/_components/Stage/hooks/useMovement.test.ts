@@ -22,25 +22,25 @@ describe('useMovement', () => {
     {
       name: 'moves up',
       initial: { x: 0, y: 1, direction: 'S' },
-      key: '{arrowup}',
+      key: '{arrowUp}',
       expected: { x: 0, y: 0, direction: 'N' },
     },
     {
       name: 'moves down',
       initial: { x: 0, y: 0, direction: 'N' },
-      key: '{arrowdown}',
+      key: '{arrowDown}',
       expected: { x: 0, y: 1, direction: 'S' },
     },
     {
       name: 'moves left',
       initial: { x: 1, y: 0, direction: 'E' },
-      key: '{arrowleft}',
+      key: '{arrowLeft}',
       expected: { x: 0, y: 0, direction: 'W' },
     },
     {
       name: 'moves right',
       initial: { x: 0, y: 0, direction: 'W' },
-      key: '{arrowright}',
+      key: '{arrowRight}',
       expected: { x: 1, y: 0, direction: 'E' },
     },
   ] as const)('$name', async ({ initial, key, expected }) => {
@@ -56,7 +56,7 @@ describe('useMovement', () => {
     {
       name: 'stops at upper left corner',
       initial: { x: 0, y: 0, direction: 'S' },
-      keys: ['{arrowup}', '{arrowleft}'],
+      keys: ['{arrowUp}', '{arrowLeft}'],
       expected: { x: 0, y: 0, direction: 'W' },
     },
     {
@@ -66,7 +66,7 @@ describe('useMovement', () => {
         y: DIMENSIONS.rows - 1,
         direction: 'N',
       },
-      keys: ['{arrowdown}', '{arrowright}'],
+      keys: ['{arrowDown}', '{arrowRight}'],
       expected: {
         x: DIMENSIONS.columns - 1,
         y: DIMENSIONS.rows - 1,
@@ -93,7 +93,7 @@ describe('useMovement', () => {
       ])
     )
 
-    await user.keyboard('{arrowright}')
+    await user.keyboard('{arrowRight}')
 
     expect(result.current).toEqual({ x: 1, y: 1, direction: 'E' })
   })

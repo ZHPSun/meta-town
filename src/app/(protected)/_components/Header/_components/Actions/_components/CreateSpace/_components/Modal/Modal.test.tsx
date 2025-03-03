@@ -21,7 +21,7 @@ describe('Modal', () => {
     expect(screen.getByLabelText('Space Name:')).toBeInTheDocument()
   })
 
-  test('trrigers onClose when close button is clicked', async () => {
+  test('calls onClose when close button is clicked', async () => {
     const onClose = vitest.fn()
     render(<Modal onClose={onClose} />)
 

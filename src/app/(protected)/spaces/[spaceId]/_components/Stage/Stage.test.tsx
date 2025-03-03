@@ -42,7 +42,7 @@ describe('Stage', () => {
     const user = userEvent.setup()
     render(<Stage />)
 
-    await user.keyboard('{arrowdown}')
+    await user.keyboard('{arrowDown}')
 
     expect(
       screen

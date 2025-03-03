@@ -17,7 +17,7 @@ describe('Header', () => {
     expect(screen.getByRole('button', { name: 'Close' })).toBeInTheDocument()
   })
 
-  test('triggle onClose when close button is clicked', async () => {
+  test('calls onClose when close button is clicked', async () => {
     const onClose = vitest.fn()
     render(<Header onClose={onClose} />)
 

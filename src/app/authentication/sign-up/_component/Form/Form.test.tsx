@@ -114,7 +114,7 @@ describe('Form', () => {
     const user = userEvent.setup()
     render(<Form />)
 
-    await user.type(screen.getByLabelText('Password'), 'passwor')
+    await user.type(screen.getByLabelText('Password'), 'pass')
 
     await user.click(screen.getByRole('button', { name: 'Join Meta Town' }))
 
