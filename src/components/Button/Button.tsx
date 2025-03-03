@@ -29,9 +29,9 @@ export const SIZE = {
   small: clsx('h-10 px-2 text-sm'),
 } as const
 
-export type Size = 'default' | 'large' | 'small'
+type Size = 'default' | 'large' | 'small'
 
-export type Variant =
+type Variant =
   | 'primary'
   | 'secondary'
   | 'naked'

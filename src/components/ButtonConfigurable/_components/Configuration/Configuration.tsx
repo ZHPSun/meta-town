@@ -2,7 +2,6 @@ import clsx from 'clsx'
 import { ChevronUp } from 'lucide-react'
 import { ComponentProps, FC } from 'react'
 import Button from '@/components/Button'
-import { type Variant } from '../../ButtonConfigurable'
 
 export const VARIANT = {
   primary: clsx('bg-neutral-500 text-white hover:bg-neutral-700'),
@@ -24,7 +23,10 @@ export const ICON_SIZE = {
   large: 22,
 } as const
 
-interface Props extends Pick<ComponentProps<typeof Button>, 'size'> {
+type Variant = Exclude<ComponentProps<typeof Button>['variant'], 'naked'>
+
+interface Props
+  extends Pick<ComponentProps<typeof Button>, 'size' | 'variant'> {
   variant?: Variant
 }
 

@@ -14,7 +14,7 @@ export const POSITION = {
   'bottom-right': clsx('right-1 top-full mt-2'),
 } as const
 
-export type Position =
+type Position =
   | 'top-left'
   | 'top'
   | 'top-right'

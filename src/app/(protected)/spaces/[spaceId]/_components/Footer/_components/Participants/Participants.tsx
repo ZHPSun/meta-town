@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import { FC } from 'react'
 import Button from '@/components/Button'
 
-export type Status = 'online' | 'offline'
+type Status = 'online' | 'offline'
 
 interface Props {
   count: number

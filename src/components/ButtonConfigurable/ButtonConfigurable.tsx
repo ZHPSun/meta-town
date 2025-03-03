@@ -3,15 +3,13 @@ import Button from '@/components/Button'
 import IconButton from '@/components/IconButton'
 import Configuration from './_components/Configuration'
 
-export type Variant = Exclude<ComponentProps<typeof Button>['variant'], 'naked'>
-
 interface ButtonProps
   extends Omit<ComponentProps<typeof Button>, 'prefix' | 'suffix'> {
-  variant?: Variant
+  variant?: ComponentProps<typeof Configuration>['variant']
 }
 
 interface IconButtonProps extends ComponentProps<typeof IconButton> {
-  variant?: Variant
+  variant?: ComponentProps<typeof Configuration>['variant']
 }
 
 type Props = ButtonProps | IconButtonProps
