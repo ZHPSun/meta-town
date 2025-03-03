@@ -45,7 +45,7 @@ jobs:
 
       - name: Generate DB types
         run: |
-          doppler run -- npm run gen-types
+          npx dotenv -- npm run gen-types
 
       - name: Run unit test
         run: |

@@ -43,17 +43,7 @@ All required environment variables are defined in the `.env.example` file. Copy 
 cp .env.example .env.local
 ```
 
-### **Required Variables**
-
-```env
-DATABASE_URL=your-database-url
-DIRECT_URL=your-direct-url
-
-NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-```
-
-> **Note:** Replace these values with your actual credentials.
+> **Note:** Replace example values with your actual credentials.
 
 ## 🛠 Development Guide
 
@@ -70,7 +60,7 @@ When pulling the latest changes from `main`, make sure to:
 2. **Generate updated Supabase types**
 
    ```sh
-   SUPABASE_ACCESS_TOKEN=REPLACE_WITH_YOUR_SUPABASE_ACCESS_TOKEN PROJECT_ID=REPLACE_WITH_YOUR_SUPABASE_PROJECT_ID npm run gen-types
+   npx dotenv -- npm run gen-types
    ```
 
    This will fetch the schema from your Supabase instance and generate type definitions in `database.types.ts`.
