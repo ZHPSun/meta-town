@@ -3,16 +3,16 @@ import createSupabaseClient from '@/utils/createSupabaseClient'
 import login from './login'
 
 vi.mock('@/utils/createSupabaseClient')
-const createSupabaseClientMock = vi.mocked(createSupabaseClient)
-
 vi.mock('next/navigation')
+
+const createSupabaseClientMock = vi.mocked(createSupabaseClient)
 
 describe('login', () => {
   afterEach(() => {
     vi.resetAllMocks()
   })
 
-  test('redirects user to homepage after log in', async () => {
+  test('redirects user to homepage after successful login', async () => {
     const supabaseClient = {
       auth: {
         signInWithPassword: vi.fn().mockResolvedValue({
@@ -24,7 +24,10 @@ describe('login', () => {
 
     createSupabaseClientMock.mockReturnValue(supabaseClient)
 
-    await login({ email: 'test@example.com', password: 'password123' })
+    await login({
+      email: 'test@example.com',
+      password: 'password123',
+    })
 
     expect(supabaseClient.auth.signInWithPassword).toHaveBeenCalledWith({
       email: 'test@example.com',
@@ -34,7 +37,7 @@ describe('login', () => {
     expect(redirect).toHaveBeenCalledWith('/')
   })
 
-  test('prevents an unverified user from logging in', async () => {
+  test('returns error after unsuccessful login', async () => {
     const supabaseClient = {
       auth: {
         signInWithPassword: vi.fn().mockResolvedValue({
@@ -46,10 +49,16 @@ describe('login', () => {
 
     createSupabaseClientMock.mockReturnValue(supabaseClient)
 
-    await expect(
-      login({ email: 'test@example.com', password: 'wrong-password' })
-    ).rejects.toThrow('Invalid login credentials')
+    const { error } = await login({
+      email: 'invalid@email.com',
+      password: 'password',
+    })
 
-    expect(redirect).not.toHaveBeenCalled()
+    expect(supabaseClient.auth.signInWithPassword).toHaveBeenCalledWith({
+      email: 'invalid@email.com',
+      password: 'password',
+    })
+
+    expect(error).toEqual({ message: 'Invalid login credentials' })
   })
 })

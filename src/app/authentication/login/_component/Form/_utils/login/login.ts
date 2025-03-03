@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation'
+import { AuthResponse } from '@supabase/supabase-js'
 import createSupabaseClient from '@/utils/createSupabaseClient'
 
 interface Data {
@@ -6,7 +7,12 @@ interface Data {
   password: string
 }
 
-const login = async ({ email, password }: Data): Promise<void> => {
+interface Result {
+  data?: AuthResponse['data']
+  error?: AuthResponse['error']
+}
+
+const login = async ({ email, password }: Data): Promise<Result> => {
   const supabaseClient = createSupabaseClient()
 
   const { error } = await supabaseClient.auth.signInWithPassword({
@@ -15,7 +21,7 @@ const login = async ({ email, password }: Data): Promise<void> => {
   })
 
   if (error) {
-    throw error
+    return { error }
   }
 
   return redirect('/')

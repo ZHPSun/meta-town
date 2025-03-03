@@ -6,6 +6,10 @@ import login from './_utils/login'
 vi.mock('./_utils/login')
 
 describe('Form', () => {
+  afterEach(() => {
+    vi.resetAllMocks()
+  })
+
   test('renders input email', () => {
     render(<Form />)
 
@@ -25,6 +29,8 @@ describe('Form', () => {
   })
 
   test('authenticates user on form submit', async () => {
+    vi.mocked(login).mockResolvedValue({ error: null })
+
     const user = userEvent.setup()
 
     render(<Form />)
@@ -39,5 +45,17 @@ describe('Form', () => {
       email: 'test@example.com',
       password: 'password',
     })
+  })
+
+  test('shows validation errors message when form is submitted with empty fields', async () => {
+    const user = userEvent.setup()
+    render(<Form />)
+
+    await user.click(screen.getByRole('button', { name: 'Login' }))
+
+    expect(
+      screen.getByText('Please enter your email address')
+    ).toBeInTheDocument()
+    expect(screen.getByText('Please enter a password')).toBeInTheDocument()
   })
 })
