@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
-import { type Coordinates } from '../_components/Placement'
-import { DIMENSIONS } from '../consts'
+import clamp from '@/utils/clamp'
+import { type Coordinates } from '../../_components/Placement'
+import { DIMENSIONS } from '../../consts'
 
 const MOVE_DELTAS = {
   ArrowUp: { dx: 0, dy: -1 },
@@ -23,9 +24,6 @@ const isArrowKey = (key: string): key is ArrowKey =>
   key === 'ArrowRight' ||
   key === 'ArrowDown' ||
   key === 'ArrowLeft'
-
-const clamp = (value: number, min: number, max: number): number =>
-  Math.min(Math.max(value, min), max)
 
 const isBlocked = (coordinates: Coordinates, blocks: Coordinates[]): boolean =>
   blocks.some(

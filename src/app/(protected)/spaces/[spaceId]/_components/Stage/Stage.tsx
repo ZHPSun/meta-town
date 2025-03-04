@@ -8,6 +8,7 @@ import OtherCharacter from './_components/OtherCharacter'
 import Wall from './_components/Wall'
 import TiledMap from './_components/TiledMap'
 import useMovement from './hooks/useMovement'
+import useCenterCharacter from './hooks/useCenterCharacter'
 import { DIMENSIONS } from './consts'
 
 export const INITIAL_COORDINATES: Coordinates = {
@@ -25,28 +26,40 @@ export const WALLS: Coordinates[] = [
 ] as const
 
 const Stage: FC = () => {
-  const characterCoordinates = useMovement(INITIAL_COORDINATES, WALLS)
+  const characterCoordinates = useMovement(INITIAL_COORDINATES)
+
+  const { stageRef, characterRef } = useCenterCharacter(characterCoordinates)
 
   return (
-    <div className="relative bg-white">
-      <Placement coordinates={characterCoordinates}>
-        <Character />
-      </Placement>
-
-      <Placement coordinates={{ x: 20, y: 20, direction: 'N' }}>
-        <OtherCharacter />
-      </Placement>
-
-      {WALLS.map((wallCoordinates) => (
-        <Placement
-          key={`${wallCoordinates.x}, ${wallCoordinates.y}`}
-          coordinates={wallCoordinates}
-        >
-          <Wall />
+    <div className="relative max-h-full max-w-full overflow-hidden bg-white">
+      <div
+        ref={stageRef}
+        aria-label="stage"
+        style={{
+          transition: 'transform 0.2s',
+        }}
+      >
+        <Placement coordinates={characterCoordinates}>
+          <div ref={characterRef}>
+            <Character />
+          </div>
         </Placement>
-      ))}
 
-      <TiledMap dimensions={DIMENSIONS} />
+        <Placement coordinates={{ x: 20, y: 20, direction: 'N' }}>
+          <OtherCharacter />
+        </Placement>
+
+        {WALLS.map((wallCoordinates) => (
+          <Placement
+            key={`${wallCoordinates.x}, ${wallCoordinates.y}`}
+            coordinates={wallCoordinates}
+          >
+            <Wall />
+          </Placement>
+        ))}
+
+        <TiledMap dimensions={DIMENSIONS} />
+      </div>
     </div>
   )
 }

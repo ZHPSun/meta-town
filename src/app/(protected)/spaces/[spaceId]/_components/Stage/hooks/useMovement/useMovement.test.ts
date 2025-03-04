@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { DIMENSIONS } from '../consts'
+import { DIMENSIONS } from '../../consts'
 import useMovement from './useMovement'
 
 describe('useMovement', () => {

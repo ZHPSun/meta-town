@@ -1,3 +1,4 @@
+import React from 'react'
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Stage, { INITIAL_COORDINATES, WALLS } from './Stage'
@@ -42,7 +43,7 @@ describe('Stage', () => {
     const user = userEvent.setup()
     render(<Stage />)
 
-    await user.keyboard('{arrowDown}')
+    await user.keyboard('{ArrowDown}')
 
     expect(
       screen
@@ -53,6 +54,15 @@ describe('Stage', () => {
       left: `${INITIAL_COORDINATES.x * TILE_SIZE}px`,
       transform: 'rotate(180deg)',
     })
+  })
+
+  test('useCenterCharacter change the style successfully', async () => {
+    const user = userEvent.setup()
+    render(<Stage />)
+    await user.keyboard('{ArrowDown}')
+    expect(screen.getByLabelText('stage').style.transform).toBe(
+      'translate(0px, 0px)'
+    )
   })
 
   test('renders OtherCharacter', () => {
