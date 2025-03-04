@@ -11,8 +11,8 @@ const Space: FC = () => (
 
     <main className="relative flex flex-1 items-center justify-center overflow-hidden bg-neutral-400">
       <Stage />
-      <SideWindow header={<h2>Chat</h2>}>Content</SideWindow>
       <Meeting />
+      <SideWindow header={<h2>Chat</h2>}>Content</SideWindow>
     </main>
     <div>
       <Footer />

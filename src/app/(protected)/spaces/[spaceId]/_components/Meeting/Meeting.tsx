@@ -10,7 +10,7 @@ const Meeting: FC = () => {
 
   return (
     <div className="absolute left-0 top-4 w-full">
-      <div className="absolute right-0 top-0 z-10 w-fit rounded-2xl bg-slate-800 p-2">
+      <div className="absolute right-0 top-0">
         <IconButton
           label="Map view"
           icon="grip-horizontal"

@@ -25,7 +25,7 @@ const ButtonConfigurable: FC<Props> = ({
   variant = 'primary',
   ...props
 }) => (
-  <div className="relative inline-flex">
+  <div className="relative isolate inline-flex">
     <div className="relative z-10 mr-8">
       {isButtonProps(props) && (
         <Button

@@ -5,11 +5,11 @@ import Participants from './_components/Participants'
 
 const SpacePreview: FC = () => (
   <div className="w-1/4 p-6">
-    <Participants count={0} />
-    <div>
+    <div className="relative">
       <Preview />
-      <Info name="Space Name" time="4 days ago" />
+      <Participants count={0} />
     </div>
+    <Info name="Space Name" time="4 days ago" />
   </div>
 )
 

@@ -41,7 +41,7 @@ const Configuration: FC<Props> = ({
       WRAPPER_SIZE[size]
     )}
   >
-    <button className="h-full px-2 outline-offset-4">
+    <button tabIndex={0} className="h-full px-2 outline-offset-4">
       <ChevronUp size={ICON_SIZE[size]} aria-label="Config" />
     </button>
   </div>
