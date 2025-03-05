@@ -41,7 +41,8 @@ jobs:
 
       - name: Deploy DB Migrations
         run: |
-          npx prisma migrate deploy
+          npm run migration:prisma
+          npx dotenv -- npm run migration:supabase
 
       - name: Generate DB types
         run: |
