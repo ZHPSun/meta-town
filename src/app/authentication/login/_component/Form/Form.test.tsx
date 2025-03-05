@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import useSession from '@/hooks/useSession'
 import navigate from '@/utils/navigate'
-import Form from './Form'
+import Form, { getServerErrorMessage } from './Form'
 import login from './_utils/login'
 
 vi.mock('./_utils/login')
@@ -78,5 +78,54 @@ describe('Form', () => {
       screen.getByText('Please enter your email address')
     ).toBeInTheDocument()
     expect(screen.getByText('Please enter a password')).toBeInTheDocument()
+  })
+
+  test('renders supabase errors message when login fails', async () => {
+    useSessionMock.mockReturnValue({
+      mutate: vi.fn(),
+    } as unknown as ReturnType<typeof useSession>)
+
+    loginMock.mockResolvedValue({
+      error: { code: 'invalid_credentials' },
+    } as unknown as Awaited<ReturnType<typeof login>>)
+
+    const user = userEvent.setup()
+    render(<Form />)
+
+    await user.type(screen.getByLabelText('Email'), 'test@example.com')
+    await user.type(screen.getByLabelText('Password'), 'password')
+    await user.click(screen.getByRole('button', { name: 'Login' }))
+
+    expect(
+      screen.getByText('Incorrect email or password. Please try again.')
+    ).toBeInTheDocument()
+  })
+
+  test('renders bypassed supabase error message when it is not related to credentials', async () => {
+    useSessionMock.mockReturnValue({
+      mutate: vi.fn(),
+    } as unknown as ReturnType<typeof useSession>)
+
+    loginMock.mockResolvedValue({
+      error: { code: 'manual_linking_disabled' },
+    } as unknown as Awaited<ReturnType<typeof login>>)
+
+    const user = userEvent.setup()
+    render(<Form />)
+
+    await user.type(screen.getByLabelText('Email'), 'test@example.com')
+    await user.type(screen.getByLabelText('Password'), 'password')
+    await user.click(screen.getByRole('button', { name: 'Login' }))
+
+    expect(
+      screen.getByText('Something wrong, please try again later.')
+    ).toBeInTheDocument()
+  })
+})
+
+describe('getServerErrorMessage', () => {
+  test('returns undefined if there is no errors', () => {
+    expect(getServerErrorMessage(undefined)).toBeUndefined()
+    expect(getServerErrorMessage(null)).toBeUndefined()
   })
 })

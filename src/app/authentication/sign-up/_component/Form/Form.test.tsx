@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import useSession from '@/hooks/useSession'
 import navigate from '@/utils/navigate'
 import signUp from './_utils/signUp'
-import Form from './Form'
+import Form, { getServerErrorMessage } from './Form'
 
 vi.mock('./_utils/signUp')
 const signUpMock = vi.mocked(signUp)
@@ -140,5 +140,58 @@ describe('Form', () => {
     expect(
       screen.getByText('Passwords do not match. Please try again')
     ).toBeInTheDocument()
+  })
+
+  test('renders supabase errors message when email is taken during sign up', async () => {
+    useSessionMock.mockReturnValue({
+      mutate: vi.fn(),
+    } as unknown as ReturnType<typeof useSession>)
+
+    signUpMock.mockResolvedValue({
+      error: { code: 'email_exists' },
+    } as unknown as Awaited<ReturnType<typeof signUp>>)
+
+    const user = userEvent.setup()
+    render(<Form />)
+
+    await user.type(screen.getByLabelText('Email'), 'test@example.com')
+    await user.type(screen.getByLabelText('Password'), 'password')
+    await user.type(screen.getByLabelText('Confirm password'), 'password')
+    await user.click(screen.getByRole('button', { name: 'Join Meta Town' }))
+
+    expect(
+      screen.getByText(
+        'This email is already registered. Please use a different email or log in instead.'
+      )
+    ).toBeInTheDocument()
+  })
+
+  test('renders bypassed supabase error message when it is not related to email conflict', async () => {
+    useSessionMock.mockReturnValue({
+      mutate: vi.fn(),
+    } as unknown as ReturnType<typeof useSession>)
+
+    signUpMock.mockResolvedValue({
+      error: { code: 'manual_linking_disabled' },
+    } as unknown as Awaited<ReturnType<typeof signUp>>)
+
+    const user = userEvent.setup()
+    render(<Form />)
+
+    await user.type(screen.getByLabelText('Email'), 'test@example.com')
+    await user.type(screen.getByLabelText('Password'), 'password')
+    await user.type(screen.getByLabelText('Confirm password'), 'password')
+    await user.click(screen.getByRole('button', { name: 'Join Meta Town' }))
+
+    expect(
+      screen.getByText('Something wrong, please try again later.')
+    ).toBeInTheDocument()
+  })
+})
+
+describe('getServerErrorMessage', () => {
+  test('returns undefined if there is no errors', () => {
+    expect(getServerErrorMessage(undefined)).toBeUndefined()
+    expect(getServerErrorMessage(null)).toBeUndefined()
   })
 })

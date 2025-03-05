@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import Button from '@/components/Button'
@@ -31,10 +31,25 @@ const schema = z
   password: string
 }>
 
+type ServerError = Awaited<ReturnType<typeof signUp>>['error']
 type Schema = z.infer<typeof schema>
+
+export const getServerErrorMessage = (
+  error: ServerError
+): string | undefined => {
+  if (!error) return
+
+  if (error.code === 'email_exists') {
+    return 'This email is already registered. Please use a different email or log in instead.'
+  }
+
+  return 'Something wrong, please try again later.'
+}
 
 const Form: FC = () => {
   const { mutate } = useSession(true)
+
+  const [serverError, setServerError] = useState<ServerError>(null)
 
   const {
     register,
@@ -45,9 +60,15 @@ const Form: FC = () => {
   })
 
   const onSubmit = async ({ email, password }: Schema): Promise<void> => {
-    await signUp({ email, password })
-    await mutate()
+    const { error } = await signUp({ email, password })
 
+    if (error) {
+      setServerError(error)
+
+      return
+    }
+
+    await mutate()
     navigate('/')
   }
 
@@ -81,6 +102,10 @@ const Form: FC = () => {
       <div className="py-2">
         <Conditions />
       </div>
+      {serverError && (
+        <p className="text-rose-500">{getServerErrorMessage(serverError)}</p>
+      )}
+
       <Button className="w-full">Join Meta Town</Button>
     </form>
   )
