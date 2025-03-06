@@ -9,6 +9,17 @@ model User {
   displayName String 
   avatar      String
   createdAt   DateTime @default(now()) @map("created_at")
-
+  ownedSpaces  Space[] @relation("user_owned_spaces") 
+  joinedSpaces    Space[] @relation("users_joined_spaces") 
   @@map("users")
+}
+
+model Space {
+  id          Int  @id @default(autoincrement()) @map("id")
+  name        String
+  createdAt   DateTime @default(now()) @map("created_at")
+  owner       User     @relation("user_owned_spaces",fields: [ownerId], references: [id])
+  ownerId     String   @map("owner_id")
+  users       User[]   @relation("users_joined_spaces")
+  @@map("spaces")
 }
