@@ -9,7 +9,7 @@ const Meeting: FC = () => {
   const [isMapView, setIsMapView] = useState(true)
 
   return (
-    <div className="absolute left-0 top-4 w-full">
+    <div className="absolute left-0 top-4 h-full w-full">
       <div className="absolute right-0 top-0">
         <IconButton
           label="Map view"
@@ -27,7 +27,7 @@ const Meeting: FC = () => {
         />
       </div>
 
-      {isMapView ? <MapView /> : <MeetingView />}
+      {isMapView ? <MapView /> : <MeetingView participantCount={20} />}
     </div>
   )
 }
