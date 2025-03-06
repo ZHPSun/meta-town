@@ -37,10 +37,16 @@ type Schema = z.infer<typeof schema>
 export const getServerErrorMessage = (
   error: ServerError
 ): string | undefined => {
-  if (!error) return
+  if (!error) {
+    return
+  }
 
   if (error.code === 'email_exists') {
     return 'This email is already registered. Please use a different email or log in instead.'
+  }
+
+  if (error.code === 'user_already_exists') {
+    return 'A user with this email address already exists in our system. Please use a different email or log in instead.'
   }
 
   return 'Something wrong, please try again later.'

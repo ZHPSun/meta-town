@@ -142,31 +142,40 @@ describe('Form', () => {
     ).toBeInTheDocument()
   })
 
-  test('renders supabase errors message when email is taken during sign up', async () => {
-    useSessionMock.mockReturnValue({
-      mutate: vi.fn(),
-    } as unknown as ReturnType<typeof useSession>)
+  test.each([
+    [
+      'email_exists',
+      'This email is already registered. Please use a different email or log in instead.',
+    ],
+    [
+      'user_already_exists',
+      'A user with this email address already exists in our system. Please use a different email or log in instead.',
+    ],
+    ['undefined_error_code', 'Something wrong, please try again later.'],
+  ] as const)(
+    'renders error message: "%s"',
+    async (errorCode, expectedErrorMessage) => {
+      useSessionMock.mockReturnValue({
+        mutate: vi.fn(),
+      } as unknown as ReturnType<typeof useSession>)
 
-    signUpMock.mockResolvedValue({
-      error: { code: 'email_exists' },
-    } as unknown as Awaited<ReturnType<typeof signUp>>)
+      signUpMock.mockResolvedValue({
+        error: { code: errorCode },
+      } as unknown as Awaited<ReturnType<typeof signUp>>)
 
-    const user = userEvent.setup()
-    render(<Form />)
+      const user = userEvent.setup()
+      render(<Form />)
 
-    await user.type(screen.getByLabelText('Email'), 'test@example.com')
-    await user.type(screen.getByLabelText('Password'), 'password')
-    await user.type(screen.getByLabelText('Confirm password'), 'password')
-    await user.click(screen.getByRole('button', { name: 'Join Meta Town' }))
+      await user.type(screen.getByLabelText('Email'), 'test@example.com')
+      await user.type(screen.getByLabelText('Password'), 'password')
+      await user.type(screen.getByLabelText('Confirm password'), 'password')
+      await user.click(screen.getByRole('button', { name: 'Join Meta Town' }))
 
-    expect(
-      screen.getByText(
-        'This email is already registered. Please use a different email or log in instead.'
-      )
-    ).toBeInTheDocument()
-  })
+      expect(screen.getByText(expectedErrorMessage)).toBeInTheDocument()
+    }
+  )
 
-  test('renders bypassed supabase error message when it is not related to email conflict', async () => {
+  test('renders bypassed supabase error message when it is not a defined error code', async () => {
     useSessionMock.mockReturnValue({
       mutate: vi.fn(),
     } as unknown as ReturnType<typeof useSession>)
