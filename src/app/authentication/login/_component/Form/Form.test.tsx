@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import useSession from '@/hooks/useSession'
 import navigate from '@/utils/navigate'
@@ -77,6 +77,7 @@ describe('Form', () => {
     expect(
       screen.getByText('Please enter your email address')
     ).toBeInTheDocument()
+
     expect(screen.getByText('Please enter a password')).toBeInTheDocument()
   })
 
@@ -120,6 +121,41 @@ describe('Form', () => {
     expect(
       screen.getByText('Something wrong, please try again later.')
     ).toBeInTheDocument()
+  })
+
+  test('renders spinning loading icon during login form submission', async () => {
+    const mutate = vi.fn()
+    useSessionMock.mockReturnValue({
+      mutate,
+    } as unknown as ReturnType<typeof useSession>)
+
+    let resolveLogin!: (value: { error: null }) => void
+    loginMock.mockImplementation(
+      () =>
+        new Promise<{ error: null }>((resolve) => {
+          resolveLogin = resolve
+        })
+    )
+
+    const user = userEvent.setup()
+    render(<Form />)
+
+    await user.type(screen.getByLabelText('Email'), 'test@example.com')
+    await user.type(screen.getByLabelText('Password'), 'password')
+
+    await user.click(screen.getByRole('button', { name: 'Login' }))
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('status', { name: 'Logging in' })
+      ).toBeInTheDocument()
+    })
+
+    resolveLogin({ error: null })
+
+    await waitFor(() => {
+      expect(mutate).toHaveBeenCalled()
+    })
   })
 })
 
