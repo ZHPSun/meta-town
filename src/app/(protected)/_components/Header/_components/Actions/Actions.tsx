@@ -3,6 +3,9 @@
 import { FC } from 'react'
 import Button from '@/components/Button'
 import Dropdown from '@/components/Dropdown'
+import VerticalList from '@/components/VerticalList'
+import ListItem from '@/components/ListItem'
+import ListDivider from '@/components/ListDivider'
 import CreateSpace from './_components/CreateSpace'
 
 const Actions: FC = () => (
@@ -15,7 +18,6 @@ const Actions: FC = () => (
     </Button>
 
     <Dropdown
-      position="bottom-left"
       trigger={(toggle, isOpen) => (
         <Button
           prefix={{ icon: 'globe', label: 'Language' }}
@@ -27,22 +29,20 @@ const Actions: FC = () => (
         </Button>
       )}
     >
-      <div className="w-[300px] space-y-4 rounded border border-neutral-300 bg-white px-2 py-4">
-        <div className="space-y-2">
-          <Button variant="naked" className="w-full">
-            English
-          </Button>
-        </div>
-        <div className="space-y-2">
-          <Button variant="naked" className="w-full">
-            Chinese
-          </Button>
-        </div>
-        <div className="space-y-2">
-          <Button variant="naked" className="w-full">
-            日本語
-          </Button>
-        </div>
+      <div>
+        <VerticalList>
+          <ListItem>
+            <Button variant="naked">English</Button>
+          </ListItem>
+          <ListDivider />
+          <ListItem>
+            <Button variant="naked">Chinese</Button>
+          </ListItem>
+          <ListDivider />
+          <ListItem>
+            <Button variant="naked">日本語</Button>
+          </ListItem>
+        </VerticalList>
       </div>
     </Dropdown>
 

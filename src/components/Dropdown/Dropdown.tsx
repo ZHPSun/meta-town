@@ -31,7 +31,7 @@ const Dropdown: FC<Props> = ({
         <div
           role="menu"
           className={clsx(
-            'absolute z-50 mt-2 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5',
+            'absolute z-50 mt-2 w-[300px] rounded rounded-md border border-neutral-300 bg-white px-2 py-4 shadow-lg ring-1 ring-black ring-opacity-5',
             POSITION[position]
           )}
         >
