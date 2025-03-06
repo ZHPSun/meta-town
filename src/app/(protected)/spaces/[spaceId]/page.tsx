@@ -1,23 +1,54 @@
-import { FC } from 'react'
+'use client'
+
+import { FC, useState } from 'react'
 import Footer from './_components/Footer'
-import SideWindow from './_components/Footer/_components/SideWindow'
+import ChatSideWindow from './_components/ChatSideWindow'
+import ParticipantsSideWindow from './_components/ParticipantsSideWindow'
 import Header from './_components/Header'
 import Meeting from './_components/Meeting'
 import Stage from './_components/Stage'
 
-const Space: FC = () => (
-  <div className="flex h-screen flex-col">
-    <Header />
+const Space: FC = () => {
+  const [isChatWindowOpen, setIsChatWindowOpen] = useState(false)
 
-    <main className="relative flex flex-1 items-center justify-center overflow-hidden bg-neutral-400">
-      <Stage />
+  const [isParticipantsWindowOpen, setIsParticipantsWindowOpen] =
+    useState(false)
+
+  return (
+    <div className="flex h-screen flex-col">
+      <Header />
       <Meeting />
-      <SideWindow header={<h2>Chat</h2>}>Content</SideWindow>
-    </main>
-    <div>
-      <Footer />
+
+      <main className="relative flex flex-1 items-center justify-center overflow-hidden bg-neutral-400">
+        <Stage />
+        {isChatWindowOpen && (
+          <ChatSideWindow onClose={() => setIsChatWindowOpen(false)} />
+        )}
+        {isParticipantsWindowOpen && (
+          <ParticipantsSideWindow
+            onClose={() => setIsParticipantsWindowOpen(false)}
+          />
+        )}
+      </main>
+      <div>
+        <Footer
+          isChatActive={isChatWindowOpen}
+          isParticipantsActive={isParticipantsWindowOpen}
+          onChatClick={() =>
+            setIsChatWindowOpen(
+              (previousIsChatWindowOpen) => !previousIsChatWindowOpen
+            )
+          }
+          onParticipantsClick={() =>
+            setIsParticipantsWindowOpen(
+              (previousIsParticipantsWindowOpen) =>
+                !previousIsParticipantsWindowOpen
+            )
+          }
+        />
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 export default Space

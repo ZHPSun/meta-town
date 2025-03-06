@@ -8,7 +8,19 @@ import Camera from './_components/Camera'
 import Participants from './_components/Participants'
 import useMedia from './hooks/useMedia'
 
-const Footer: FC = () => {
+interface Props {
+  isChatActive?: boolean
+  isParticipantsActive?: boolean
+  onChatClick: () => void
+  onParticipantsClick: () => void
+}
+
+const Footer: FC<Props> = ({
+  isChatActive = false,
+  isParticipantsActive = false,
+  onChatClick,
+  onParticipantsClick,
+}) => {
   const { mediaStream: cameraStream, toggleMediaStream: toggleCameraStream } =
     useMedia({ camera: true })
 
@@ -43,12 +55,18 @@ const Footer: FC = () => {
       <div className="flex gap-2">
         <IconButton
           tooltip={{ position: 'top' }}
-          variant="naked"
+          variant={isChatActive ? 'secondary' : 'naked'}
           icon="message-circle"
           label="Chat"
+          onClick={onChatClick}
         />
 
-        <Participants count={1} status="online" />
+        <Participants
+          count={1}
+          status="online"
+          onClick={onParticipantsClick}
+          isSideWindowOpen={isParticipantsActive}
+        />
 
         <div className="ml-12">
           <IconButton

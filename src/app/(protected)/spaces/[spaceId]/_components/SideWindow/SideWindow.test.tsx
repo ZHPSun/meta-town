@@ -7,6 +7,7 @@ describe('SideWindow', () => {
   test('renders header', () => {
     render(
       <SideWindow
+        onClose={vi.fn()}
         header={
           <>
             <span>Participants</span>
@@ -32,7 +33,11 @@ describe('SideWindow', () => {
   })
 
   test('renders close button', async () => {
-    render(<SideWindow header="Side Window">Content</SideWindow>)
+    render(
+      <SideWindow onClose={vi.fn()} header="Side Window">
+        Content
+      </SideWindow>
+    )
 
     await waitFor(() =>
       expect(screen.getByRole('button', { name: 'Close' })).toBeInTheDocument()
@@ -40,7 +45,11 @@ describe('SideWindow', () => {
   })
 
   test('renders children', () => {
-    render(<SideWindow header="Side Window">Content</SideWindow>)
+    render(
+      <SideWindow onClose={vi.fn()} header="Side Window">
+        Content
+      </SideWindow>
+    )
 
     expect(screen.getByText('Content')).toBeInTheDocument()
   })

@@ -9,7 +9,7 @@ describe('Footer', () => {
   })
 
   test('renders the Main menu button', () => {
-    render(<Footer />)
+    render(<Footer onChatClick={vi.fn()} onParticipantsClick={vi.fn()} />)
 
     expect(screen.getByRole('link', { name: 'Meta Town' })).toBeInTheDocument()
   })
@@ -24,7 +24,7 @@ describe('Footer', () => {
     })
 
     const user = userEvent.setup()
-    render(<Footer />)
+    render(<Footer onChatClick={vi.fn()} onParticipantsClick={vi.fn()} />)
 
     await user.click(await screen.findByRole('button', { name: 'Camera' }))
 
@@ -32,7 +32,7 @@ describe('Footer', () => {
   })
 
   test('renders video ButtonConfigurable', async () => {
-    render(<Footer />)
+    render(<Footer onChatClick={vi.fn()} onParticipantsClick={vi.fn()} />)
 
     await waitFor(() => {
       expect(screen.getByRole('button', { name: 'Camera' })).toBeInTheDocument()
@@ -40,7 +40,7 @@ describe('Footer', () => {
   })
 
   test('renders danger Button with camera off', async () => {
-    render(<Footer />)
+    render(<Footer onChatClick={vi.fn()} onParticipantsClick={vi.fn()} />)
 
     expect(await screen.findByRole('button', { name: 'Camera' })).toHaveClass(
       VARIANT.danger
@@ -57,7 +57,7 @@ describe('Footer', () => {
     })
 
     const user = userEvent.setup()
-    render(<Footer />)
+    render(<Footer onChatClick={vi.fn()} onParticipantsClick={vi.fn()} />)
 
     await user.click(await screen.findByRole('button', { name: 'Camera' }))
 
@@ -67,7 +67,7 @@ describe('Footer', () => {
   })
 
   test('renders microphone ButtonConfigurable', async () => {
-    render(<Footer />)
+    render(<Footer onChatClick={vi.fn()} onParticipantsClick={vi.fn()} />)
 
     await waitFor(() => {
       expect(
@@ -77,7 +77,7 @@ describe('Footer', () => {
   })
 
   test('renders danger Button with mic off', async () => {
-    render(<Footer />)
+    render(<Footer onChatClick={vi.fn()} onParticipantsClick={vi.fn()} />)
 
     expect(
       await screen.findByRole('button', { name: 'Microphone' })
@@ -94,7 +94,7 @@ describe('Footer', () => {
     })
 
     const user = userEvent.setup()
-    render(<Footer />)
+    render(<Footer onChatClick={vi.fn()} onParticipantsClick={vi.fn()} />)
 
     await user.click(await screen.findByRole('button', { name: 'Microphone' }))
 
@@ -103,24 +103,88 @@ describe('Footer', () => {
     ).toHaveClass(VARIANT.success)
   })
 
-  test('renders the Chat button', async () => {
-    render(<Footer />)
+  test('renders Chat button', async () => {
+    render(<Footer onChatClick={vi.fn()} onParticipantsClick={vi.fn()} />)
 
     await waitFor(() =>
-      expect(screen.getByRole('button', { name: 'Chat' })).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'Chat' })).toHaveClass(
+        VARIANT.naked
+      )
     )
   })
 
-  test('renders participants', () => {
-    render(<Footer />)
+  test('renders secondary Button with isChatActive', async () => {
+    render(
+      <Footer
+        isChatActive
+        onChatClick={vi.fn()}
+        onParticipantsClick={vi.fn()}
+      />
+    )
+
+    await waitFor(() =>
+      expect(screen.getByRole('button', { name: 'Chat' })).toHaveClass(
+        VARIANT.secondary
+      )
+    )
+  })
+
+  test('calls onChatClick when Chat button is clicked', async () => {
+    const handleClick = vi.fn()
+    const user = userEvent.setup()
+
+    render(
+      <Footer onChatClick={handleClick} onParticipantsClick={handleClick} />
+    )
+
+    await waitFor(() =>
+      user.click(screen.getByRole('button', { name: 'Chat' }))
+    )
+
+    expect(handleClick).toBeCalled()
+  })
+
+  test('renders participants button', () => {
+    render(<Footer onChatClick={vi.fn()} onParticipantsClick={vi.fn()} />)
 
     expect(
-      screen.getByLabelText('Participant Status: Available')
+      screen.getByRole('button', { name: 'Participants' })
     ).toBeInTheDocument()
   })
 
+  test('renders secondary Button with isParticipantsActive', async () => {
+    render(
+      <Footer
+        isParticipantsActive
+        onChatClick={vi.fn()}
+        onParticipantsClick={vi.fn()}
+      />
+    )
+
+    await waitFor(() =>
+      expect(screen.getByRole('button', { name: 'Participants' })).toHaveClass(
+        VARIANT.secondary
+      )
+    )
+  })
+
+  test('calls onParticipantsClick when participants button is clicked', async () => {
+    const handleClick = vi.fn()
+    const user = userEvent.setup()
+
+    render(
+      <Footer onChatClick={handleClick} onParticipantsClick={handleClick} />
+    )
+
+    await waitFor(() =>
+      user.click(screen.getByRole('button', { name: 'Participants' }))
+    )
+
+    expect(handleClick).toBeCalled()
+  })
+
   test('renders the Leave space button', async () => {
-    render(<Footer />)
+    render(<Footer onChatClick={vi.fn()} onParticipantsClick={vi.fn()} />)
 
     await waitFor(() =>
       expect(

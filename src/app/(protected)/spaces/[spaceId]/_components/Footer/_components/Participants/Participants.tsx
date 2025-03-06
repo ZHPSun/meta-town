@@ -1,12 +1,14 @@
-import clsx from 'clsx'
 import { FC } from 'react'
+import clsx from 'clsx'
 import Button from '@/components/Button'
 
-type Status = 'online' | 'offline'
+export type Status = 'online' | 'offline'
 
 interface Props {
   count: number
   status: Status
+  isSideWindowOpen?: boolean
+  onClick: () => void
 }
 
 export const STATUS = {
@@ -19,8 +21,18 @@ const PARTICIPANT_STATUS = {
   offline: 'Unavailable',
 } as const
 
-const Participants: FC<Props> = ({ count, status }) => (
-  <Button variant="secondary" prefix={{ label: 'Users', icon: 'users' }}>
+const Participants: FC<Props> = ({
+  count,
+  status,
+  isSideWindowOpen = false,
+  onClick,
+}) => (
+  <Button
+    variant={isSideWindowOpen ? 'secondary' : 'naked'}
+    prefix={{ label: 'Users', icon: 'users' }}
+    onClick={onClick}
+    aria-label="Participants"
+  >
     <span
       className={clsx(
         STATUS[status],
