@@ -4,8 +4,6 @@ import { FC } from 'react'
 import Button from '@/components/Button'
 import Dropdown from '@/components/Dropdown'
 import VerticalList from '@/components/VerticalList'
-import ListItem from '@/components/ListItem'
-import ListDivider from '@/components/ListDivider'
 import CreateSpace from './_components/CreateSpace'
 
 const Actions: FC = () => (
@@ -31,17 +29,17 @@ const Actions: FC = () => (
     >
       <div>
         <VerticalList>
-          <ListItem>
+          <VerticalList.Item>
             <Button variant="naked">English</Button>
-          </ListItem>
-          <ListDivider />
-          <ListItem>
+          </VerticalList.Item>
+          <VerticalList.Divider />
+          <VerticalList.Item>
             <Button variant="naked">Chinese</Button>
-          </ListItem>
-          <ListDivider />
-          <ListItem>
+          </VerticalList.Item>
+          <VerticalList.Divider />
+          <VerticalList.Item>
             <Button variant="naked">日本語</Button>
-          </ListItem>
+          </VerticalList.Item>
         </VerticalList>
       </div>
     </Dropdown>

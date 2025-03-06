@@ -14,8 +14,8 @@ interface Props {
   placement?: Placement
 }
 
-const ListItem: FC<Props> = ({ children, placement = 'full' }) => (
+const Item: FC<Props> = ({ children, placement = 'full' }) => (
   <li className={clsx('flex', PLACEMENT[placement])}>{children}</li>
 )
 
-export default ListItem
+export default Item

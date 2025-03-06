@@ -31,6 +31,11 @@ const eslintConfig = [
       'no-restricted-globals': ['error', 'React'],
 
       // React rules
+      'react/jsx-boolean-value': [
+        'error',
+        'never',
+        { assumeUndefinedIsFalse: true },
+      ],
       'react/jsx-curly-brace-presence': 'error',
       'react/function-component-definition': [
         'error',

@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react'
-import ListDivider from './ListDivider'
+import Divider from './Divider'
 
-describe('ListDivider', () => {
+describe('Divider', () => {
   test('renders divider', () => {
-    render(<ListDivider />)
+    render(<Divider />)
 
     expect(screen.getByRole('separator')).toBeInTheDocument()
   })

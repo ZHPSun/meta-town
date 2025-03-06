@@ -2,8 +2,6 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import Button from '../Button'
 import IconButton from '../IconButton'
 import Dropdown from '../Dropdown'
-import ListItem from '../ListItem'
-import ListDivider from '../ListDivider'
 import VerticalList from './VerticalList'
 
 const meta = {
@@ -34,23 +32,23 @@ export const Default: Story = {
       )}
     >
       <VerticalList>
-        <ListItem>
+        <VerticalList.Item>
           <Button variant="primary" prefix={{ icon: 'nut', label: 'Nut' }}>
             Button
           </Button>
-        </ListItem>
-        <ListDivider />
-        <ListItem>
+        </VerticalList.Item>
+        <VerticalList.Divider />
+        <VerticalList.Item>
           <Button variant="secondary" suffix={{ icon: 'bell', label: 'Bell' }}>
             Button
           </Button>
-        </ListItem>
-        <ListDivider />
-        <ListItem>Plain Text</ListItem>
-        <ListDivider />
-        <ListItem placement="right">
+        </VerticalList.Item>
+        <VerticalList.Divider />
+        <VerticalList.Item>Plain Text</VerticalList.Item>
+        <VerticalList.Divider />
+        <VerticalList.Item placement="right">
           <IconButton icon="apple" label="Apple" variant="secondary" />
-        </ListItem>
+        </VerticalList.Item>
       </VerticalList>
     </Dropdown>
   ),
