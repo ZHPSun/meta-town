@@ -2,24 +2,27 @@ import { render, screen } from '@testing-library/react'
 import Login from './page'
 
 describe('Login', () => {
-  test('renders Logo', () => {
+  test('renders Logo', async () => {
     render(<Login />)
 
-    expect(screen.getByRole('link', { name: 'Meta Town' })).toBeInTheDocument()
+    expect(
+      await screen.findByRole('link', { name: 'Meta Town' })
+    ).toBeInTheDocument()
   })
 
-  test('renders Form', () => {
+  test('renders Form', async () => {
     render(<Login />)
 
-    expect(screen.getByRole('button', { name: 'Login' })).toBeInTheDocument()
+    expect(
+      await screen.findByRole('button', { name: 'Login' })
+    ).toBeInTheDocument()
   })
 
-  test('renders link to registration page', () => {
+  test('renders link to registration page', async () => {
     render(<Login />)
 
-    expect(screen.getByRole('link', { name: 'Sign up now!' })).toHaveAttribute(
-      'href',
-      '/authentication/sign-up'
-    )
+    expect(
+      await screen.findByRole('link', { name: 'Sign up now!' })
+    ).toHaveAttribute('href', '/authentication/sign-up')
   })
 })
