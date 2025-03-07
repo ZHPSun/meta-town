@@ -11,8 +11,8 @@ const MuteIndicator: FC<Props> = ({ isMuted }) => {
   }
 
   return (
-    <div className="w-10 px-2 text-rose-500">
-      <MicOff aria-label="Muted" />
+    <div className="text-rose-500">
+      <MicOff size={20} aria-label="Muted" />
     </div>
   )
 }

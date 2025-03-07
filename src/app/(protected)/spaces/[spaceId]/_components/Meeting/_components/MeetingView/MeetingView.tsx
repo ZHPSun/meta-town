@@ -17,14 +17,14 @@ export const GRID = [
   clsx('grid-cols-3 grid-rows-3'),
   clsx('grid-cols-3 grid-rows-3'),
   clsx('grid-cols-3 grid-rows-3'),
-  clsx('grid-cols-4 grid-rows-4'),
+  clsx('grid-cols-4'),
 ]
 
 const MeetingView: FC<Props> = ({ participantCount }) => (
   <div
     role="region"
     aria-label="Meeting View"
-    className="mx-10 flex h-full items-center justify-between"
+    className="flex h-full items-center space-x-8"
   >
     <IconButton variant="primary" label="Previous" icon="chevron-left" />
 
@@ -32,7 +32,7 @@ const MeetingView: FC<Props> = ({ participantCount }) => (
       role="grid"
       aria-label="Grid"
       className={clsx(
-        'grid w-full gap-4',
+        'grid flex-1 gap-4',
         GRID[Math.min(participantCount - 1, GRID.length - 1)]
       )}
     >

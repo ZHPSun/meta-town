@@ -6,9 +6,9 @@ interface Props {
 }
 
 const UserInfo: FC<Props> = () => (
-  <div className="absolute left-[10%] top-[10%] flex h-10 items-center rounded-2xl bg-neutral-300">
+  <div className="absolute left-1 top-1 flex items-center rounded-2xl bg-neutral-300 px-2 py-1">
     <MuteIndicator isMuted />
-    <span className="px-2">Jack</span>
+    <span className="px-2 text-sm">Jack</span>
   </div>
 )
 

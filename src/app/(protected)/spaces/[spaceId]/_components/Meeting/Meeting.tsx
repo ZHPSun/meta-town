@@ -6,28 +6,35 @@ import MapView from './_components/MapView'
 import MeetingView from './_components/MeetingView'
 
 const Meeting: FC = () => {
-  const [isMapView, setIsMapView] = useState(true)
+  const [view, setView] = useState<'map' | 'meeting'>('map')
 
   return (
-    <div className="absolute left-0 top-4 h-full w-full">
-      <div className="absolute right-0 top-0">
+    <div className="absolute inset-0 flex flex-col space-y-2 px-6 py-4">
+      <div className="space-x-2 text-right">
         <IconButton
           label="Map view"
           icon="grip-horizontal"
-          variant={isMapView ? 'primary' : 'naked'}
+          variant={view === 'map' ? 'secondary' : 'naked'}
           size="small"
-          onClick={() => setIsMapView(true)}
+          onClick={() => setView('map')}
         />
         <IconButton
           label="Meeting view"
           icon="grip"
-          variant={isMapView ? 'naked' : 'primary'}
+          variant={view === 'meeting' ? 'secondary' : 'naked'}
           size="small"
-          onClick={() => setIsMapView(false)}
+          tooltip={{ position: 'bottom-right' }}
+          onClick={() => setView('meeting')}
         />
       </div>
-
-      {isMapView ? <MapView /> : <MeetingView participantCount={20} />}
+      <div className="h-full flex-1">
+        {
+          {
+            map: <MapView />,
+            meeting: <MeetingView participantCount={16} />,
+          }[view]
+        }
+      </div>
     </div>
   )
 }

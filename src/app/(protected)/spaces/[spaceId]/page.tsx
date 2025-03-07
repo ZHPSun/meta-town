@@ -9,40 +9,36 @@ import Meeting from './_components/Meeting'
 import Stage from './_components/Stage'
 
 const Space: FC = () => {
-  const [isChatWindowOpen, setIsChatWindowOpen] = useState(false)
-
-  const [isParticipantsWindowOpen, setIsParticipantsWindowOpen] =
-    useState(false)
+  const [sideWindow, setSideWindow] = useState<'chat' | 'participants' | null>(
+    null
+  )
 
   return (
     <div className="flex h-screen flex-col">
       <Header />
-      <Meeting />
 
       <main className="relative flex flex-1 items-center justify-center overflow-hidden bg-neutral-400">
         <Stage />
-        {isChatWindowOpen && (
-          <ChatSideWindow onClose={() => setIsChatWindowOpen(false)} />
+        <Meeting />
+        {sideWindow === 'chat' && (
+          <ChatSideWindow onClose={() => setSideWindow(null)} />
         )}
-        {isParticipantsWindowOpen && (
-          <ParticipantsSideWindow
-            onClose={() => setIsParticipantsWindowOpen(false)}
-          />
+        {sideWindow === 'participants' && (
+          <ParticipantsSideWindow onClose={() => setSideWindow(null)} />
         )}
       </main>
       <div>
         <Footer
-          isChatActive={isChatWindowOpen}
-          isParticipantsActive={isParticipantsWindowOpen}
+          isChatActive={sideWindow === 'chat'}
+          isParticipantsActive={sideWindow === 'participants'}
           onChatClick={() =>
-            setIsChatWindowOpen(
-              (previousIsChatWindowOpen) => !previousIsChatWindowOpen
+            setSideWindow((previousSetWindow) =>
+              previousSetWindow === 'chat' ? null : 'chat'
             )
           }
           onParticipantsClick={() =>
-            setIsParticipantsWindowOpen(
-              (previousIsParticipantsWindowOpen) =>
-                !previousIsParticipantsWindowOpen
+            setSideWindow((previousSetWindow) =>
+              previousSetWindow === 'participants' ? null : 'participants'
             )
           }
         />

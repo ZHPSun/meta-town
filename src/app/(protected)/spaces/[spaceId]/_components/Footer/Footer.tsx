@@ -29,27 +29,30 @@ const Footer: FC<Props> = ({
 
   return (
     <footer className="flex w-full justify-between bg-gray-100 px-6 py-4">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center">
         <div className="mr-12">
           <Logo />
         </div>
 
-        <Camera stream={cameraStream} />
-
-        <ButtonConfigurable
-          tooltip={{ position: 'top' }}
-          variant={cameraStream ? 'success' : 'danger'}
-          icon="video"
-          label="Camera"
-          onClick={toggleCameraStream}
-        />
-        <ButtonConfigurable
-          tooltip={{ position: 'top' }}
-          variant={micStream ? 'success' : 'danger'}
-          icon="mic"
-          label="Microphone"
-          onClick={toggleMicStream}
-        />
+        <div className="relative">
+          <Camera stream={cameraStream} />
+          <div className="space-x-2">
+            <ButtonConfigurable
+              tooltip={{ position: 'top' }}
+              variant={cameraStream ? 'success' : 'danger'}
+              icon="video"
+              label="Camera"
+              onClick={toggleCameraStream}
+            />
+            <ButtonConfigurable
+              tooltip={{ position: 'top' }}
+              variant={micStream ? 'success' : 'danger'}
+              icon="mic"
+              label="Microphone"
+              onClick={toggleMicStream}
+            />
+          </div>
+        </div>
       </div>
 
       <div className="flex gap-2">
