@@ -10,40 +10,50 @@ describe('createUser', () => {
   })
 
   test('creates a new user', async () => {
-    const USER_DATA = {
-      id: 'ID',
-      displayName: 'John Doe',
-      avatar: 'dog',
-    }
+    const authId = 'AUTH_ID'
 
     const data = { displayName: 'John Doe', avatar: 'dog' }
 
     const supabaseClient = {
+      auth: {
+        getUser: vi.fn().mockResolvedValue({ data: { user: { id: authId } } }),
+      },
       from: vi.fn().mockReturnValue({
-        insert: vi.fn().mockReturnValue({
-          select: vi.fn().mockReturnValue({
-            single: vi.fn().mockResolvedValue({ data: USER_DATA }),
-          }),
-        }),
+        insert: vi.fn(),
       }),
     } as unknown as ReturnType<typeof createSupabaseClient>
 
     createSupabaseClientMock.mockReturnValue(supabaseClient)
 
-    const user = await createUser(data)
+    await createUser(data)
+
+    expect(supabaseClient.auth.getUser).toHaveBeenCalled()
 
     expect(supabaseClient.from).toHaveBeenCalledWith('users')
 
-    expect(supabaseClient.from('users').insert).toHaveBeenCalledWith(data)
+    expect(supabaseClient.from('users').insert).toHaveBeenCalledWith({
+      display_name: data.displayName,
+      avatar: data.avatar,
+      auth_id: authId,
+    })
+  })
 
-    expect(
-      supabaseClient.from('users').insert(data).select
-    ).toHaveBeenCalledWith('id, displayName, avatar')
+  test('does not create user when auth is null', async () => {
+    const data = { displayName: 'John Doe', avatar: 'dog' }
 
-    expect(
-      supabaseClient.from('users').insert(data).select().single
-    ).toHaveBeenCalled()
+    const supabaseClient = {
+      auth: {
+        getUser: vi.fn().mockResolvedValue({ data: { user: null } }),
+      },
+      from: vi.fn(),
+    } as unknown as ReturnType<typeof createSupabaseClient>
 
-    expect(user).toEqual(USER_DATA)
+    createSupabaseClientMock.mockReturnValue(supabaseClient)
+
+    await createUser(data)
+
+    expect(supabaseClient.auth.getUser).toHaveBeenCalled()
+
+    expect(supabaseClient.from).not.toHaveBeenCalled()
   })
 })

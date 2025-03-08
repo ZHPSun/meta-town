@@ -53,11 +53,8 @@ When pulling the latest changes from `main`, make sure to:
 
 1. **Apply any pending database migrations**
 
-   We use Prisma for schema-level migrations (table structure, indexes, constraints) and Supabase for database-level migrations (RLS policies, permissions, triggers).
-
    ```sh
-   npm run migration:prisma
-   npx dotenv -- npm run migration:supabase
+   npx prisma migrate deploy
    ```
 
 2. **Generate updated Supabase types**

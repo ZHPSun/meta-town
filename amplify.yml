@@ -1,0 +1,33 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm ci --cache .npm --prefer-offline
+        - (curl -Ls --tlsv1.2 --proto "=https" --retry 3 https://cli.doppler.com/install.sh || wget -t 3 -qO- https://cli.doppler.com/install.sh) | sh -s -- --no-package-manager --no-install
+
+        - |
+          if [ "$AWS_BRANCH" = "main" ]; then
+            export DOPPLER_TOKEN="$DOPPLER_TOKEN_PROD"
+          else
+            export DOPPLER_TOKEN="$DOPPLER_TOKEN_STG"
+          fi
+
+        - echo "$DOPPLER_TOKEN" | ./doppler configure set token --scope /
+        - ./doppler secrets download --no-file --format env > .env
+        - npx prisma migrate deploy
+        - npx dotenv -- npm run gen-types
+
+    build:
+      commands:
+        - npm run build
+
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+
+  cache:
+    paths:
+      - .next/cache/**/*
+      - .npm/**/*

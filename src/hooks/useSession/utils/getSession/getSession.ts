@@ -1,13 +1,14 @@
+import { Session } from '@supabase/supabase-js'
 import createSupabaseClient from '@/utils/createSupabaseClient'
 
-const getSession = async (): Promise<boolean> => {
-  const supabase = createSupabaseClient()
+const getSession = async (): Promise<Session | null> => {
+  const supabaseClient = createSupabaseClient()
 
   const {
     data: { session },
-  } = await supabase.auth.getSession()
+  } = await supabaseClient.auth.getSession()
 
-  return !!session
+  return session
 }
 
 export default getSession

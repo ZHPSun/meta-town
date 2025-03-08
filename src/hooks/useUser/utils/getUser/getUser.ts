@@ -1,25 +1,24 @@
+import camelcaseKeys, { CamelCaseKeys } from 'camelcase-keys'
 import createSupabaseClient, { Tables } from '@/utils/createSupabaseClient'
 
-type User = Pick<Tables<'users'>, 'id' | 'displayName' | 'avatar'>
+type User = CamelCaseKeys<
+  Pick<Tables<'users'>, 'id' | 'display_name' | 'avatar'>
+>
 
-const getUser = async (): Promise<User | null> => {
-  const supabase = createSupabaseClient()
+const getUser = async ([, authId]: [string, string]): Promise<User | null> => {
+  const supabaseClient = createSupabaseClient()
 
-  const {
-    data: { user: auth },
-  } = await supabase.auth.getUser()
+  const { data: user } = await supabaseClient
+    .from('users')
+    .select('id, display_name, avatar')
+    .eq('auth_id', authId)
+    .single()
 
-  if (!auth) {
+  if (!user) {
     return null
   }
 
-  const { data: user } = await supabase
-    .from('users')
-    .select('id, displayName, avatar')
-    .eq('id', auth.id)
-    .single()
-
-  return user
+  return camelcaseKeys(user)
 }
 
 export default getUser

@@ -6,7 +6,7 @@ import getSession from './utils/getSession'
 type Session = Awaited<ReturnType<typeof getSession>>
 
 const useSession = (skipCheck = false): SWRResponse<Session> => {
-  const result = useSWR<boolean>('session', getSession)
+  const result = useSWR('session', getSession)
 
   useEffect(() => {
     const { isLoading, data } = result

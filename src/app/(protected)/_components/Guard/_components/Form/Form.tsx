@@ -16,7 +16,9 @@ const Form: FC = () => {
   ): Promise<void> => {
     event.preventDefault()
 
-    await mutate(() => createUser(data))
+    await createUser(data)
+
+    await mutate()
   }
 
   return (

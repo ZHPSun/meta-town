@@ -1,6 +1,7 @@
 words:
-  - supabase
   - autodocs
+  - autoincrement
   - Metaverse
-flagWords:
-suggestWords:
+  - supabase
+flagWords: null
+suggestWords: null

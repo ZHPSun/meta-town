@@ -1,22 +1,26 @@
-import createSupabaseClient, { Tables } from '@/utils/createSupabaseClient'
+import createSupabaseClient from '@/utils/createSupabaseClient'
 
 interface Data {
   displayName: string
   avatar: string
 }
 
-type User = Pick<Tables<'users'>, 'id' | 'displayName' | 'avatar'>
-
-const createUser = async (data: Data): Promise<User | null> => {
+const createUser = async (data: Data): Promise<void> => {
   const supabaseClient = createSupabaseClient()
 
-  const { data: user } = await supabaseClient
-    .from('users')
-    .insert(data)
-    .select('id, displayName, avatar')
-    .single()
+  const {
+    data: { user: auth },
+  } = await supabaseClient.auth.getUser()
 
-  return user
+  if (!auth) {
+    return
+  }
+
+  await supabaseClient.from('users').insert({
+    display_name: data.displayName,
+    avatar: data.avatar,
+    auth_id: auth.id,
+  })
 }
 
 export default createUser

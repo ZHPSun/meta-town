@@ -28,7 +28,7 @@ jobs:
           if [[ "${{ github.ref_name }}" == "main" ]]; then
             echo "DOPPLER_TOKEN=${{ secrets.DOPPLER_TOKEN_PROD }}" >> $GITHUB_ENV
           else
-            echo "DOPPLER_TOKEN=${{ secrets.DOPPLER_TOKEN_STG }}" >> $GITHUB_ENV
+            echo "DOPPLER_TOKEN=${{ secrets.DOPPLER_TOKEN_STG_V2 }}" >> $GITHUB_ENV
           fi
 
       - name: Install Doppler CLI
@@ -42,8 +42,7 @@ jobs:
 
       - name: Deploy DB Migrations
         run: |
-          npm run migration:prisma
-          npx dotenv -- npm run migration:supabase
+          npx prisma migrate deploy
 
       - name: Generate DB types
         run: |

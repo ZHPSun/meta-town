@@ -27,37 +27,49 @@ describe('useUser', () => {
   })
 
   test('calls useSWR with key and fetcher', () => {
+    const session = {
+      user: {
+        id: 'AUTH_ID',
+      },
+    }
+
     useSessionMock.mockReturnValue({
-      data: true,
+      data: session,
       isLoading: false,
     } as unknown as ReturnType<typeof useSession>)
 
     renderHook(() => useUser())
 
-    expect(useSWRMock).toHaveBeenCalledWith('user', getUser)
+    expect(useSWRMock).toHaveBeenCalledWith(['user', session.user.id], getUser)
   })
 
   test('returns result from useSWR', () => {
-    const USER_DATA = {
+    const session = {
+      user: {
+        id: 'AUTH_ID',
+      },
+    }
+
+    const data = {
       id: 'ID',
       displayName: 'John Doe',
       avatar: 'dog',
     }
 
     useSessionMock.mockReturnValue({
-      data: true,
+      data: session,
       isLoading: false,
     } as unknown as ReturnType<typeof useSession>)
 
     useSWRMock.mockReturnValue({
-      data: USER_DATA,
+      data,
       isLoading: false,
     } as unknown as ReturnType<typeof useSWR>)
 
     const { result } = renderHook(() => useUser())
 
     expect(result.current).toEqual({
-      data: USER_DATA,
+      data,
       isLoading: false,
     })
   })

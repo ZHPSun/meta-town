@@ -10,9 +10,13 @@ describe('getSession', () => {
   })
 
   test('returns true if session exists', async () => {
+    const sessionData = {}
+
     const supabaseClient = {
       auth: {
-        getSession: vi.fn().mockResolvedValue({ data: { session: {} } }),
+        getSession: vi
+          .fn()
+          .mockResolvedValue({ data: { session: sessionData } }),
       },
     } as unknown as ReturnType<typeof createSupabaseClient>
 
@@ -20,7 +24,7 @@ describe('getSession', () => {
 
     const session = await getSession()
 
-    expect(session).toBe(true)
+    expect(session).toBe(sessionData)
   })
 
   test('returns false if session does not exist', async () => {
@@ -34,6 +38,6 @@ describe('getSession', () => {
 
     const session = await getSession()
 
-    expect(session).toBe(false)
+    expect(session).toBe(null)
   })
 })

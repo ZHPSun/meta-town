@@ -1,3 +1,4 @@
+import camelcaseKeys from 'camelcase-keys'
 import createSupabaseClient from '@/utils/createSupabaseClient'
 import getUser from './getUser'
 
@@ -9,27 +10,20 @@ describe('getUser', () => {
     vi.resetAllMocks()
   })
 
-  test('returns user if user exists', async () => {
-    const AUTH_DATA = {
-      user: {
-        id: 'ID',
-      },
-    }
+  test('returns user', async () => {
+    const AUTH_ID = 'AUTH_ID'
 
-    const USER_DATA = {
+    const data = {
       id: 'ID',
-      displayName: 'John Doe',
+      display_name: 'John Doe',
       avatar: 'dog',
     }
 
     const supabaseClient = {
-      auth: {
-        getUser: vi.fn().mockResolvedValue({ data: AUTH_DATA }),
-      },
       from: vi.fn().mockReturnValue({
         select: vi.fn().mockReturnValue({
           eq: vi.fn().mockReturnValue({
-            single: vi.fn().mockResolvedValue({ data: USER_DATA }),
+            single: vi.fn().mockResolvedValue({ data }),
           }),
         }),
       }),
@@ -37,36 +31,57 @@ describe('getUser', () => {
 
     createSupabaseClientMock.mockReturnValue(supabaseClient)
 
-    const user = await getUser()
+    const user = await getUser(['user', AUTH_ID])
 
     expect(supabaseClient.from).toHaveBeenCalledWith('users')
 
     expect(supabaseClient.from('users').select).toHaveBeenCalledWith(
-      'id, displayName, avatar'
+      'id, display_name, avatar'
     )
 
     expect(supabaseClient.from('users').select().eq).toHaveBeenCalledWith(
-      'id',
-      AUTH_DATA.user.id
+      'auth_id',
+      AUTH_ID
     )
 
     expect(
-      supabaseClient.from('users').select().eq('id', AUTH_DATA.user.id).single
+      supabaseClient.from('users').select().eq('auth_id', AUTH_ID).single
     ).toHaveBeenCalled()
 
-    expect(user).toEqual(USER_DATA)
+    expect(user).toEqual(camelcaseKeys(data))
   })
 
-  test('returns null if auth user does not exist', async () => {
+  test('returns null if user not found', async () => {
+    const AUTH_ID = 'AUTH_ID'
+
     const supabaseClient = {
-      auth: {
-        getUser: vi.fn().mockResolvedValue({ data: { user: null } }),
-      },
+      from: vi.fn().mockReturnValue({
+        select: vi.fn().mockReturnValue({
+          eq: vi.fn().mockReturnValue({
+            single: vi.fn().mockResolvedValue({ data: null }),
+          }),
+        }),
+      }),
     } as unknown as ReturnType<typeof createSupabaseClient>
 
     createSupabaseClientMock.mockReturnValue(supabaseClient)
 
-    const user = await getUser()
+    const user = await getUser(['user', AUTH_ID])
+
+    expect(supabaseClient.from).toHaveBeenCalledWith('users')
+
+    expect(supabaseClient.from('users').select).toHaveBeenCalledWith(
+      'id, display_name, avatar'
+    )
+
+    expect(supabaseClient.from('users').select().eq).toHaveBeenCalledWith(
+      'auth_id',
+      AUTH_ID
+    )
+
+    expect(
+      supabaseClient.from('users').select().eq('auth_id', AUTH_ID).single
+    ).toHaveBeenCalled()
 
     expect(user).toBeNull()
   })

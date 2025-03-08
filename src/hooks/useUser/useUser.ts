@@ -7,7 +7,7 @@ type User = Awaited<ReturnType<typeof getUser>>
 const useUser = (): SWRResponse<User> => {
   const { data: session } = useSession()
 
-  return useSWR(session ? 'user' : null, getUser)
+  return useSWR(session ? ['user', session.user.id] : null, getUser)
 }
 
 export default useUser

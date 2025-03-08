@@ -19,3 +19,20 @@ GRANT EXECUTE ON ROUTINES TO anon, authenticated;
 
 ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public 
 GRANT USAGE, SELECT ON SEQUENCES TO anon, authenticated;
+
+-- 确保 `auth` schema 存在，以防 Prisma 迁移时找不到它
+CREATE SCHEMA IF NOT EXISTS auth;
+
+DO $$
+BEGIN
+-- 尝试创建 `auth.id()` 函数
+  CREATE FUNCTION auth.uid()
+  RETURNS uuid 
+  LANGUAGE SQL
+  AS 'SELECT gen_random_uuid();';
+
+EXCEPTION
+-- 如果函数已存在，则忽略错误，防止迁移失败
+  WHEN duplicate_function 
+  THEN NULL;
+END; $$;

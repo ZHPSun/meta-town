@@ -40,8 +40,10 @@ describe('Form', () => {
   })
 
   test('calls createUser on form submit', async () => {
+    const mutate = vi.fn()
+
     useUserMock.mockReturnValue({
-      mutate: vi.fn().mockImplementation((fn: () => void) => fn()),
+      mutate,
       isLoading: false,
     } as unknown as ReturnType<typeof useUser>)
 
@@ -51,6 +53,8 @@ describe('Form', () => {
 
     await user.type(screen.getByPlaceholderText('Display name'), 'John Doe')
     await user.click(screen.getByRole('button', { name: 'Create user' }))
+
+    expect(mutate).toHaveBeenCalled()
 
     expect(createUser).toHaveBeenCalledWith({
       displayName: 'John Doe',
