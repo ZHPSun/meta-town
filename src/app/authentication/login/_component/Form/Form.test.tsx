@@ -42,10 +42,14 @@ describe('Form', () => {
 
   test('authenticates user on form submit', async () => {
     const mutate = vi.fn()
+
     useSessionMock.mockReturnValue({
       mutate,
     } as unknown as ReturnType<typeof useSession>)
-    loginMock.mockResolvedValue({ error: null })
+
+    loginMock.mockImplementation(
+      () => new Promise((resolve) => setTimeout(resolve, 1000, { error: null }))
+    )
 
     const user = userEvent.setup()
 
@@ -55,13 +59,20 @@ describe('Form', () => {
     await user.type(screen.getByLabelText('Password'), 'password')
     await user.click(screen.getByRole('button', { name: 'Login' }))
 
+    expect(
+      screen.getByRole('status', { name: 'Logging in' })
+    ).toBeInTheDocument()
+
     expect(login).toHaveBeenCalledWith({
       email: 'test@example.com',
       password: 'password',
     })
 
-    expect(mutate).toHaveBeenCalledWith()
+    await waitFor(() => expect(mutate).toHaveBeenCalledWith())
+
     expect(navigate).toHaveBeenCalledWith('/')
+
+    expect(screen.getByRole('button', { name: 'Login' })).toBeInTheDocument()
   })
 
   test('shows validation errors message when form is submitted with empty fields', async () => {
@@ -121,41 +132,6 @@ describe('Form', () => {
     expect(
       screen.getByText('Something wrong, please try again later.')
     ).toBeInTheDocument()
-  })
-
-  test('renders spinning loading icon during login form submission', async () => {
-    const mutate = vi.fn()
-    useSessionMock.mockReturnValue({
-      mutate,
-    } as unknown as ReturnType<typeof useSession>)
-
-    let resolveLogin!: (value: { error: null }) => void
-    loginMock.mockImplementation(
-      () =>
-        new Promise<{ error: null }>((resolve) => {
-          resolveLogin = resolve
-        })
-    )
-
-    const user = userEvent.setup()
-    render(<Form />)
-
-    await user.type(screen.getByLabelText('Email'), 'test@example.com')
-    await user.type(screen.getByLabelText('Password'), 'password')
-
-    await user.click(screen.getByRole('button', { name: 'Login' }))
-
-    await waitFor(() => {
-      expect(
-        screen.getByRole('status', { name: 'Logging in' })
-      ).toBeInTheDocument()
-    })
-
-    resolveLogin({ error: null })
-
-    await waitFor(() => {
-      expect(mutate).toHaveBeenCalled()
-    })
   })
 })
 

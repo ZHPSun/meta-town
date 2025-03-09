@@ -1,13 +1,18 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import useSession from '@/hooks/useSession'
 import useUser from '@/hooks/useUser'
 import Form from './Form'
 import createUser from './_utils/createUser'
+
+vi.mock('@/hooks/useSession')
+const useSessionMock = vi.mocked(useSession)
 
 vi.mock('@/hooks/useUser')
 const useUserMock = vi.mocked(useUser)
 
 vi.mock('./_utils/createUser')
+const createUserMock = vi.mocked(createUser)
 
 describe('Form', () => {
   afterEach(() => {
@@ -20,6 +25,11 @@ describe('Form', () => {
       isLoading: false,
     } as unknown as ReturnType<typeof useUser>)
 
+    useSessionMock.mockReturnValue({
+      data: {},
+      isLoading: false,
+    } as unknown as ReturnType<typeof useSession>)
+
     render(<Form />)
 
     expect(screen.getByPlaceholderText('Display name')).toBeInTheDocument()
@@ -28,24 +38,39 @@ describe('Form', () => {
     ).toBeInTheDocument()
   })
 
-  test('calls useUser', () => {
+  test('renders null if session is null', () => {
     useUserMock.mockReturnValue({
       mutate: vi.fn(),
       isLoading: false,
     } as unknown as ReturnType<typeof useUser>)
 
-    render(<Form />)
+    useSessionMock.mockReturnValue({
+      data: null,
+      isLoading: false,
+    } as unknown as ReturnType<typeof useSession>)
 
-    expect(useUserMock).toHaveBeenCalled()
+    const { container } = render(<Form />)
+
+    expect(container).toBeEmptyDOMElement()
   })
 
   test('calls createUser on form submit', async () => {
     const mutate = vi.fn()
+    const session = { user: { id: 'AUTH_ID' } }
+
+    useSessionMock.mockReturnValue({
+      data: session,
+      isLoading: false,
+    } as unknown as ReturnType<typeof useSession>)
 
     useUserMock.mockReturnValue({
       mutate,
       isLoading: false,
     } as unknown as ReturnType<typeof useUser>)
+
+    createUserMock.mockImplementation(
+      () => new Promise((resolve) => setTimeout(resolve, 1000))
+    )
 
     const user = userEvent.setup()
 
@@ -54,22 +79,18 @@ describe('Form', () => {
     await user.type(screen.getByPlaceholderText('Display name'), 'John Doe')
     await user.click(screen.getByRole('button', { name: 'Create user' }))
 
-    expect(mutate).toHaveBeenCalled()
+    expect(screen.getByRole('button', { name: 'Create user' })).toBeDisabled()
 
     expect(createUser).toHaveBeenCalledWith({
       displayName: 'John Doe',
       avatar: 'dog',
+      authId: session.user.id,
     })
-  })
 
-  test('renders disabled button when loading', () => {
-    useUserMock.mockReturnValue({
-      mutate: vi.fn(),
-      isLoading: true,
-    } as unknown as ReturnType<typeof useUser>)
+    await waitFor(() => expect(mutate).toHaveBeenCalled())
 
-    render(<Form />)
-
-    expect(screen.getByRole('button', { name: 'Create user' })).toBeDisabled()
+    expect(
+      screen.getByRole('button', { name: 'Create user' })
+    ).not.toBeDisabled()
   })
 })

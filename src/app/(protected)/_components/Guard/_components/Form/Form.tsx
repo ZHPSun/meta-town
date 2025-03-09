@@ -1,24 +1,39 @@
 import { FC, FormEvent, useState } from 'react'
 import Button from '@/components/Button'
+import useSession from '@/hooks/useSession'
 import useUser from '@/hooks/useUser'
 import createUser from './_utils/createUser'
 
 const Form: FC = () => {
-  const { mutate, isLoading } = useUser()
+  const { mutate } = useUser()
+  const { data: session } = useSession()
+
+  const [isLoading, setIsLoading] = useState(false)
 
   const [data, setData] = useState({
     displayName: '',
     avatar: 'dog',
   })
 
+  if (!session) {
+    return null
+  }
+
   const handleSubmit = async (
     event: FormEvent<HTMLFormElement>
   ): Promise<void> => {
     event.preventDefault()
 
-    await createUser(data)
+    setIsLoading(true)
+
+    await createUser({
+      ...data,
+      authId: session.user.id,
+    })
 
     await mutate()
+
+    setIsLoading(false)
   }
 
   return (
