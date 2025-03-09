@@ -52,7 +52,7 @@ const Form: FC = () => {
         />
       </p>
 
-      <Button type="submit" disabled={isLoading}>
+      <Button type="submit" isLoading={isLoading}>
         Create user
       </Button>
     </form>

@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { FC, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { Loader } from 'lucide-react'
 import Button from '@/components/Button'
 import TextField from '@/components/TextField'
 import useSession from '@/hooks/useSession'
@@ -113,16 +112,8 @@ const Form: FC = () => {
         <p className="text-rose-500">{getServerErrorMessage(serverError)}</p>
       )}
 
-      <Button className="w-full" disabled={isSubmitting}>
-        {isSubmitting ? (
-          <Loader
-            className="mx-auto animate-spin"
-            role="status"
-            aria-label="Signing up"
-          />
-        ) : (
-          'Join Meta Town'
-        )}
+      <Button className="w-full" isLoading={isSubmitting}>
+        Join Meta Town
       </Button>
     </form>
   )

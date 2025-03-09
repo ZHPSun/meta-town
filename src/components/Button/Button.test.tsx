@@ -69,6 +69,20 @@ describe('Button', () => {
     )
   })
 
+  test('renders button with isLoading', () => {
+    render(<Button isLoading>Loading</Button>)
+
+    expect(screen.getByRole('button', { name: /Loading/i })).toBeInTheDocument()
+
+    expect(screen.getByRole('button', { name: /Loading/i })).toHaveAttribute(
+      'disabled'
+    )
+
+    expect(screen.getByRole('button', { name: /Loading/i })).toContainElement(
+      screen.getByRole('status')
+    )
+  })
+
   test.each([
     'primary',
     'secondary',

@@ -65,9 +65,7 @@ describe('Form', () => {
 
     await user.click(screen.getByRole('button', { name: 'Join Meta Town' }))
 
-    expect(
-      screen.getByRole('status', { name: 'Signing up' })
-    ).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Loading' })).toBeDisabled()
 
     expect(signUp).toHaveBeenCalledWith({
       email: 'test@example.com',
@@ -80,7 +78,7 @@ describe('Form', () => {
 
     expect(
       screen.getByRole('button', { name: 'Join Meta Town' })
-    ).toBeInTheDocument()
+    ).not.toBeDisabled()
   })
 
   test('shows validation errors message when form is submitted with empty fields', async () => {

@@ -79,7 +79,7 @@ describe('Form', () => {
     await user.type(screen.getByPlaceholderText('Display name'), 'John Doe')
     await user.click(screen.getByRole('button', { name: 'Create user' }))
 
-    expect(screen.getByRole('button', { name: 'Create user' })).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Loading' })).toBeDisabled()
 
     expect(createUser).toHaveBeenCalledWith({
       displayName: 'John Doe',

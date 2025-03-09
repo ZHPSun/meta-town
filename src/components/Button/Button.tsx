@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { Loader } from 'lucide-react'
 import { DynamicIcon, type IconName } from 'lucide-react/dynamic'
 import { ButtonHTMLAttributes, FC, ReactNode } from 'react'
 
@@ -41,6 +42,7 @@ type Variant =
 
 interface Props
   extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'prefix' | 'suffix'> {
+  isLoading?: boolean
   children: ReactNode
   size?: Size
   variant?: Variant
@@ -57,6 +59,7 @@ interface Props
 const Button: FC<Props> = ({
   children,
   className,
+  isLoading = false,
   size = 'default',
   variant = 'primary',
   prefix,
@@ -65,17 +68,28 @@ const Button: FC<Props> = ({
 }) => (
   <button
     className={clsx(
-      'rounded-lg outline-offset-4',
-      (prefix ?? suffix) && 'flex items-center gap-2',
+      'rounded-lg align-middle outline-offset-4',
+      (prefix ?? suffix) && 'inline-flex items-center gap-2',
       VARIANT[variant],
       SIZE[size],
       className
     )}
+    disabled={isLoading}
     {...rest}
   >
-    {prefix && <DynamicIcon name={prefix.icon} aria-label={prefix.label} />}
-    {children}
-    {suffix && <DynamicIcon name={suffix.icon} aria-label={suffix.label} />}
+    {isLoading ? (
+      <Loader
+        className="mx-auto animate-spin"
+        role="status"
+        aria-label="Loading"
+      />
+    ) : (
+      <>
+        {prefix && <DynamicIcon name={prefix.icon} aria-label={prefix.label} />}
+        {children}
+        {suffix && <DynamicIcon name={suffix.icon} aria-label={suffix.label} />}
+      </>
+    )}
   </button>
 )
 

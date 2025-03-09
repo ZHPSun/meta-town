@@ -59,9 +59,7 @@ describe('Form', () => {
     await user.type(screen.getByLabelText('Password'), 'password')
     await user.click(screen.getByRole('button', { name: 'Login' }))
 
-    expect(
-      screen.getByRole('status', { name: 'Logging in' })
-    ).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Loading' })).toBeDisabled()
 
     expect(login).toHaveBeenCalledWith({
       email: 'test@example.com',
@@ -72,7 +70,7 @@ describe('Form', () => {
 
     expect(navigate).toHaveBeenCalledWith('/')
 
-    expect(screen.getByRole('button', { name: 'Login' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Login' })).not.toBeDisabled()
   })
 
   test('shows validation errors message when form is submitted with empty fields', async () => {
