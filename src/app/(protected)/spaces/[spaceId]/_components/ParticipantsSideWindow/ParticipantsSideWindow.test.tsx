@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import ParticipantsSideWindow from './ParticipantsSideWindow'
 
@@ -23,9 +23,7 @@ describe('ParticipantsSideWindow', () => {
 
     render(<ParticipantsSideWindow onClose={handleClick} />)
 
-    await waitFor(() =>
-      user.click(screen.getByRole('button', { name: 'Close' }))
-    )
+    await user.click(await screen.findByRole('button', { name: 'Close' }))
 
     expect(handleClick).toBeCalled()
   })

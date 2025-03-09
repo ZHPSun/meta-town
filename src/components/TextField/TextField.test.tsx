@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import TextField from './TextField'
 
@@ -36,9 +36,7 @@ describe('TextField', () => {
   test('renders TextField with prefix icon', async () => {
     render(<TextField prefix={{ name: 'search', label: 'Search' }} />)
 
-    await waitFor(() =>
-      expect(screen.getByLabelText('Search')).toBeInTheDocument()
-    )
+    expect(await screen.findByLabelText('Search')).toBeInTheDocument()
   })
 
   test('passes value and onChange to Input', async () => {

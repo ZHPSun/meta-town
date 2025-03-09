@@ -34,17 +34,20 @@ const Configuration: FC<Props> = ({
   size = 'default',
   variant = 'primary',
 }) => (
-  <div
+  <button
+    tabIndex={0}
     className={clsx(
-      'absolute bottom-0 right-0 top-0 rounded-2xl text-right',
+      'absolute bottom-0 right-0 top-0 rounded-2xl outline-offset-4',
       VARIANT[variant],
       WRAPPER_SIZE[size]
     )}
   >
-    <button tabIndex={0} className="h-full px-2 outline-offset-4">
-      <ChevronUp size={ICON_SIZE[size]} aria-label="Config" />
-    </button>
-  </div>
+    <ChevronUp
+      size={ICON_SIZE[size]}
+      aria-label="Config"
+      className="ml-auto mr-2"
+    />
+  </button>
 )
 
 export default Configuration

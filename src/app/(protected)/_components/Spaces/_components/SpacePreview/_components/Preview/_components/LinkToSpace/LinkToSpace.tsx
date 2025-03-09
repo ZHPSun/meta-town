@@ -15,7 +15,10 @@ const LinkToSpace: FC<Props> = ({ spaceID, children }) => (
     {children}
 
     <div className="absolute inset-0 flex items-center justify-center">
-      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-black bg-opacity-50 opacity-0 transition-opacity duration-150 group-hover:opacity-100">
+      <div
+        role="presentation"
+        className="flex h-12 w-12 items-center justify-center rounded-full bg-black bg-opacity-50 opacity-0 transition-opacity duration-150 group-hover:opacity-100"
+      >
         <LogIn
           size={25}
           color="white"

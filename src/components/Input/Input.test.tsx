@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Input from './Input'
 
@@ -12,9 +12,7 @@ describe('Input', () => {
   test('renders prefix', async () => {
     render(<Input prefix={{ name: 'search', label: 'Search' }} />)
 
-    await waitFor(() =>
-      expect(screen.getByLabelText('Search')).toBeInTheDocument()
-    )
+    expect(await screen.findByLabelText('Search')).toBeInTheDocument()
   })
 
   test('passes the native value and onChange properties to the attributes', async () => {

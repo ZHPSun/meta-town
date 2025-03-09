@@ -15,9 +15,9 @@ describe('Configuration', () => {
   test('renders configuration button wrapper with default size', () => {
     render(<Configuration />)
 
-    expect(
-      screen.getByRole('button', { name: 'Config' }).parentElement
-    ).toHaveClass(WRAPPER_SIZE.default)
+    expect(screen.getByRole('button', { name: 'Config' })).toHaveClass(
+      WRAPPER_SIZE.default
+    )
   })
 
   test.each(['small', 'default', 'large'] as const)(
@@ -25,26 +25,26 @@ describe('Configuration', () => {
     (size) => {
       render(<Configuration size={size} />)
 
-      expect(
-        screen.getByRole('button', { name: 'Config' }).parentElement
-      ).toHaveClass(WRAPPER_SIZE[size])
+      expect(screen.getByRole('button', { name: 'Config' })).toHaveClass(
+        WRAPPER_SIZE[size]
+      )
     }
   )
 
   test('renders configuration button wrapper with default primary variant', () => {
     render(<Configuration />)
-    expect(
-      screen.getByRole('button', { name: 'Config' }).parentElement
-    ).toHaveClass(VARIANT.primary)
+    expect(screen.getByRole('button', { name: 'Config' })).toHaveClass(
+      VARIANT.primary
+    )
   })
 
   test.each(['primary', 'secondary', 'success', 'danger', 'warning'] as const)(
     'renders configuration button wrapper with %s variant',
     (variant) => {
       render(<Configuration variant={variant} />)
-      expect(
-        screen.getByRole('button', { name: 'Config' }).parentElement
-      ).toHaveClass(VARIANT[variant])
+      expect(screen.getByRole('button', { name: 'Config' })).toHaveClass(
+        VARIANT[variant]
+      )
     }
   )
 

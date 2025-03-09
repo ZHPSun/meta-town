@@ -6,6 +6,7 @@ import { FlatCompat } from '@eslint/eslintrc'
 import eslint from '@eslint/js'
 import stylistic from '@stylistic/eslint-plugin'
 import pluginRegex from 'eslint-plugin-regex'
+import testingLibrary from 'eslint-plugin-testing-library'
 import vitest from 'eslint-plugin-vitest'
 import {
   config as tseslintConfig,
@@ -146,6 +147,10 @@ const eslintConfig = [
         ...vitest.environments.env.globals,
       },
     },
+  },
+  {
+    files: ['**/*.test.tsx'],
+    ...testingLibrary.configs['flat/react'],
   },
   {
     plugins: {

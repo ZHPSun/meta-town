@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { VARIANT } from '@/components/Button'
 import Space from './page'
@@ -31,9 +31,7 @@ describe('Space', () => {
 
     render(<Space />)
 
-    await waitFor(() =>
-      user.click(screen.getByRole('button', { name: 'Chat' }))
-    )
+    await user.click(await screen.findByRole('button', { name: 'Chat' }))
 
     expect(
       screen.getByRole('region', { name: 'Chat Side Window' })
@@ -43,9 +41,7 @@ describe('Space', () => {
       VARIANT.secondary
     )
 
-    await waitFor(() =>
-      user.click(screen.getByRole('button', { name: 'Chat' }))
-    )
+    await user.click(await screen.findByRole('button', { name: 'Chat' }))
 
     expect(
       screen.queryByRole('region', { name: 'Chat Side Window' })
@@ -61,17 +57,13 @@ describe('Space', () => {
 
     render(<Space />)
 
-    await waitFor(() =>
-      user.click(screen.getByRole('button', { name: 'Chat' }))
-    )
+    await user.click(await screen.findByRole('button', { name: 'Chat' }))
 
     expect(
       screen.getByRole('region', { name: 'Chat Side Window' })
     ).toBeInTheDocument()
 
-    await waitFor(() =>
-      user.click(screen.getByRole('button', { name: 'Close' }))
-    )
+    await user.click(await screen.findByRole('button', { name: 'Close' }))
 
     expect(
       screen.queryByRole('region', { name: 'Chat Side Window' })
@@ -83,8 +75,8 @@ describe('Space', () => {
 
     render(<Space />)
 
-    await waitFor(() =>
-      user.click(screen.getByRole('button', { name: 'Participants' }))
+    await user.click(
+      await screen.findByRole('button', { name: 'Participants' })
     )
 
     expect(
@@ -95,8 +87,8 @@ describe('Space', () => {
       VARIANT.secondary
     )
 
-    await waitFor(() =>
-      user.click(screen.getByRole('button', { name: 'Participants' }))
+    await user.click(
+      await screen.findByRole('button', { name: 'Participants' })
     )
 
     expect(
@@ -113,17 +105,15 @@ describe('Space', () => {
 
     render(<Space />)
 
-    await waitFor(() =>
-      user.click(screen.getByRole('button', { name: 'Participants' }))
+    await user.click(
+      await screen.findByRole('button', { name: 'Participants' })
     )
 
     expect(
       screen.getByRole('region', { name: 'Participants Side Window' })
     ).toBeInTheDocument()
 
-    await waitFor(() =>
-      user.click(screen.getByRole('button', { name: 'Close' }))
-    )
+    await user.click(await screen.findByRole('button', { name: 'Close' }))
 
     expect(
       screen.queryByRole('region', { name: 'Participants Side Window' })

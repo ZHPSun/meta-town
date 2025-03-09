@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import MeetingView, { GRID } from './MeetingView'
 
 describe('MeetingView', () => {
@@ -19,19 +19,17 @@ describe('MeetingView', () => {
   test('renders left button', async () => {
     render(<MeetingView participantCount={20} />)
 
-    await waitFor(() =>
-      expect(
-        screen.getByRole('button', { name: 'Previous' })
-      ).toBeInTheDocument()
-    )
+    expect(
+      await screen.findByRole('button', { name: 'Previous' })
+    ).toBeInTheDocument()
   })
 
   test('renders right button', async () => {
     render(<MeetingView participantCount={20} />)
 
-    await waitFor(() =>
-      expect(screen.getByRole('button', { name: 'Next' })).toBeInTheDocument()
-    )
+    expect(
+      await screen.findByRole('button', { name: 'Next' })
+    ).toBeInTheDocument()
   })
 
   test.each([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] as const)(

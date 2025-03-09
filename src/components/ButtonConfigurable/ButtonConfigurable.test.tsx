@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import ButtonConfigurable from '@/components/ButtonConfigurable'
 import {
   VARIANT as BUTTON_VARIANT,
@@ -25,17 +25,17 @@ describe('ButtonConfigurable', () => {
   test('renders Configuration with default size', () => {
     render(<ButtonConfigurable>Button</ButtonConfigurable>)
 
-    expect(
-      screen.getByRole('button', { name: 'Config' }).parentElement
-    ).toHaveClass(WRAPPER_SIZE.default)
+    expect(screen.getByRole('button', { name: 'Config' })).toHaveClass(
+      WRAPPER_SIZE.default
+    )
   })
 
   test('renders Configuration with default primary variant', () => {
     render(<ButtonConfigurable>Button</ButtonConfigurable>)
 
-    expect(
-      screen.getByRole('button', { name: 'Config' }).parentElement
-    ).toHaveClass(CONFIGURATION_VARIANT.primary)
+    expect(screen.getByRole('button', { name: 'Config' })).toHaveClass(
+      CONFIGURATION_VARIANT.primary
+    )
   })
 
   test.each(['small', 'default', 'large'] as const)(
@@ -43,9 +43,9 @@ describe('ButtonConfigurable', () => {
     (size) => {
       render(<ButtonConfigurable size={size}>Button</ButtonConfigurable>)
 
-      expect(
-        screen.getByRole('button', { name: 'Config' }).parentElement
-      ).toHaveClass(WRAPPER_SIZE[size])
+      expect(screen.getByRole('button', { name: 'Config' })).toHaveClass(
+        WRAPPER_SIZE[size]
+      )
     }
   )
 
@@ -54,9 +54,9 @@ describe('ButtonConfigurable', () => {
     (variant) => {
       render(<ButtonConfigurable variant={variant}>Button</ButtonConfigurable>)
 
-      expect(
-        screen.getByRole('button', { name: 'Config' }).parentElement
-      ).toHaveClass(CONFIGURATION_VARIANT[variant])
+      expect(screen.getByRole('button', { name: 'Config' })).toHaveClass(
+        CONFIGURATION_VARIANT[variant]
+      )
     }
   )
 
@@ -101,18 +101,16 @@ describe('ButtonConfigurable', () => {
   test('renders IconButton', async () => {
     render(<ButtonConfigurable icon="beer" label="Beer" />)
 
-    await waitFor(() =>
-      expect(screen.getByRole('button', { name: 'Beer' })).toBeInTheDocument()
-    )
+    expect(
+      await screen.findByRole('button', { name: 'Beer' })
+    ).toBeInTheDocument()
   })
 
   test('renders IconButton with default size', async () => {
     render(<ButtonConfigurable icon="beer" label="Beer" />)
 
-    await waitFor(() =>
-      expect(screen.getByRole('button', { name: 'Beer' })).toHaveClass(
-        BUTTON_SIZE.default
-      )
+    expect(await screen.findByRole('button', { name: 'Beer' })).toHaveClass(
+      BUTTON_SIZE.default
     )
   })
 
@@ -120,21 +118,17 @@ describe('ButtonConfigurable', () => {
     'renders IconButton with %s size',
     async (size) => {
       render(<ButtonConfigurable size={size} icon="beer" label="Beer" />)
-      await waitFor(() => {
-        expect(screen.getByRole('button', { name: 'Beer' })).toHaveClass(
-          BUTTON_SIZE[size]
-        )
-      })
+      expect(await screen.findByRole('button', { name: 'Beer' })).toHaveClass(
+        BUTTON_SIZE[size]
+      )
     }
   )
 
   test('render IconButton with default primary variant', async () => {
     render(<ButtonConfigurable icon="beer" label="Beer" />)
 
-    await waitFor(() =>
-      expect(screen.getByRole('button', { name: 'Beer' })).toHaveClass(
-        BUTTON_VARIANT.primary
-      )
+    expect(await screen.findByRole('button', { name: 'Beer' })).toHaveClass(
+      BUTTON_VARIANT.primary
     )
   })
 
@@ -143,10 +137,8 @@ describe('ButtonConfigurable', () => {
     async (variant) => {
       render(<ButtonConfigurable variant={variant} icon="beer" label="Beer" />)
 
-      await waitFor(() =>
-        expect(screen.getByRole('button', { name: 'Beer' })).toHaveClass(
-          BUTTON_VARIANT[variant]
-        )
+      expect(await screen.findByRole('button', { name: 'Beer' })).toHaveClass(
+        BUTTON_VARIANT[variant]
       )
     }
   )

@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Button, { VARIANT, SIZE } from './Button'
 
@@ -25,9 +25,7 @@ describe('Button', () => {
       </Button>
     )
 
-    await waitFor(() =>
-      expect(screen.getByLabelText('Camera')).toBeInTheDocument()
-    )
+    expect(await screen.findByLabelText('Camera')).toBeInTheDocument()
   })
 
   test('renders suffix icon', async () => {
@@ -37,9 +35,7 @@ describe('Button', () => {
       </Button>
     )
 
-    await waitFor(() =>
-      expect(screen.getByLabelText('Camera')).toBeInTheDocument()
-    )
+    expect(await screen.findByLabelText('Camera')).toBeInTheDocument()
   })
 
   test('renders button with default size', () => {

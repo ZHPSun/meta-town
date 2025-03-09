@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Meeting, { VIEW } from './Meeting'
 
@@ -6,21 +6,17 @@ describe('Meeting', () => {
   test('renders map view IconButton', async () => {
     render(<Meeting />)
 
-    await waitFor(() =>
-      expect(
-        screen.getByRole('button', { name: 'Map view' })
-      ).toBeInTheDocument()
-    )
+    expect(
+      await screen.findByRole('button', { name: 'Map view' })
+    ).toBeInTheDocument()
   })
 
   test('renders meeting view IconButton', async () => {
     render(<Meeting />)
 
-    await waitFor(() =>
-      expect(
-        screen.getByRole('button', { name: 'Meeting view' })
-      ).toBeInTheDocument()
-    )
+    expect(
+      await screen.findByRole('button', { name: 'Meeting view' })
+    ).toBeInTheDocument()
   })
 
   test('renders MapView and does not render MeetingView by default', () => {
@@ -40,8 +36,8 @@ describe('Meeting', () => {
     const user = userEvent.setup()
     render(<Meeting />)
 
-    await waitFor(() =>
-      user.click(screen.getByRole('button', { name: 'Meeting view' }))
+    await user.click(
+      await screen.findByRole('button', { name: 'Meeting view' })
     )
 
     expect(
@@ -61,13 +57,11 @@ describe('Meeting', () => {
     const user = userEvent.setup()
     render(<Meeting />)
 
-    await waitFor(() =>
-      user.click(screen.getByRole('button', { name: 'Meeting view' }))
+    await user.click(
+      await screen.findByRole('button', { name: 'Meeting view' })
     )
 
-    await waitFor(() =>
-      user.click(screen.getByRole('button', { name: 'Map view' }))
-    )
+    await user.click(await screen.findByRole('button', { name: 'Map view' }))
     expect(screen.getByRole('region', { name: 'Map View' })).toBeInTheDocument()
     expect(
       screen.queryByRole('region', { name: 'Meeting View' })

@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import MapView from './MapView'
 
 describe('MapView', () => {
@@ -17,18 +17,16 @@ describe('MapView', () => {
   test('renders left button', async () => {
     render(<MapView />)
 
-    await waitFor(() =>
-      expect(
-        screen.getByRole('button', { name: 'Previous' })
-      ).toBeInTheDocument()
-    )
+    expect(
+      await screen.findByRole('button', { name: 'Previous' })
+    ).toBeInTheDocument()
   })
 
   test('renders right button', async () => {
     render(<MapView />)
 
-    await waitFor(() =>
-      expect(screen.getByRole('button', { name: 'Next' })).toBeInTheDocument()
-    )
+    expect(
+      await screen.findByRole('button', { name: 'Next' })
+    ).toBeInTheDocument()
   })
 })
