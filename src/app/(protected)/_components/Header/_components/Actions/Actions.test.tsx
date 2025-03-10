@@ -3,12 +3,6 @@ import userEvent from '@testing-library/user-event'
 import Actions from './Actions'
 
 describe('Actions', () => {
-  test('renders users button', () => {
-    render(<Actions />)
-
-    expect(screen.getByRole('button', { name: 'S.T.' })).toBeInTheDocument()
-  })
-
   test('renders Resources button', () => {
     render(<Actions />)
 
@@ -51,5 +45,11 @@ describe('Actions', () => {
     expect(
       screen.getByRole('button', { name: 'Create Spaces' })
     ).toBeInTheDocument()
+  })
+
+  test('renders Edit Profile button', () => {
+    render(<Actions />)
+
+    expect(screen.getByRole('button', { name: 'S.T.' })).toBeInTheDocument()
   })
 })

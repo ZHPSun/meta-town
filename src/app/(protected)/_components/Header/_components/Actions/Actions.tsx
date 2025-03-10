@@ -5,12 +5,11 @@ import Button from '@/components/Button'
 import Dropdown from '@/components/Dropdown'
 import VerticalList from '@/components/VerticalList'
 import CreateSpace from './_components/CreateSpace'
+import EditProfile from './_components/EditProfile'
 
 const Actions: FC = () => (
   <div className="flex gap-4">
-    <Button variant="secondary" prefix={{ icon: 'circle-user-round' }}>
-      S.T.
-    </Button>
+    <EditProfile />
     <Button variant="naked" prefix={{ icon: 'circle-help' }}>
       Resources
     </Button>
