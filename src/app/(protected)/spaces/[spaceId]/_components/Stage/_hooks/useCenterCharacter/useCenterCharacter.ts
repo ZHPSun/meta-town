@@ -8,61 +8,71 @@ interface ElementSize {
 }
 
 interface ElementPosition {
-  x: number
-  y: number
+  left: number
+  top: number
 }
 
 export const getCenter = (viewport: HTMLElement): ElementPosition => ({
-  x: Math.floor(viewport.clientWidth / 2),
-  y: Math.floor(viewport.clientHeight / 2),
+  left: Math.floor(viewport.clientWidth / 2),
+  top: Math.floor(viewport.clientHeight / 2),
 })
 
 export const getPositionOffset = (
-  offsetPoint: ElementPosition,
+  characterPosition: ElementPosition,
   center: ElementPosition
 ): ElementPosition => ({
-  x: center.x - offsetPoint.x,
-  y: center.y - offsetPoint.y,
+  left: center.left - characterPosition.left,
+  top: center.top - characterPosition.top,
 })
 
 export const getMinMaxPositionOffset = (
   offset: ElementPosition,
+  zoom: number,
   stageSize: ElementSize,
   viewportSize: ElementSize
 ): ElementPosition => {
-  const toLeftLimitation = viewportSize.width - stageSize.width
+  const toLeftLimitation = viewportSize.width - stageSize.width * zoom
   const toRightLimitation = 0
-  const toTopLimitation = viewportSize.height - stageSize.height
+  const toTopLimitation = viewportSize.height - stageSize.height * zoom
   const toBottomLimitation = 0
 
   return {
-    x: clamp(offset.x, toLeftLimitation, toRightLimitation),
-    y: clamp(offset.y, toTopLimitation, toBottomLimitation),
+    left: clamp(offset.left, toLeftLimitation, toRightLimitation),
+    top: clamp(offset.top, toTopLimitation, toBottomLimitation),
   }
 }
 
 export const transform = (
   element: HTMLElement,
-  offset: ElementPosition
+  offset: ElementPosition,
+  zoom: number
 ): void => {
-  element.style.transform = `translate(${offset.x}px, ${offset.y}px)`
+  element.style.setProperty('--translate-x', `${offset.left}px`)
+  element.style.setProperty('--translate-y', `${offset.top}px`)
+  element.style.setProperty('--scale', `${zoom}`)
 }
 
 const useCenterCharacter = (
-  coordinates: Coordinates
+  coordinates: Coordinates,
+  zoom: number
 ): {
   stageRef: RefObject<HTMLDivElement | null>
   characterRef: RefObject<HTMLDivElement | null>
 } => {
   const stageRef = useRef<HTMLDivElement>(null)
   const characterRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
-    if (!stageRef.current || !characterRef.current) return
+    if (!stageRef.current || !characterRef.current) {
+      return
+    }
 
     const stage = stageRef.current
     const character = characterRef.current
     const viewport = stage.parentElement
-    if (!viewport) return
+    if (!viewport) {
+      return
+    }
 
     const viewportSize: ElementSize = {
       width: viewport.clientWidth,
@@ -74,25 +84,24 @@ const useCenterCharacter = (
       height: stage.scrollHeight,
     }
 
-    const characterRect = character.getBoundingClientRect()
-    const stageRect = stage.getBoundingClientRect()
-
     const characterPosition: ElementPosition = {
-      x: characterRect.left - stageRect.left,
-      y: characterRect.top - stageRect.top,
+      left: character.offsetLeft * zoom,
+      top: character.offsetTop * zoom,
     }
 
     const center = getCenter(viewport)
+
     const offset = getPositionOffset(characterPosition, center)
 
     const offsetWithLimit = getMinMaxPositionOffset(
       offset,
+      zoom,
       stageSize,
       viewportSize
     )
 
-    transform(stage, offsetWithLimit)
-  }, [stageRef, characterRef, coordinates])
+    transform(stage, offsetWithLimit, zoom)
+  }, [coordinates, zoom])
 
   return { stageRef, characterRef }
 }

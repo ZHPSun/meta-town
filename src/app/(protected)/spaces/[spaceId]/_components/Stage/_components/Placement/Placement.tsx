@@ -1,4 +1,4 @@
-import { ReactNode, FC } from 'react'
+import { ReactNode, FC, Ref } from 'react'
 import { TILE_SIZE } from '../../consts'
 
 const FACE_ROTATION = {
@@ -19,12 +19,14 @@ export interface Coordinates {
 interface Props {
   coordinates: Coordinates
   children: ReactNode
+  ref?: Ref<HTMLDivElement>
 }
 
-const Placement: FC<Props> = ({ coordinates, children }) => (
+const Placement: FC<Props> = ({ coordinates, children, ref }) => (
   <div
-    data-testid="placement"
+    aria-label={`Placement: ${coordinates.x}, ${coordinates.y}`}
     className="absolute"
+    ref={ref}
     style={{
       width: `${TILE_SIZE}px`,
       height: `${TILE_SIZE}px`,

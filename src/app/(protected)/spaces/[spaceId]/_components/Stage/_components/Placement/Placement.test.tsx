@@ -10,7 +10,7 @@ describe('Placement', () => {
       </Placement>
     )
 
-    expect(screen.getByTestId('placement')).toHaveStyle({
+    expect(screen.getByLabelText('Placement: 3, 4')).toHaveStyle({
       top: `${TILE_SIZE * 4}px`,
       left: `${TILE_SIZE * 3}px`,
       transform: 'rotate(90deg)',
@@ -24,6 +24,20 @@ describe('Placement', () => {
       </Placement>
     )
 
-    expect(screen.getByText('Hello, World!')).toBeInTheDocument()
+    expect(screen.getByLabelText('Placement: 3, 4')).toContainElement(
+      screen.getByText('Hello, World!')
+    )
+  })
+
+  test('attaches ref', () => {
+    const ref = { current: null }
+
+    render(
+      <Placement coordinates={{ x: 3, y: 4, direction: 'N' }} ref={ref}>
+        <div>Hello, World!</div>
+      </Placement>
+    )
+
+    expect(screen.getByLabelText('Placement: 3, 4')).toBe(ref.current)
   })
 })

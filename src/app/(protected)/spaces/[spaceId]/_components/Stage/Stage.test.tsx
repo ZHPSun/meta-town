@@ -1,5 +1,4 @@
-import React from 'react'
-import { render, screen, within } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Stage, { INITIAL_COORDINATES, WALLS } from './Stage'
 import * as consts from './consts'
@@ -45,36 +44,65 @@ describe('Stage', () => {
 
     await user.keyboard('{ArrowDown}')
 
-    expect(
-      screen
-        .getAllByTestId('placement')
-        .find((placement) => within(placement).queryByLabelText('Character'))
-    ).toHaveStyle({
+    expect(screen.getByLabelText('Placement: 0, 1')).toHaveStyle({
       top: `${(INITIAL_COORDINATES.y + 1) * TILE_SIZE}px`,
       left: `${INITIAL_COORDINATES.x * TILE_SIZE}px`,
       transform: 'rotate(180deg)',
     })
   })
 
-  test('useCenterCharacter change the style successfully', async () => {
-    const user = userEvent.setup()
+  test('useCenterCharacter change the style successfully', () => {
     render(<Stage />)
-    await user.keyboard('{ArrowDown}')
+
     expect(screen.getByLabelText('stage').style.transform).toBe(
-      'translate(0px, 0px)'
+      'translate(var(--translate-x), var(--translate-y)) scale(var(--scale))'
     )
+
+    expect(screen.getByLabelText('stage').style.transformOrigin).toBe(
+      'top left'
+    )
+
+    expect(
+      screen.getByLabelText('stage').style.getPropertyValue('--translate-x')
+    ).toBe('0px')
+
+    expect(
+      screen.getByLabelText('stage').style.getPropertyValue('--translate-y')
+    ).toBe('0px')
+
+    expect(
+      screen.getByLabelText('stage').style.getPropertyValue('--scale')
+    ).toBe('1')
+  })
+
+  test('zooms in', async () => {
+    const user = userEvent.setup()
+
+    render(<Stage />)
+
+    await user.click(await screen.findByRole('button', { name: 'Zoom In' }))
+
+    expect(
+      screen.getByLabelText('stage').style.getPropertyValue('--scale')
+    ).toBe('1.1')
+  })
+
+  test('zooms out', async () => {
+    const user = userEvent.setup()
+
+    render(<Stage />)
+
+    await user.click(await screen.findByRole('button', { name: 'Zoom Out' }))
+
+    expect(
+      screen.getByLabelText('stage').style.getPropertyValue('--scale')
+    ).toBe('0.9')
   })
 
   test('renders OtherCharacter', () => {
     render(<Stage />)
 
-    expect(
-      screen
-        .getAllByTestId('placement')
-        .find((placement) =>
-          within(placement).queryByLabelText('OtherCharacter')
-        )
-    ).toHaveStyle({
+    expect(screen.getByLabelText('Placement: 20, 20')).toHaveStyle({
       top: `${20 * TILE_SIZE}px`,
       left: `${20 * TILE_SIZE}px`,
       transform: 'rotate(0deg)',

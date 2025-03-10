@@ -1,14 +1,15 @@
 'use client'
 
 import { FC } from 'react'
-import Placement from './_components/Placement'
-import { type Coordinates } from './_components/Placement'
+import IconButton from '@/components/IconButton'
 import Character from './_components/Character'
 import OtherCharacter from './_components/OtherCharacter'
-import Wall from './_components/Wall'
+import Placement, { type Coordinates } from './_components/Placement'
 import TiledMap from './_components/TiledMap'
-import useMovement from './hooks/useMovement'
-import useCenterCharacter from './hooks/useCenterCharacter'
+import Wall from './_components/Wall'
+import useCenterCharacter from './_hooks/useCenterCharacter'
+import useMovement from './_hooks/useMovement'
+import useZoom from './_hooks/useZoom'
 import { DIMENSIONS } from './consts'
 
 export const INITIAL_COORDINATES: Coordinates = {
@@ -26,39 +27,65 @@ export const WALLS: Coordinates[] = [
 ] as const
 
 const Stage: FC = () => {
-  const characterCoordinates = useMovement(INITIAL_COORDINATES)
+  const characterCoordinates = useMovement(INITIAL_COORDINATES, [...WALLS])
 
-  const { stageRef, characterRef } = useCenterCharacter(characterCoordinates)
+  const { zoom, zoomIn, zoomOut } = useZoom()
+
+  const { stageRef, characterRef } = useCenterCharacter(
+    characterCoordinates,
+    zoom
+  )
 
   return (
-    <div className="relative max-h-full max-w-full overflow-hidden bg-white">
+    <div className="relative flex size-full items-center justify-center bg-neutral-500">
       <div
-        ref={stageRef}
-        aria-label="stage"
-        style={{
-          transition: 'transform 0.2s',
-        }}
+        className="max-h-full max-w-full overflow-hidden"
+        aria-label="viewport"
       >
-        <Placement coordinates={characterCoordinates}>
-          <div ref={characterRef}>
+        <div
+          ref={stageRef}
+          aria-label="stage"
+          className="relative"
+          style={{
+            transformOrigin: 'top left',
+            transition: 'transform 0.2s',
+            transform:
+              'translate(var(--translate-x), var(--translate-y)) scale(var(--scale))',
+          }}
+        >
+          <Placement coordinates={characterCoordinates} ref={characterRef}>
             <Character />
-          </div>
-        </Placement>
-
-        <Placement coordinates={{ x: 20, y: 20, direction: 'N' }}>
-          <OtherCharacter />
-        </Placement>
-
-        {WALLS.map((wallCoordinates) => (
-          <Placement
-            key={`${wallCoordinates.x}, ${wallCoordinates.y}`}
-            coordinates={wallCoordinates}
-          >
-            <Wall />
           </Placement>
-        ))}
 
-        <TiledMap dimensions={DIMENSIONS} />
+          <Placement coordinates={{ x: 20, y: 20, direction: 'N' }}>
+            <OtherCharacter />
+          </Placement>
+
+          {WALLS.map((wallCoordinates) => (
+            <Placement
+              key={`${wallCoordinates.x}, ${wallCoordinates.y}`}
+              coordinates={wallCoordinates}
+            >
+              <Wall />
+            </Placement>
+          ))}
+
+          <TiledMap dimensions={DIMENSIONS} />
+        </div>
+      </div>
+      <div className="absolute bottom-4 right-4 space-x-2 text-white">
+        <IconButton
+          icon="zoom-out"
+          label="Zoom Out"
+          tooltip={{ position: 'top' }}
+          onClick={zoomOut}
+        />
+        <IconButton
+          icon="zoom-in"
+          label="Zoom In"
+          tooltip={{ position: 'top' }}
+          onClick={zoomIn}
+        />
       </div>
     </div>
   )

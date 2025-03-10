@@ -17,7 +17,7 @@ const Space: FC = () => {
     <div className="flex h-screen flex-col">
       <Header />
 
-      <main className="relative flex flex-1 items-center justify-center overflow-hidden bg-neutral-400">
+      <main className="relative flex-1 overflow-hidden">
         <Stage />
         <Meeting />
         {sideWindow === 'chat' && (
