@@ -19,9 +19,7 @@ describe('AvatarPicker', () => {
 
     render(<AvatarPicker />)
 
-    await waitFor(() =>
-      user.click(screen.getByRole('button', { name: 'pink' }))
-    )
+    await user.click(await screen.findByRole('button', { name: 'pink' }))
 
     expect(
       within(screen.getByRole('button', { name: 'pink' })).getByLabelText(
@@ -35,13 +33,9 @@ describe('AvatarPicker', () => {
 
     render(<AvatarPicker />)
 
-    await waitFor(() =>
-      user.click(screen.getByRole('button', { name: 'pink' }))
-    )
+    await user.click(await screen.findByRole('button', { name: 'pink' }))
 
-    await waitFor(() =>
-      user.click(screen.getByRole('button', { name: 'blue' }))
-    )
+    await user.click(await screen.findByRole('button', { name: 'blue' }))
 
     expect(
       within(screen.getByRole('button', { name: 'pink' })).getByLabelText(
@@ -67,10 +61,8 @@ describe('AvatarPicker', () => {
   test('renders naked variant for unselected animal', async () => {
     render(<AvatarPicker />)
 
-    await waitFor(() =>
-      expect(screen.getByRole('button', { name: 'pink' })).toHaveClass(
-        BUTTON_VARIANT.naked
-      )
+    expect(await screen.findByRole('button', { name: 'pink' })).toHaveClass(
+      BUTTON_VARIANT.naked
     )
   })
 
@@ -79,14 +71,10 @@ describe('AvatarPicker', () => {
 
     render(<AvatarPicker />)
 
-    await waitFor(() =>
-      user.click(screen.getByRole('button', { name: 'bird' }))
-    )
+    await user.click(await screen.findByRole('button', { name: 'bird' }))
 
-    await waitFor(() =>
-      expect(screen.getByRole('button', { name: 'bird' })).toHaveClass(
-        BUTTON_VARIANT.secondary
-      )
+    expect(await screen.findByRole('button', { name: 'bird' })).toHaveClass(
+      BUTTON_VARIANT.secondary
     )
   })
 
@@ -95,22 +83,16 @@ describe('AvatarPicker', () => {
 
     render(<AvatarPicker />)
 
-    await waitFor(() =>
-      user.click(screen.getByRole('button', { name: 'bird' }))
-    )
+    await user.click(await screen.findByRole('button', { name: 'bird' }))
 
     await waitFor(() => user.click(screen.getByRole('button', { name: 'cat' })))
 
-    await waitFor(() =>
-      expect(screen.getByRole('button', { name: 'bird' })).toHaveClass(
-        BUTTON_VARIANT.naked
-      )
+    expect(await screen.findByRole('button', { name: 'bird' })).toHaveClass(
+      BUTTON_VARIANT.naked
     )
 
-    await waitFor(() =>
-      expect(screen.getByRole('button', { name: 'cat' })).toHaveClass(
-        BUTTON_VARIANT.secondary
-      )
+    expect(await screen.findByRole('button', { name: 'cat' })).toHaveClass(
+      BUTTON_VARIANT.secondary
     )
   })
 })

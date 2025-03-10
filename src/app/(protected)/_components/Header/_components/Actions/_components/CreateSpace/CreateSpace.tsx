@@ -2,11 +2,11 @@
 
 import { FC, useState } from 'react'
 import Button from '@/components/Button'
-import Modal from './_components/Modal'
+import Modal from '@/components/Modal'
+import Form from './_components/Form'
 
 const CreateSpace: FC = () => {
   const [isCreateSpaceModalOpen, setIsCreateSpaceModalOpen] = useState(false)
-  const onClose = (): void => setIsCreateSpaceModalOpen(false)
 
   return (
     <div>
@@ -17,7 +17,14 @@ const CreateSpace: FC = () => {
       >
         Create Spaces
       </Button>
-      {isCreateSpaceModalOpen && <Modal onClose={onClose} />}
+      {isCreateSpaceModalOpen && (
+        <Modal
+          title="Create a new space"
+          onClose={() => setIsCreateSpaceModalOpen(false)}
+        >
+          <Form />
+        </Modal>
+      )}
     </div>
   )
 }
