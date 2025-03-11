@@ -44,7 +44,9 @@ describe('Guard', () => {
 
     render(<Guard>Hello world</Guard>)
 
-    expect(screen.getByText('Loading...')).toBeInTheDocument()
+    expect(
+      screen.getByText('Please wait, we are syncing the metaverse...')
+    ).toBeInTheDocument()
   })
 
   test('renders loading when useUser is loading', () => {
@@ -60,7 +62,9 @@ describe('Guard', () => {
 
     render(<Guard>Hello world</Guard>)
 
-    expect(screen.getByText('Loading...')).toBeInTheDocument()
+    expect(
+      screen.getByText('Please wait, we are syncing the metaverse...')
+    ).toBeInTheDocument()
   })
 
   test('renders nothing when useSession returns false', () => {

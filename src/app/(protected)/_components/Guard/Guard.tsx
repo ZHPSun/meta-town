@@ -3,6 +3,7 @@
 import { FC, ReactNode } from 'react'
 import useSession from '@/hooks/useSession'
 import useUser from '@/hooks/useUser'
+import GlobalLoading from '@/components/GlobalLoading'
 import Form from './_components/Form'
 
 interface Props {
@@ -14,7 +15,7 @@ const CreateUserGuard: FC<Props> = ({ children }) => {
   const { data: session, isLoading: isSessionLoading } = useSession()
 
   if (isUserLoading || isSessionLoading) {
-    return <div>Loading...</div>
+    return <GlobalLoading />
   }
 
   if (!session) {
