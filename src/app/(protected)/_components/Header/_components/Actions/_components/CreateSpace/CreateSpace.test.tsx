@@ -1,6 +1,10 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import useUser from '@/hooks/useUser'
 import CreateSpace from './CreateSpace'
+
+vi.mock('@/hooks/useUser')
+const useUserMock = vi.mocked(useUser)
 
 describe('CreateSpace', () => {
   test('renders button', () => {
@@ -20,6 +24,10 @@ describe('CreateSpace', () => {
   })
 
   test('triggers modal when button is clicked', async () => {
+    useUserMock.mockReturnValue({
+      data: { id: 'AUTH_ID' },
+    } as unknown as ReturnType<typeof useUser>)
+
     render(<CreateSpace />)
 
     await userEvent.click(screen.getByRole('button', { name: 'Create Spaces' }))
@@ -28,6 +36,10 @@ describe('CreateSpace', () => {
   })
 
   test('triggers then close the modal when button is clicked', async () => {
+    useUserMock.mockReturnValue({
+      data: { id: 'AUTH_ID' },
+    } as unknown as ReturnType<typeof useUser>)
+
     render(<CreateSpace />)
 
     await userEvent.click(screen.getByRole('button', { name: 'Create Spaces' }))

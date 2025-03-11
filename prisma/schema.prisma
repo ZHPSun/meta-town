@@ -17,13 +17,11 @@ model User {
 }
 
 model Space {
-  id         Int      @id @default(autoincrement())
-  auth_id    String   @unique @db.Uuid()
-  name       String
-  created_at DateTime @default(now())
-  owner      User     @relation("user_owned_spaces", fields: [owner_id], references: [id])
-  owner_id   Int
-  users      User[]   @relation("users_joined_spaces")
-
+  id          Int      @id @default(autoincrement())
+  name        String
+  created_at  DateTime @default(now())
+  owner       User     @relation("user_owned_spaces",fields: [owner_id], references: [id])
+  owner_id    Int
+  users       User[]   @relation("users_joined_spaces")
   @@map("spaces")
 }

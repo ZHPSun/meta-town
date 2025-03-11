@@ -135,3 +135,5 @@ dist
 storybook-static
 
 database.types.ts
+
+.vscode
