@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import useUser from '@/hooks/useUser'
 import Stage, { INITIAL_COORDINATES, WALLS } from './Stage'
 import * as consts from './consts'
 
@@ -17,20 +18,61 @@ vi.mock('./consts', async (importOriginal) => {
   }
 })
 
+vi.mock('@/hooks/useUser')
+const useUserMock = vi.mocked(useUser)
+
+afterEach(() => {
+  vi.resetAllMocks()
+})
+
 describe('Stage', () => {
-  test('renders Placement and Character', () => {
+  test('does not render stage if there is no user', () => {
+    useUserMock.mockReturnValue({
+      data: null,
+      isLoading: false,
+    } as unknown as ReturnType<typeof useUser>)
+    const { container } = render(<Stage />)
+
+    expect(container).toBeEmptyDOMElement()
+  })
+
+  test('renders Placement and Character', async () => {
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+      isLoading: false,
+    } as unknown as ReturnType<typeof useUser>)
     render(<Stage />)
 
-    expect(screen.getByLabelText('Character')).toBeInTheDocument()
+    expect(await screen.findByLabelText('dog')).toBeInTheDocument()
   })
 
   test('renders walls', () => {
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+      isLoading: false,
+    } as unknown as ReturnType<typeof useUser>)
     render(<Stage />)
 
     expect(screen.getAllByLabelText('Wall')).toHaveLength(WALLS.length)
   })
 
   test('renders TiledMap', () => {
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+      isLoading: false,
+    } as unknown as ReturnType<typeof useUser>)
     render(<Stage />)
 
     expect(screen.getAllByRole('gridcell')).toHaveLength(
@@ -39,6 +81,14 @@ describe('Stage', () => {
   })
 
   test('moves character', async () => {
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+      isLoading: false,
+    } as unknown as ReturnType<typeof useUser>)
     const user = userEvent.setup()
     render(<Stage />)
 
@@ -52,6 +102,14 @@ describe('Stage', () => {
   })
 
   test('useCenterCharacter change the style successfully', () => {
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+      isLoading: false,
+    } as unknown as ReturnType<typeof useUser>)
     render(<Stage />)
 
     expect(screen.getByLabelText('stage').style.transform).toBe(
@@ -76,6 +134,14 @@ describe('Stage', () => {
   })
 
   test('zooms in', async () => {
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+      isLoading: false,
+    } as unknown as ReturnType<typeof useUser>)
     const user = userEvent.setup()
 
     render(<Stage />)
@@ -88,6 +154,14 @@ describe('Stage', () => {
   })
 
   test('zooms out', async () => {
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+      isLoading: false,
+    } as unknown as ReturnType<typeof useUser>)
     const user = userEvent.setup()
 
     render(<Stage />)
@@ -100,6 +174,14 @@ describe('Stage', () => {
   })
 
   test('renders OtherCharacter', () => {
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+      isLoading: false,
+    } as unknown as ReturnType<typeof useUser>)
     render(<Stage />)
 
     expect(screen.getByLabelText('Placement: 20, 20')).toHaveStyle({

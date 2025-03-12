@@ -2,6 +2,7 @@
 
 import { FC } from 'react'
 import IconButton from '@/components/IconButton'
+import useUser from '@/hooks/useUser'
 import Character from './_components/Character'
 import OtherCharacter from './_components/OtherCharacter'
 import Placement, { type Coordinates } from './_components/Placement'
@@ -36,6 +37,12 @@ const Stage: FC = () => {
     zoom
   )
 
+  const { data: user } = useUser()
+
+  if (!user) {
+    return null
+  }
+
   return (
     <div className="relative flex size-full items-center justify-center bg-neutral-500">
       <div
@@ -54,7 +61,7 @@ const Stage: FC = () => {
           }}
         >
           <Placement coordinates={characterCoordinates} ref={characterRef}>
-            <Character />
+            <Character avatar={user.avatar} />
           </Placement>
 
           <Placement coordinates={{ x: 20, y: 20, direction: 'N' }}>

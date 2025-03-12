@@ -1,10 +1,26 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { VARIANT } from '@/components/Button'
+import useUser from '@/hooks/useUser'
 import Space from './page'
+
+vi.mock('@/hooks/useUser')
+const useUserMock = vi.mocked(useUser)
+
+afterEach(() => {
+  vi.resetAllMocks()
+})
 
 describe('Space', () => {
   test('renders Header', () => {
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+      isLoading: false,
+    } as unknown as ReturnType<typeof useUser>)
     render(<Space />)
 
     expect(
@@ -13,12 +29,28 @@ describe('Space', () => {
   })
 
   test('renders Stage', () => {
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+      isLoading: false,
+    } as unknown as ReturnType<typeof useUser>)
     render(<Space />)
 
     expect(screen.getByRole('grid', { name: 'Tiled Map' })).toBeInTheDocument()
   })
 
   test('renders Footer', () => {
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+      isLoading: false,
+    } as unknown as ReturnType<typeof useUser>)
     render(<Space />)
 
     expect(
@@ -27,6 +59,14 @@ describe('Space', () => {
   })
 
   test('toggles ChatSideWindow', async () => {
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+      isLoading: false,
+    } as unknown as ReturnType<typeof useUser>)
     const user = userEvent.setup()
 
     render(<Space />)
@@ -53,6 +93,14 @@ describe('Space', () => {
   })
 
   test('closes ChatSideWindow on click side window close button', async () => {
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+      isLoading: false,
+    } as unknown as ReturnType<typeof useUser>)
     const user = userEvent.setup()
 
     render(<Space />)
@@ -71,6 +119,14 @@ describe('Space', () => {
   })
 
   test('toggles ParticipantsSideWindow', async () => {
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+      isLoading: false,
+    } as unknown as ReturnType<typeof useUser>)
     const user = userEvent.setup()
 
     render(<Space />)
@@ -101,6 +157,14 @@ describe('Space', () => {
   })
 
   test('closes ParticipantsSideWindow on click side window close button', async () => {
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+      isLoading: false,
+    } as unknown as ReturnType<typeof useUser>)
     const user = userEvent.setup()
 
     render(<Space />)
@@ -121,6 +185,14 @@ describe('Space', () => {
   })
 
   test('renders Meeting', () => {
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+      isLoading: false,
+    } as unknown as ReturnType<typeof useUser>)
     render(<Space />)
 
     expect(screen.getByRole('region', { name: 'Map View' })).toBeInTheDocument()
