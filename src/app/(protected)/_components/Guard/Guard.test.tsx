@@ -16,7 +16,7 @@ describe('Guard', () => {
 
   test('calls useSession and useUser', () => {
     useSessionMock.mockReturnValue({
-      data: true,
+      data: {},
       isLoading: false,
     } as unknown as ReturnType<typeof useSession>)
 
@@ -51,7 +51,7 @@ describe('Guard', () => {
 
   test('renders loading when useUser is loading', () => {
     useSessionMock.mockReturnValue({
-      data: true,
+      data: {},
       isLoading: false,
     } as unknown as ReturnType<typeof useSession>)
 
@@ -85,7 +85,7 @@ describe('Guard', () => {
 
   test('renders form on top of children when user is not found', () => {
     useSessionMock.mockReturnValue({
-      data: true,
+      data: {},
       isLoading: false,
     } as unknown as ReturnType<typeof useSession>)
 
@@ -104,7 +104,7 @@ describe('Guard', () => {
 
   test('renders only children when user is found', () => {
     useSessionMock.mockReturnValue({
-      data: true,
+      data: {},
       isLoading: false,
     } as unknown as ReturnType<typeof useSession>)
 

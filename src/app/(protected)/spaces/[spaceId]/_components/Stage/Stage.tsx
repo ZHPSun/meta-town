@@ -12,6 +12,7 @@ import useCenterCharacter from './_hooks/useCenterCharacter'
 import useMovement from './_hooks/useMovement'
 import useZoom from './_hooks/useZoom'
 import { DIMENSIONS } from './consts'
+import useUpdateSpacePosition from './_hooks/useUpdateSpacePosition'
 
 export const INITIAL_COORDINATES: Coordinates = {
   x: 0,
@@ -36,6 +37,8 @@ const Stage: FC = () => {
     characterCoordinates,
     zoom
   )
+
+  useUpdateSpacePosition(characterCoordinates)
 
   const { data: user } = useUser()
 

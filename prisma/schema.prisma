@@ -5,23 +5,55 @@ datasource db {
 }
 
 model User {
-  id            Int      @id @default(autoincrement())
-  auth_id       String   @unique @db.Uuid()
-  display_name  String
-  avatar        String
-  created_at    DateTime @default(now())
-  owned_spaces  Space[]  @relation("user_owned_spaces")
-  joined_spaces Space[]  @relation("users_joined_spaces")
+  id Int @id @default(autoincrement())
+
+  auth_id      String   @unique @db.Uuid()
+  display_name String
+  avatar       String
+  created_at   DateTime @default(now())
+
+  owned_spaces     Space[]         @relation("user_owned_spaces")
+  joined_spaces    Space[]         @relation("users_joined_spaces")
+  spaces_positions UserSpacePosition[]
 
   @@map("users")
 }
 
 model Space {
-  id          Int      @id @default(autoincrement())
-  name        String
-  created_at  DateTime @default(now())
-  owner       User     @relation("user_owned_spaces",fields: [owner_id], references: [id])
-  owner_id    Int
-  users       User[]   @relation("users_joined_spaces")
+  id       Int @id @default(autoincrement())
+  owner_id Int
+
+  name       String
+  created_at DateTime @default(now())
+
+  owner           User            @relation("user_owned_spaces", fields: [owner_id], references: [id])
+  users           User[]          @relation("users_joined_spaces")
+  users_positions UserSpacePosition[]
+
   @@map("spaces")
+}
+
+enum Direction {
+  N
+  E
+  S
+  W
+}
+
+model UserSpacePosition {
+  id       Int @id @default(autoincrement())
+  user_id  Int
+  space_id Int
+
+  x          Int?
+  y          Int?
+  direction  Direction?
+  created_at DateTime   @default(now())
+  updated_at  DateTime   @default(now()) @updatedAt
+
+  user  User  @relation(fields: [user_id], references: [id])
+  space Space @relation(fields: [space_id], references: [id])
+
+  @@unique([user_id, space_id])
+  @@map("user_space_positions")
 }

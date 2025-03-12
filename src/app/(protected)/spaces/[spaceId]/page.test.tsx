@@ -1,17 +1,21 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { VARIANT } from '@/components/Button'
+import { useParams } from 'next/navigation'
 import useUser from '@/hooks/useUser'
+import { VARIANT } from '@/components/Button'
 import Space from './page'
 
 vi.mock('@/hooks/useUser')
 const useUserMock = vi.mocked(useUser)
 
-afterEach(() => {
-  vi.resetAllMocks()
-})
+vi.mock('next/navigation')
+const mockParamsMock = vi.mocked(useParams)
 
 describe('Space', () => {
+  afterEach(() => {
+    vi.resetAllMocks()
+  })
+
   test('renders Header', () => {
     useUserMock.mockReturnValue({
       data: {
@@ -19,8 +23,12 @@ describe('Space', () => {
         displayName: 'John Doe',
         avatar: 'dog',
       },
-      isLoading: false,
     } as unknown as ReturnType<typeof useUser>)
+
+    mockParamsMock.mockReturnValue({
+      spaceId: 'SPACE_ID',
+    })
+
     render(<Space />)
 
     expect(
@@ -35,8 +43,11 @@ describe('Space', () => {
         displayName: 'John Doe',
         avatar: 'dog',
       },
-      isLoading: false,
     } as unknown as ReturnType<typeof useUser>)
+
+    mockParamsMock.mockReturnValue({
+      spaceId: 'SPACE_ID',
+    })
     render(<Space />)
 
     expect(screen.getByRole('grid', { name: 'Tiled Map' })).toBeInTheDocument()
@@ -49,8 +60,11 @@ describe('Space', () => {
         displayName: 'John Doe',
         avatar: 'dog',
       },
-      isLoading: false,
     } as unknown as ReturnType<typeof useUser>)
+
+    mockParamsMock.mockReturnValue({
+      spaceId: 'SPACE_ID',
+    })
     render(<Space />)
 
     expect(
@@ -65,8 +79,11 @@ describe('Space', () => {
         displayName: 'John Doe',
         avatar: 'dog',
       },
-      isLoading: false,
     } as unknown as ReturnType<typeof useUser>)
+
+    mockParamsMock.mockReturnValue({
+      spaceId: 'SPACE_ID',
+    })
     const user = userEvent.setup()
 
     render(<Space />)
@@ -99,8 +116,11 @@ describe('Space', () => {
         displayName: 'John Doe',
         avatar: 'dog',
       },
-      isLoading: false,
     } as unknown as ReturnType<typeof useUser>)
+
+    mockParamsMock.mockReturnValue({
+      spaceId: 'SPACE_ID',
+    })
     const user = userEvent.setup()
 
     render(<Space />)
@@ -125,8 +145,11 @@ describe('Space', () => {
         displayName: 'John Doe',
         avatar: 'dog',
       },
-      isLoading: false,
     } as unknown as ReturnType<typeof useUser>)
+
+    mockParamsMock.mockReturnValue({
+      spaceId: 'SPACE_ID',
+    })
     const user = userEvent.setup()
 
     render(<Space />)
@@ -163,8 +186,11 @@ describe('Space', () => {
         displayName: 'John Doe',
         avatar: 'dog',
       },
-      isLoading: false,
     } as unknown as ReturnType<typeof useUser>)
+
+    mockParamsMock.mockReturnValue({
+      spaceId: 'SPACE_ID',
+    })
     const user = userEvent.setup()
 
     render(<Space />)
@@ -191,8 +217,11 @@ describe('Space', () => {
         displayName: 'John Doe',
         avatar: 'dog',
       },
-      isLoading: false,
     } as unknown as ReturnType<typeof useUser>)
+
+    mockParamsMock.mockReturnValue({
+      spaceId: 'SPACE_ID',
+    })
     render(<Space />)
 
     expect(screen.getByRole('region', { name: 'Map View' })).toBeInTheDocument()

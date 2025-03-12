@@ -10,9 +10,13 @@ vi.mock('@/hooks/useUser')
 const useUserMock = vi.mocked(useUser)
 
 describe('ProtectedLayout', () => {
-  beforeEach(() => {
+  afterEach(() => {
+    vi.resetAllMocks()
+  })
+
+  test('renders Guard', () => {
     useSessionMock.mockReturnValue({
-      data: true,
+      data: {},
       isLoading: false,
     } as unknown as ReturnType<typeof useSession>)
 
@@ -20,13 +24,7 @@ describe('ProtectedLayout', () => {
       data: {},
       isLoading: false,
     } as unknown as ReturnType<typeof useUser>)
-  })
 
-  afterEach(() => {
-    vi.resetAllMocks()
-  })
-
-  test('renders Guard', () => {
     render(<ProtectedLayout>Hello world</ProtectedLayout>)
 
     expect(useSession).toHaveBeenCalled()
@@ -34,6 +32,16 @@ describe('ProtectedLayout', () => {
   })
 
   test('passes children to Guard', () => {
+    useSessionMock.mockReturnValue({
+      data: {},
+      isLoading: false,
+    } as unknown as ReturnType<typeof useSession>)
+
+    useUserMock.mockReturnValue({
+      data: {},
+      isLoading: false,
+    } as unknown as ReturnType<typeof useUser>)
+
     render(<ProtectedLayout>Hello world</ProtectedLayout>)
 
     expect(screen.getByText('Hello world')).toBeInTheDocument()

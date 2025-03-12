@@ -16,7 +16,7 @@ describe('useSession', () => {
 
   test('calls useSWR with key and fetcher', () => {
     useSWRMock.mockReturnValue({
-      data: true,
+      data: {},
       isLoading: false,
     } as unknown as ReturnType<typeof useSWR>)
 
@@ -27,14 +27,14 @@ describe('useSession', () => {
 
   test('returns result from useSWR', () => {
     useSWRMock.mockReturnValue({
-      data: true,
+      data: {},
       isLoading: false,
     } as unknown as ReturnType<typeof useSWR>)
 
     const { result } = renderHook(() => useSession())
 
     expect(result.current).toEqual({
-      data: true,
+      data: {},
       isLoading: false,
     })
   })
