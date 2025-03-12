@@ -12,10 +12,11 @@ const EditProfile: FC = () => {
     <div>
       <Button
         variant="secondary"
-        prefix={{ icon: 'circle-user-round' }}
+        prefix={{ icon: 'user-pen' }}
         onClick={() => setIsEditProfileOpen(true)}
+        className="w-full"
       >
-        S.T.
+        Edit Profile
       </Button>
       {isEditProfileOpen && (
         <Modal

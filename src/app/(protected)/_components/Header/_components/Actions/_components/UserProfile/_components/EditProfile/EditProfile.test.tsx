@@ -6,7 +6,11 @@ describe('EditProfile', () => {
   test('renders button', () => {
     render(<EditProfile />)
 
-    expect(screen.getByRole('button', { name: 'S.T.' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', {
+        name: 'Edit Profile',
+      })
+    ).toBeInTheDocument()
   })
 
   test('does not render modal initially', () => {
@@ -22,7 +26,7 @@ describe('EditProfile', () => {
 
     render(<EditProfile />)
 
-    await user.click(screen.getByRole('button', { name: 'S.T.' }))
+    await user.click(screen.getByRole('button', { name: 'Edit Profile' }))
 
     expect(
       screen.getByRole('heading', { name: 'Edit Your Profile' })
@@ -34,7 +38,7 @@ describe('EditProfile', () => {
 
     render(<EditProfile />)
 
-    await user.click(screen.getByRole('button', { name: 'S.T.' }))
+    await user.click(screen.getByRole('button', { name: 'Edit Profile' }))
     await user.click(screen.getByRole('button', { name: 'Close' }))
     expect(
       screen.queryByRole('heading', { name: 'Edit Your Profile' })

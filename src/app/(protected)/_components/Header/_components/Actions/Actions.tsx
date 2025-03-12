@@ -5,11 +5,12 @@ import Button from '@/components/Button'
 import Dropdown from '@/components/Dropdown'
 import VerticalList from '@/components/VerticalList'
 import CreateSpace from './_components/CreateSpace'
-import EditProfile from './_components/EditProfile'
+import UserProfile from './_components/UserProfile'
 
 const Actions: FC = () => (
   <div className="flex gap-4">
-    <EditProfile />
+    <UserProfile />
+
     <Button variant="naked" prefix={{ icon: 'circle-help' }}>
       Resources
     </Button>
@@ -26,21 +27,19 @@ const Actions: FC = () => (
         </Button>
       )}
     >
-      <div>
-        <VerticalList>
-          <VerticalList.Item>
-            <Button variant="naked">English</Button>
-          </VerticalList.Item>
-          <VerticalList.Divider />
-          <VerticalList.Item>
-            <Button variant="naked">Chinese</Button>
-          </VerticalList.Item>
-          <VerticalList.Divider />
-          <VerticalList.Item>
-            <Button variant="naked">日本語</Button>
-          </VerticalList.Item>
-        </VerticalList>
-      </div>
+      <VerticalList>
+        <VerticalList.Item>
+          <Button variant="secondary">English</Button>
+        </VerticalList.Item>
+        <VerticalList.Divider />
+        <VerticalList.Item>
+          <Button variant="secondary">Chinese</Button>
+        </VerticalList.Item>
+        <VerticalList.Divider />
+        <VerticalList.Item>
+          <Button variant="secondary">日本語</Button>
+        </VerticalList.Item>
+      </VerticalList>
     </Dropdown>
 
     <CreateSpace />
