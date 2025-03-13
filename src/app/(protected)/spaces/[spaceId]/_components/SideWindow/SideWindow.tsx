@@ -8,7 +8,7 @@ interface Props {
 }
 
 const SideWindow: FC<Props> = ({ children, header, onClose }) => (
-  <div className="absolute bottom-0 right-0 top-0 w-96 overflow-hidden bg-gray-100">
+  <div className="absolute bottom-0 right-0 top-0 flex w-96 flex-col bg-gray-100">
     <div className="flex items-center justify-between px-6 py-4">
       {header}
 
@@ -21,7 +21,7 @@ const SideWindow: FC<Props> = ({ children, header, onClose }) => (
       />
     </div>
 
-    <div className="flex items-center justify-center overflow-auto">
+    <div className="flex flex-1 items-center justify-center overflow-auto">
       {children}
     </div>
   </div>

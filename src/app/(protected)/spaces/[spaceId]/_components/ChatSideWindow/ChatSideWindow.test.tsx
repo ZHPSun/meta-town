@@ -9,6 +9,20 @@ describe('ChatSideWindow', () => {
     expect(screen.getByText('Chat')).toBeInTheDocument()
   })
 
+  test('renders Messages', () => {
+    render(<ChatSideWindow onClose={vi.fn()} />)
+
+    expect(screen.getAllByRole('region', { name: 'message' })).toHaveLength(6)
+  })
+
+  test('renders Form', async () => {
+    render(<ChatSideWindow onClose={vi.fn()} />)
+
+    expect(
+      await screen.findByRole('button', { name: 'Send' })
+    ).toBeInTheDocument()
+  })
+
   test('renders side window', () => {
     render(<ChatSideWindow onClose={vi.fn()} />)
 
