@@ -67,7 +67,9 @@ describe('UserProfile', () => {
     ).toBeInTheDocument()
 
     expect(
-      within(screen.getByRole('menu')).getByRole('button', { name: 'logout' })
+      await within(screen.getByRole('menu')).findByRole('button', {
+        name: 'Sign Out',
+      })
     ).toBeInTheDocument()
   })
 

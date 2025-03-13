@@ -2,12 +2,12 @@
 
 import { FC } from 'react'
 import Button from '@/components/Button'
-import IconButton from '@/components/IconButton'
 import Dropdown from '@/components/Dropdown'
 import VerticalList from '@/components/VerticalList'
 import useUser from '@/hooks/useUser'
 import useSession from '@/hooks/useSession'
 import EditProfile from './_components/EditProfile'
+import SignOut from './_components/SignOut'
 
 const UserProfile: FC = () => {
   const { data: user } = useUser()
@@ -37,7 +37,7 @@ const UserProfile: FC = () => {
           <EditProfile />
         </VerticalList.Item>
         <VerticalList.Item placement="right">
-          <IconButton icon="log-out" label="logout" variant="danger" />
+          <SignOut />
         </VerticalList.Item>
       </VerticalList>
     </Dropdown>
