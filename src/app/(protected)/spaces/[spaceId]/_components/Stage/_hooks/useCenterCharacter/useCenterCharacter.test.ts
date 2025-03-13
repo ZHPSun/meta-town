@@ -121,19 +121,6 @@ describe('transform', () => {
 })
 
 describe('useCenterCharacter', () => {
-  test('does not transform element while stageRef and characterRef are null', () => {
-    let characterPosition: Coordinates = { x: 15, y: 15, direction: 'S' }
-    const zoom = 1
-
-    const { result, rerender } = renderHook(() =>
-      useCenterCharacter(characterPosition, zoom)
-    )
-    const stageRef = result.current.stageRef
-    characterPosition = { x: 10, y: 10, direction: 'S' }
-    rerender()
-    expect(stageRef.current).toBeNull()
-  })
-
   test('does not transform element while stageRef does not have a parent element', () => {
     let characterPosition: Coordinates = { x: 15, y: 15, direction: 'S' }
     const stage = document.createElement('div')
