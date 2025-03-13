@@ -93,4 +93,25 @@ describe('Form', () => {
       expect(createSpaceMock).toHaveBeenCalled()
     })
   })
+
+  test('calls onCreated on form submit', async () => {
+    const AUTH_ID = 'AUTH_ID'
+    useUserMock.mockReturnValue({
+      data: { id: AUTH_ID },
+    } as unknown as ReturnType<typeof useUser>)
+
+    const onCreated = vi.fn()
+    const user = userEvent.setup()
+    render(<Form onCreated={onCreated} />)
+
+    await user.type(
+      screen.getByRole('textbox', { name: 'Space Name:' }),
+      'test'
+    )
+    await user.click(screen.getByRole('button', { name: 'Create Space' }))
+
+    await waitFor(() => {
+      expect(onCreated).toHaveBeenCalled()
+    })
+  })
 })

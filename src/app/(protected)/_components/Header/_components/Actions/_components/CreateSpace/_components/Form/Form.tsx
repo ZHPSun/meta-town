@@ -4,7 +4,11 @@ import useUser from '@/hooks/useUser'
 import TextField from '@/components/TextField'
 import createSpace from './_utils/createSpace'
 
-const Form: FC = () => {
+interface Props {
+  onCreated?: () => void
+}
+
+const Form: FC<Props> = ({ onCreated }) => {
   const { data: user } = useUser()
   const [isLoading, setIsLoading] = useState(false)
   const [spaceName, setSpaceName] = useState('')
@@ -29,6 +33,7 @@ const Form: FC = () => {
     setIsLoading(true)
     await createSpace(data)
     setIsLoading(false)
+    onCreated?.()
   }
 
   return (

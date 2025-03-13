@@ -22,7 +22,7 @@ const CreateSpace: FC = () => {
           title="Create a new space"
           onClose={() => setIsCreateSpaceModalOpen(false)}
         >
-          <Form />
+          <Form onCreated={() => setIsCreateSpaceModalOpen(false)} />
         </Modal>
       )}
     </div>
