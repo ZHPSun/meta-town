@@ -5,7 +5,7 @@ datasource db {
 }
 
 model User {
-  id String @id @default(uuid()) @db.Uuid()
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid()
 
   auth_id      String   @unique @db.Uuid()
   display_name String
@@ -20,7 +20,7 @@ model User {
 }
 
 model Space {
-  id       String @id @default(uuid()) @db.Uuid()
+  id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid()
   owner_id String @db.Uuid()
 
   name       String
@@ -41,7 +41,7 @@ enum Direction {
 }
 
 model UserSpacePosition {
-  id       String @id @default(uuid()) @db.Uuid()
+  id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid()
   user_id  String @db.Uuid()
   space_id String @db.Uuid()
 

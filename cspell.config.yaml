@@ -1,6 +1,7 @@
 words:
   - autodocs
   - autoincrement
+  - dbgenerated
   - Metaverse
   - supabase
 flagWords: null
