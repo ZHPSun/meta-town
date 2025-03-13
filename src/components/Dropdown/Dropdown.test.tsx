@@ -76,8 +76,10 @@ describe('Dropdown', () => {
     }
   )
 
-  test('closes the dropdown when clicked anywhere', async () => {
+  test('closes the dropdown when clicked item inside without interrupt the original click', async () => {
     const user = userEvent.setup()
+
+    const fn = vi.fn()
 
     render(
       <Dropdown
@@ -85,7 +87,7 @@ describe('Dropdown', () => {
           <Button onClick={toggle}>{isOpen ? 'Close' : 'Open'}</Button>
         )}
       >
-        <Button>Logout</Button>
+        <Button onClick={fn}>Logout</Button>
       </Dropdown>
     )
 
@@ -93,6 +95,33 @@ describe('Dropdown', () => {
 
     await user.click(screen.getByRole('button', { name: 'Logout' }))
 
+    expect(fn).toHaveBeenCalled()
+    expect(screen.queryByRole('menu')).not.toBeInTheDocument()
+  })
+
+  test('closes the dropdown when clicked item outside without  interrupt the original click', async () => {
+    const user = userEvent.setup()
+
+    const fn = vi.fn()
+
+    render(
+      <div>
+        <Dropdown
+          trigger={(toggle, isOpen) => (
+            <Button onClick={toggle}>{isOpen ? 'Close' : 'Open'}</Button>
+          )}
+        >
+          Hello world
+        </Dropdown>
+        <Button onClick={fn}>Login</Button>
+      </div>
+    )
+
+    await user.click(screen.getByRole('button', { name: 'Open' }))
+
+    await user.click(screen.getByRole('button', { name: 'Login' }))
+
+    expect(fn).toHaveBeenCalled()
     expect(screen.queryByRole('menu')).not.toBeInTheDocument()
   })
 })

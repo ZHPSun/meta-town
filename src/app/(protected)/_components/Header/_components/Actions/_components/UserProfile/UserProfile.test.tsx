@@ -73,6 +73,92 @@ describe('UserProfile', () => {
     ).toBeInTheDocument()
   })
 
+  test('does not render edit profile modal initially', async () => {
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+      isLoading: false,
+    } as unknown as ReturnType<typeof useUser>)
+
+    useSessionMock.mockReturnValue({
+      data: {
+        user: { id: 'ID', email: 'test@example.com' },
+      },
+      isLoading: false,
+    } as unknown as ReturnType<typeof useSession>)
+
+    const user = userEvent.setup()
+
+    render(<UserProfile />)
+
+    await user.click(screen.getByRole('button', { name: 'John Doe' }))
+
+    expect(
+      screen.queryByRole('heading', { name: 'Edit Your Profile' })
+    ).not.toBeInTheDocument()
+  })
+
+  test('opens edit profile modal when button is clicked', async () => {
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+      isLoading: false,
+    } as unknown as ReturnType<typeof useUser>)
+
+    useSessionMock.mockReturnValue({
+      data: {
+        user: { id: 'ID', email: 'test@example.com' },
+      },
+      isLoading: false,
+    } as unknown as ReturnType<typeof useSession>)
+
+    const user = userEvent.setup()
+
+    render(<UserProfile />)
+
+    await user.click(screen.getByRole('button', { name: 'John Doe' }))
+    await user.click(screen.getByRole('button', { name: 'Edit Profile' }))
+
+    expect(
+      screen.getByRole('heading', { name: 'Edit Your Profile' })
+    ).toBeInTheDocument()
+  })
+
+  test('closes edit profile modal when close button is clicked', async () => {
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+      isLoading: false,
+    } as unknown as ReturnType<typeof useUser>)
+
+    useSessionMock.mockReturnValue({
+      data: {
+        user: { id: 'ID', email: 'test@example.com' },
+      },
+      isLoading: false,
+    } as unknown as ReturnType<typeof useSession>)
+
+    const user = userEvent.setup()
+
+    render(<UserProfile />)
+
+    await user.click(screen.getByRole('button', { name: 'John Doe' }))
+    await user.click(screen.getByRole('button', { name: 'Edit Profile' }))
+    await user.click(screen.getByRole('button', { name: 'Close' }))
+    expect(
+      screen.queryByRole('heading', { name: 'Edit Your Profile' })
+    ).not.toBeInTheDocument()
+  })
+
   test('renders user display name', () => {
     useUserMock.mockReturnValue({
       data: {

@@ -1,17 +1,19 @@
 'use client'
 
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import Button from '@/components/Button'
 import Dropdown from '@/components/Dropdown'
+import Modal from '@/components/Modal'
 import VerticalList from '@/components/VerticalList'
-import useUser from '@/hooks/useUser'
 import useSession from '@/hooks/useSession'
-import EditProfile from './_components/EditProfile'
+import useUser from '@/hooks/useUser'
+import Form from './_components/Form'
 import SignOut from './_components/SignOut'
 
 const UserProfile: FC = () => {
   const { data: user } = useUser()
   const { data: session } = useSession()
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
 
   if (!session) {
     return
@@ -20,27 +22,44 @@ const UserProfile: FC = () => {
   const displayName = user?.displayName ?? session.user.email
 
   return (
-    <Dropdown
-      trigger={(toggle, isOpen) => (
-        <Button
-          prefix={{ icon: 'circle-user-round', label: 'avatar' }}
-          onClick={toggle}
-          variant={isOpen ? 'secondary' : 'naked'}
-          aria-label={displayName}
+    <div>
+      <Dropdown
+        trigger={(toggle, isOpen) => (
+          <Button
+            prefix={{ icon: 'circle-user-round', label: 'avatar' }}
+            onClick={toggle}
+            variant={isOpen ? 'secondary' : 'naked'}
+            aria-label={displayName}
+          >
+            {displayName}
+          </Button>
+        )}
+      >
+        <VerticalList>
+          <VerticalList.Item>
+            <Button
+              variant="secondary"
+              prefix={{ icon: 'user-pen' }}
+              onClick={() => setIsEditModalOpen(true)}
+              className="w-full"
+            >
+              Edit Profile
+            </Button>
+          </VerticalList.Item>
+          <VerticalList.Item placement="right">
+            <SignOut />
+          </VerticalList.Item>
+        </VerticalList>
+      </Dropdown>
+      {isEditModalOpen && (
+        <Modal
+          title="Edit Your Profile"
+          onClose={() => setIsEditModalOpen(false)}
         >
-          {displayName}
-        </Button>
+          <Form />
+        </Modal>
       )}
-    >
-      <VerticalList>
-        <VerticalList.Item>
-          <EditProfile />
-        </VerticalList.Item>
-        <VerticalList.Item placement="right">
-          <SignOut />
-        </VerticalList.Item>
-      </VerticalList>
-    </Dropdown>
+    </div>
   )
 }
 
