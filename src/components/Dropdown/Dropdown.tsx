@@ -1,7 +1,7 @@
 'use client'
 
 import clsx from 'clsx'
-import { FC, ReactNode, useState } from 'react'
+import { FC, ReactNode, useEffect, useRef, useState } from 'react'
 
 interface Props {
   trigger: (toggle: () => void, isOpen: boolean) => ReactNode
@@ -22,16 +22,37 @@ const Dropdown: FC<Props> = ({
   position = 'bottom-left',
 }) => {
   const [isOpen, setIsOpen] = useState(false)
+  const triggerContainerRef = useRef<HTMLDivElement>(null)
+
   const toggle = (): void => setIsOpen((previousIsOpen) => !previousIsOpen)
+
+  useEffect(() => {
+    const handleClick = (event: MouseEvent): void => {
+      if (
+        !(event.target instanceof Element) ||
+        triggerContainerRef.current?.contains(event.target)
+      ) {
+        return
+      }
+
+      setIsOpen(false)
+    }
+
+    document.addEventListener('click', handleClick)
+
+    return (): void => {
+      document.removeEventListener('click', handleClick)
+    }
+  }, [])
 
   return (
     <div className="relative">
-      <div>{trigger(toggle, isOpen)}</div>
+      <div ref={triggerContainerRef}>{trigger(toggle, isOpen)}</div>
       {isOpen && (
         <div
           role="menu"
           className={clsx(
-            'absolute z-50 mt-2 w-[300px] rounded rounded-md border border-neutral-300 bg-white px-2 py-4 shadow-lg ring-1 ring-black ring-opacity-5',
+            'absolute z-50 mt-2 w-60 rounded rounded-md border border-neutral-300 bg-white px-2 py-4 shadow-lg',
             POSITION[position]
           )}
         >

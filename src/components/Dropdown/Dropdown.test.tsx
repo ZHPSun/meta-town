@@ -75,4 +75,24 @@ describe('Dropdown', () => {
       expect(screen.getByRole('menu')).toHaveClass(POSITION[position])
     }
   )
+
+  test('closes the dropdown when clicked anywhere', async () => {
+    const user = userEvent.setup()
+
+    render(
+      <Dropdown
+        trigger={(toggle, isOpen) => (
+          <Button onClick={toggle}>{isOpen ? 'Close' : 'Open'}</Button>
+        )}
+      >
+        <Button>Logout</Button>
+      </Dropdown>
+    )
+
+    await user.click(screen.getByRole('button', { name: 'Open' }))
+
+    await user.click(screen.getByRole('button', { name: 'Logout' }))
+
+    expect(screen.queryByRole('menu')).not.toBeInTheDocument()
+  })
 })
