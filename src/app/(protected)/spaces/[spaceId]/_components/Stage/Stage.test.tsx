@@ -228,7 +228,7 @@ describe('Stage', () => {
 
     expect(updateSpacePosition).toHaveBeenCalledWith({
       userId: 'USER_ID',
-      spaceId: parseInt(spaceId),
+      spaceId,
       coordinates: { x: 0, y: 1, direction: 'S' },
     })
 

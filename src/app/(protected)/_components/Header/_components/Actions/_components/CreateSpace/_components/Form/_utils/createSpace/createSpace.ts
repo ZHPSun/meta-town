@@ -2,7 +2,7 @@ import createSupabaseClient from '@/utils/createSupabaseClient'
 
 interface Data {
   name: string
-  ownerId: number
+  ownerId: string
 }
 
 const createSpace = async (data: Data): Promise<void> => {

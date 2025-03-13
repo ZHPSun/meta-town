@@ -2,8 +2,8 @@ import createSupabaseClient from '@/utils/createSupabaseClient'
 import { Coordinates } from '../../../../_components/Placement'
 
 interface Data {
-  userId: number
-  spaceId: number
+  userId: string
+  spaceId: string
   coordinates: Coordinates
 }
 

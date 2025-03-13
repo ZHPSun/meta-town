@@ -32,7 +32,7 @@ const useUpdateSpacePosition = (characterCoordinates: Coordinates): void => {
 
         await updateSpacePosition({
           userId: user.id,
-          spaceId: parseInt(spaceId),
+          spaceId,
           coordinates,
         })
 

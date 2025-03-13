@@ -94,7 +94,7 @@ describe('useUpdateSpacePosition', () => {
     expect(updateSpacePosition).toBeCalledTimes(1)
     expect(updateSpacePosition).toBeCalledWith({
       userId,
-      spaceId: parseInt(spaceId),
+      spaceId,
       coordinates: newCoordinates,
     })
   })
@@ -131,7 +131,7 @@ describe('useUpdateSpacePosition', () => {
     expect(updateSpacePosition).toBeCalledTimes(1)
     expect(updateSpacePosition).toBeCalledWith({
       userId,
-      spaceId: parseInt(spaceId),
+      spaceId,
       coordinates: coordinates1st,
     })
 
@@ -149,7 +149,7 @@ describe('useUpdateSpacePosition', () => {
 
     expect(updateSpacePosition).toBeCalledWith({
       userId,
-      spaceId: parseInt(spaceId),
+      spaceId,
       coordinates: coordinates2nd,
     })
   })

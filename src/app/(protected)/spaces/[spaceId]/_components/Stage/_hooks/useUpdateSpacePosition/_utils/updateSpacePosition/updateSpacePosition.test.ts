@@ -7,8 +7,8 @@ const createSupabaseClientMock = vi.mocked(createSupabaseClient)
 describe('updateSpacePosition', () => {
   test('calls supabase upsert with data', async () => {
     const data = {
-      userId: 1,
-      spaceId: 2,
+      userId: 'USER_ID',
+      spaceId: 'SPACE_ID',
       coordinates: { x: 3, y: 4, direction: 'N' } as const,
     }
 

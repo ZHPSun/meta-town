@@ -6,7 +6,7 @@ const createSupabaseClientMock = vi.mocked(createSupabaseClient)
 
 describe('CreateSpace', () => {
   test('creates a new space', async () => {
-    const data = { name: 'Space', ownerId: 1 }
+    const data = { name: 'Space', ownerId: 'OWNER_ID' }
 
     const supabaseClient = {
       from: vi.fn().mockReturnValue({

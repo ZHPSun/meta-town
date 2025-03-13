@@ -5,7 +5,7 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid()) @db.Uuid()
 
   auth_id      String   @unique @db.Uuid()
   display_name String
@@ -20,8 +20,8 @@ model User {
 }
 
 model Space {
-  id       Int @id @default(autoincrement())
-  owner_id Int
+  id       String @id @default(uuid()) @db.Uuid()
+  owner_id String @db.Uuid()
 
   name       String
   created_at DateTime @default(now())
@@ -41,9 +41,10 @@ enum Direction {
 }
 
 model UserSpacePosition {
-  id       Int @id @default(autoincrement())
-  user_id  Int
-  space_id Int
+  id       String @id @default(uuid()) @db.Uuid()
+  user_id  String @db.Uuid()
+  space_id String @db.Uuid()
+
 
   x          Int?
   y          Int?
