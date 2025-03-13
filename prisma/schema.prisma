@@ -15,6 +15,7 @@ model User {
   owned_spaces     Space[]         @relation("user_owned_spaces")
   joined_spaces    Space[]         @relation("users_joined_spaces")
   spaces_positions UserSpacePosition[]
+  spaces_presences UserSpacePresence[]
 
   @@map("users")
 }
@@ -29,6 +30,7 @@ model Space {
   owner           User            @relation("user_owned_spaces", fields: [owner_id], references: [id])
   users           User[]          @relation("users_joined_spaces")
   users_positions UserSpacePosition[]
+  users_presences UserSpacePresence[]
 
   @@map("spaces")
 }
@@ -57,4 +59,24 @@ model UserSpacePosition {
 
   @@unique([user_id, space_id])
   @@map("user_space_positions")
+}
+
+enum Status {
+  ONLINE
+  OFFLINE
+}
+
+model UserSpacePresence {
+  id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid()
+  user_id  String @db.Uuid()
+  space_id String @db.Uuid()
+
+  status       Status
+  last_seen_at DateTime @default(now())
+
+  user  User  @relation(fields: [user_id], references: [id])
+  space Space @relation(fields: [space_id], references: [id])
+
+  @@unique([user_id, space_id])
+  @@map("user_space_presences")
 }
