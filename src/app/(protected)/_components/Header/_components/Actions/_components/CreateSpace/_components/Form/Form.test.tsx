@@ -32,13 +32,23 @@ describe('Form', () => {
 
     const user = userEvent.setup()
     render(<Form onCreated={vi.fn()} />)
-    const input = screen.getByRole('textbox', { name: 'Space Name:' })
-    await user.type(input, ' ')
-    await user.clear(input)
 
     await user.click(screen.getByRole('button', { name: 'Create Space' }))
 
     expect(createSpaceMock).not.toHaveBeenCalled()
+  })
+
+  test('shows error message while space name is empty', async () => {
+    useUserMock.mockReturnValue({
+      data: { id: 'AUTH_ID' },
+    } as unknown as ReturnType<typeof useUser>)
+
+    const user = userEvent.setup()
+    render(<Form onCreated={vi.fn()} />)
+
+    await user.click(screen.getByRole('button', { name: 'Create Space' }))
+
+    expect(screen.getByText('Please enter a space name')).toBeInTheDocument()
   })
 
   test('renders nothing when user is null', () => {

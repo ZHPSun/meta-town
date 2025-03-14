@@ -1,4 +1,7 @@
-import { FC, FormEvent, useState } from 'react'
+import React, { FC } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 import Button from '@/components/Button'
 import TextField from '@/components/TextField'
 import createSpace from '@/db/createSpace'
@@ -8,42 +11,42 @@ interface Props {
   onCreated: () => void
 }
 
+const schema = z.object({
+  spaceName: z.string().nonempty('Please enter a space name'),
+})
+
+type Schema = z.infer<typeof schema>
+
 const Form: FC<Props> = ({ onCreated }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<Schema>({ resolver: zodResolver(schema) })
   const { data: user } = useUser()
-  const [isLoading, setIsLoading] = useState(false)
-  const [spaceName, setSpaceName] = useState('')
 
   if (!user) {
     return
   }
 
-  const handleSubmit = async (
-    event: FormEvent<HTMLFormElement>
-  ): Promise<void> => {
-    event.preventDefault()
-    if (!spaceName) {
-      return
-    }
-
-    const data = {
-      name: spaceName,
-      ownerId: user.id,
-    }
-
-    setIsLoading(true)
-    await createSpace(data)
-    setIsLoading(false)
+  const onSubmit: SubmitHandler<Schema> = async (data): Promise<void> => {
+    await createSpace({ name: data.spaceName, ownerId: String(user.id) })
     onCreated()
   }
 
   return (
-    <form className="space-y-4" onSubmit={(event) => void handleSubmit(event)}>
+    <form
+      className="space-y-4"
+      onSubmit={(event) => {
+        void handleSubmit(onSubmit)(event)
+      }}
+    >
       <TextField
+        {...register('spaceName')}
         label="Space Name:"
-        value={spaceName}
-        onChange={(event) => setSpaceName(event.target.value)}
+        errorMessage={errors.spaceName?.message}
       />
-      <Button className="w-full" type="submit" isLoading={isLoading}>
+      <Button className="w-full" type="submit" isLoading={isSubmitting}>
         Create Space
       </Button>
     </form>
