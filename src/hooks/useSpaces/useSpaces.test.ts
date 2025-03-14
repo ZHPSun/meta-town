@@ -61,7 +61,7 @@ describe('useSpaces', () => {
     } as unknown as ReturnType<typeof useSWR>)
 
     const { result } = renderHook(() => useSpaces())
-    console.log(result)
+
     expect(result.current).toEqual({
       data,
       isLoading: false,

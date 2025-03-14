@@ -2,8 +2,14 @@ import { FC } from 'react'
 import Button from '@/components/Button'
 import IconButton from '@/components/IconButton'
 import Tooltip from '@/components/Tooltip'
+import Dropdown from '@/components/Dropdown'
+import VerticalList from '@/components/VerticalList'
 
-const Header: FC = () => (
+interface Props {
+  onEditSpace: () => void
+}
+
+const Header: FC<Props> = ({ onEditSpace }) => (
   <div className="flex justify-between border-b border-neutral-200 px-6 py-2">
     <div className="flex gap-1">
       <IconButton
@@ -39,13 +45,32 @@ const Header: FC = () => (
       <Button size="small" variant="secondary" prefix={{ icon: 'layout-grid' }}>
         Meeting view
       </Button>
-      <IconButton
-        size="small"
-        variant="naked"
-        icon="ellipsis-vertical"
-        label="More options"
-        tooltip={{ position: 'bottom-right' }}
-      />
+
+      <Dropdown
+        trigger={(toggle, isOpen) => (
+          <IconButton
+            size="small"
+            onClick={toggle}
+            variant={isOpen ? 'secondary' : 'naked'}
+            icon="ellipsis-vertical"
+            label="More options"
+            tooltip={{ position: 'bottom-right' }}
+          />
+        )}
+        position="bottom-right"
+      >
+        <VerticalList>
+          <VerticalList.Item>
+            <Button
+              onClick={onEditSpace}
+              variant="naked"
+              prefix={{ icon: 'edit' }}
+            >
+              Edit space
+            </Button>
+          </VerticalList.Item>
+        </VerticalList>
+      </Dropdown>
     </div>
   </div>
 )

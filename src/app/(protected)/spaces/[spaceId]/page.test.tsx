@@ -226,4 +226,37 @@ describe('Space', () => {
 
     expect(screen.getByRole('region', { name: 'Map View' })).toBeInTheDocument()
   })
+
+  test('renders stage configuration', async () => {
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+    } as unknown as ReturnType<typeof useUser>)
+
+    mockParamsMock.mockReturnValue({
+      spaceId: 'SPACE_ID',
+    })
+    const user = userEvent.setup()
+
+    render(<Space />)
+
+    await user.click(
+      await screen.findByRole('button', { name: 'More options' })
+    )
+
+    await user.click(screen.getByRole('button', { name: 'Edit space' }))
+
+    expect(
+      screen.getByRole('dialog', { name: 'Configuration' })
+    ).toBeInTheDocument()
+
+    await user.click(await screen.findByRole('button', { name: 'Close' }))
+
+    expect(
+      screen.queryByRole('dialog', { name: 'Configuration' })
+    ).not.toBeInTheDocument()
+  })
 })

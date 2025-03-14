@@ -1,9 +1,10 @@
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import Header from './Header'
 
 describe('Header', () => {
   test('renders copy link button', async () => {
-    render(<Header />)
+    render(<Header onEditSpace={vi.fn()} />)
 
     expect(
       await screen.findByRole('button', { name: 'Copy invite link' })
@@ -11,7 +12,7 @@ describe('Header', () => {
   })
 
   test('renders lock meeting area button', async () => {
-    render(<Header />)
+    render(<Header onEditSpace={vi.fn()} />)
 
     expect(
       await screen.findByRole('button', { name: 'Lock meeting area' })
@@ -19,7 +20,7 @@ describe('Header', () => {
   })
 
   test('renders all-hands button', () => {
-    render(<Header />)
+    render(<Header onEditSpace={vi.fn()} />)
 
     expect(
       screen.getByRole('button', { name: 'All-Hands' })
@@ -27,18 +28,34 @@ describe('Header', () => {
   })
 
   test('renders meeting view button', () => {
-    render(<Header />)
+    render(<Header onEditSpace={vi.fn()} />)
 
     expect(
       screen.getByRole('button', { name: 'Meeting view' })
     ).toBeInTheDocument()
   })
 
-  test('renders more options button', async () => {
-    render(<Header />)
+  test('calls onEditSpace when edit space button is clicked', async () => {
+    const onEditSpace = vi.fn()
+
+    const user = userEvent.setup()
+
+    render(<Header onEditSpace={onEditSpace} />)
 
     expect(
       await screen.findByRole('button', { name: 'More options' })
     ).toBeInTheDocument()
+
+    await user.click(
+      await screen.findByRole('button', { name: 'More options' })
+    )
+
+    expect(
+      screen.getByRole('button', { name: 'Edit space' })
+    ).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Edit space' }))
+
+    expect(onEditSpace).toHaveBeenCalled()
   })
 })

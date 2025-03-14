@@ -9,8 +9,14 @@ interface Props {
   title: string
 }
 
-const Modal: FC<Props> = ({ onClose, children, title }) =>
-  createPortal(
+const Modal: FC<Props> = ({ onClose, children, title }) => {
+  const portalRoot = document.getElementById('modal-root')
+
+  if (!portalRoot) {
+    return null
+  }
+
+  return createPortal(
     <div>
       <Overlay />
       <div className="fixed inset-0 flex h-full w-full items-center justify-center">
@@ -20,7 +26,8 @@ const Modal: FC<Props> = ({ onClose, children, title }) =>
         </div>
       </div>
     </div>,
-    document.getElementById('modal-root')!
+    portalRoot
   )
+}
 
 export default Modal

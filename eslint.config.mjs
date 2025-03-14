@@ -29,7 +29,9 @@ const eslintConfig = [
     rules: {
       // Common rules
       'arrow-body-style': 'error',
+      'object-shorthand': 'error',
       'no-restricted-globals': ['error', 'React'],
+      'no-console': 'error',
 
       // React rules
       'react/jsx-boolean-value': [

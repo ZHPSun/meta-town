@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useParams } from 'next/navigation'
 import { act } from 'react'
@@ -43,7 +43,7 @@ describe('Stage', () => {
       spaceId: 'SPACE_ID',
     })
 
-    const { container } = render(<Stage />)
+    const { container } = render(<Stage onConfigurationClose={vi.fn()} />)
 
     expect(container).toBeEmptyDOMElement()
   })
@@ -57,7 +57,7 @@ describe('Stage', () => {
       spaceId: 'SPACE_ID',
     })
 
-    render(<Stage />)
+    render(<Stage onConfigurationClose={vi.fn()} />)
 
     expect(await screen.findByLabelText('dog')).toBeInTheDocument()
   })
@@ -71,7 +71,7 @@ describe('Stage', () => {
       spaceId: 'SPACE_ID',
     })
 
-    render(<Stage />)
+    render(<Stage onConfigurationClose={vi.fn()} />)
 
     expect(screen.getAllByLabelText('Wall')).toHaveLength(WALLS.length)
   })
@@ -85,7 +85,7 @@ describe('Stage', () => {
       spaceId: 'SPACE_ID',
     })
 
-    render(<Stage />)
+    render(<Stage onConfigurationClose={vi.fn()} />)
 
     expect(screen.getAllByRole('gridcell')).toHaveLength(
       DIMENSIONS.rows * DIMENSIONS.columns
@@ -102,7 +102,7 @@ describe('Stage', () => {
     })
 
     const user = userEvent.setup()
-    render(<Stage />)
+    render(<Stage onConfigurationClose={vi.fn()} />)
 
     await user.keyboard('{ArrowDown}')
 
@@ -122,7 +122,7 @@ describe('Stage', () => {
       spaceId: 'SPACE_ID',
     })
 
-    render(<Stage />)
+    render(<Stage onConfigurationClose={vi.fn()} />)
 
     expect(screen.getByLabelText('stage').style.transform).toBe(
       'translate(var(--translate-x), var(--translate-y)) scale(var(--scale))'
@@ -156,7 +156,7 @@ describe('Stage', () => {
 
     const user = userEvent.setup()
 
-    render(<Stage />)
+    render(<Stage onConfigurationClose={vi.fn()} />)
 
     await user.click(await screen.findByRole('button', { name: 'Zoom In' }))
 
@@ -176,7 +176,7 @@ describe('Stage', () => {
 
     const user = userEvent.setup()
 
-    render(<Stage />)
+    render(<Stage onConfigurationClose={vi.fn()} />)
 
     await user.click(await screen.findByRole('button', { name: 'Zoom Out' }))
 
@@ -194,7 +194,7 @@ describe('Stage', () => {
       spaceId: 'SPACE_ID',
     })
 
-    render(<Stage />)
+    render(<Stage onConfigurationClose={vi.fn()} />)
 
     expect(screen.getByLabelText('Placement: 20, 20')).toHaveStyle({
       top: `${20 * TILE_SIZE}px`,
@@ -220,7 +220,7 @@ describe('Stage', () => {
     const user = userEvent.setup({
       advanceTimers: vi.advanceTimersByTime,
     })
-    render(<Stage />)
+    render(<Stage onConfigurationClose={vi.fn()} />)
 
     await user.keyboard('{ArrowDown}')
 
@@ -233,5 +233,83 @@ describe('Stage', () => {
     })
 
     vi.useRealTimers()
+  })
+
+  test('does not render configuration by default', () => {
+    useUserMock.mockReturnValue({
+      data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
+    } as unknown as ReturnType<typeof useUser>)
+
+    mockParamsMock.mockReturnValue({
+      spaceId: 'SPACE_ID',
+    })
+
+    render(<Stage onConfigurationClose={vi.fn()} />)
+
+    expect(
+      screen.queryByRole('dialog', { name: 'Configuration' })
+    ).not.toBeInTheDocument()
+  })
+
+  test('renders configuration when isConfigurationOpen is true', () => {
+    useUserMock.mockReturnValue({
+      data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
+    } as unknown as ReturnType<typeof useUser>)
+
+    mockParamsMock.mockReturnValue({
+      spaceId: 'SPACE_ID',
+    })
+
+    render(<Stage onConfigurationClose={vi.fn()} isConfigurationOpen />)
+
+    expect(
+      screen.getByRole('dialog', { name: 'Configuration' })
+    ).toBeInTheDocument()
+  })
+
+  test('configures walls', async () => {
+    useUserMock.mockReturnValue({
+      data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
+    } as unknown as ReturnType<typeof useUser>)
+
+    mockParamsMock.mockReturnValue({
+      spaceId: 'SPACE_ID',
+    })
+
+    const user = userEvent.setup()
+
+    render(<Stage onConfigurationClose={vi.fn()} isConfigurationOpen />)
+
+    expect(screen.getAllByLabelText('Wall')).toHaveLength(WALLS.length)
+
+    await user.click(await screen.findByRole('button', { name: 'wall' }))
+    await user.click(screen.getByRole('button', { name: '1, 1' }))
+
+    expect(screen.getAllByLabelText('Wall')).toHaveLength(WALLS.length + 1)
+    expect(screen.getByLabelText('Placement: 1, 1')).toBeInTheDocument()
+    expect(
+      within(screen.getByLabelText('Placement: 1, 1')).getByLabelText('Wall')
+    ).toBeInTheDocument()
+  })
+
+  test('calls onConfigurationClose when configuration close button is clicked', async () => {
+    useUserMock.mockReturnValue({
+      data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
+    } as unknown as ReturnType<typeof useUser>)
+
+    mockParamsMock.mockReturnValue({
+      spaceId: 'SPACE_ID',
+    })
+
+    const onConfigurationClose = vi.fn()
+    const user = userEvent.setup()
+
+    render(
+      <Stage onConfigurationClose={onConfigurationClose} isConfigurationOpen />
+    )
+
+    await user.click(await screen.findByRole('button', { name: 'Close' }))
+
+    expect(onConfigurationClose).toHaveBeenCalled()
   })
 })

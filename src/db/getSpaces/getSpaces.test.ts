@@ -22,7 +22,7 @@ describe('getSpaces', () => {
       from: vi.fn().mockReturnValue({
         select: vi.fn().mockReturnValue({
           eq: vi.fn().mockReturnValue({
-            order: vi.fn().mockReturnValue({ data: data }),
+            order: vi.fn().mockReturnValue({ data }),
           }),
         }),
       }),
