@@ -1,5 +1,5 @@
 import createSupabaseClient from '@/utils/createSupabaseClient'
-import { Coordinates } from '../../../../_components/Placement'
+import { Coordinates } from '../../app/(protected)/spaces/[spaceId]/_components/Stage/_components/Placement'
 
 interface Data {
   userId: string

@@ -1,10 +1,10 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import createSpace from '@/db/createSpace'
 import useUser from '@/hooks/useUser'
-import createSpace from './_utils/createSpace'
 import Form from './Form'
 
-vi.mock('./_utils/createSpace')
+vi.mock('@/db/createSpace')
 const createSpaceMock = vi.mocked(createSpace)
 
 vi.mock('@/hooks/useUser')
@@ -16,7 +16,7 @@ describe('Form', () => {
       data: { id: 'AUTH_ID' },
     } as unknown as ReturnType<typeof useUser>)
 
-    render(<Form />)
+    render(<Form onCreated={vi.fn()} />)
 
     expect(screen.getByLabelText('Space Name:')).toBeInTheDocument()
 
@@ -31,7 +31,7 @@ describe('Form', () => {
     } as unknown as ReturnType<typeof useUser>)
 
     const user = userEvent.setup()
-    render(<Form />)
+    render(<Form onCreated={vi.fn()} />)
     const input = screen.getByRole('textbox', { name: 'Space Name:' })
     await user.type(input, ' ')
     await user.clear(input)
@@ -45,7 +45,7 @@ describe('Form', () => {
     useUserMock.mockReturnValue({
       data: null,
     } as unknown as ReturnType<typeof useUser>)
-    const { container } = render(<Form />)
+    const { container } = render(<Form onCreated={vi.fn()} />)
 
     expect(container).toBeEmptyDOMElement()
   })
@@ -56,7 +56,7 @@ describe('Form', () => {
       data: { id: AUTH_ID },
     } as unknown as ReturnType<typeof useUser>)
     const user = userEvent.setup()
-    render(<Form />)
+    render(<Form onCreated={vi.fn()} />)
 
     await user.type(
       screen.getByRole('textbox', { name: 'Space Name:' }),
@@ -78,7 +78,7 @@ describe('Form', () => {
     createSpaceMock.mockImplementation(
       () => new Promise((resolve) => setTimeout(resolve, 1000))
     )
-    render(<Form />)
+    render(<Form onCreated={vi.fn()} />)
     await user.type(
       screen.getByRole('textbox', { name: 'Space Name:' }),
       'test'

@@ -7,7 +7,12 @@ interface Props extends Omit<ComponentPropsWithoutRef<typeof Input>, 'id'> {
   errorMessage?: string
 }
 
-const TextField: FC<Props> = ({ label, errorMessage, className, ...rest }) => {
+const TextField: FC<Props> = ({
+  label = undefined,
+  errorMessage = undefined,
+  className,
+  ...rest
+}) => {
   const generatedId = useId()
   const inputId = generatedId
 

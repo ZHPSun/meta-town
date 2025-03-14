@@ -10,7 +10,7 @@ interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, 'prefix'> {
   }
 }
 
-const Input: FC<Props> = ({ className, prefix, ...rest }) => (
+const Input: FC<Props> = ({ className, prefix = undefined, ...rest }) => (
   <div className={clsx(prefix ? 'relative' : '')}>
     {prefix && (
       <div className="absolute bottom-0 left-0 top-0 flex items-center pl-4">

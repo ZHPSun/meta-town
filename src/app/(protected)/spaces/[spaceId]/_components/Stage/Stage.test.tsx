@@ -3,9 +3,9 @@ import userEvent from '@testing-library/user-event'
 import { useParams } from 'next/navigation'
 import { act } from 'react'
 import useUser from '@/hooks/useUser'
-import Stage, { INITIAL_COORDINATES, WALLS } from './Stage'
-import updateSpacePosition from './_hooks/useUpdateSpacePosition/_utils/updateSpacePosition'
+import updateSpacePosition from '@/db/updateSpacePosition'
 import * as consts from './consts'
+import Stage, { INITIAL_COORDINATES, WALLS } from './Stage'
 
 const { DIMENSIONS, TILE_SIZE } = consts
 
@@ -27,7 +27,7 @@ const useUserMock = vi.mocked(useUser)
 vi.mock('next/navigation')
 const mockParamsMock = vi.mocked(useParams)
 
-vi.mock('./_hooks/useUpdateSpacePosition/_utils/updateSpacePosition')
+vi.mock('@/db/updateSpacePosition')
 
 describe('Stage', () => {
   afterEach(() => {

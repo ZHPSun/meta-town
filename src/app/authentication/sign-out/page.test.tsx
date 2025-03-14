@@ -1,10 +1,10 @@
 import { render, waitFor } from '@testing-library/react'
+import signOut from '@/db/signOut'
 import useSession from '@/hooks/useSession'
 import navigate from '@/utils/navigate'
-import signOut from './_utils/signOut'
 import SignOut from './page'
 
-vi.mock('./_utils/signOut')
+vi.mock('@/db/signOut')
 const signOutMock = vi.mocked(signOut)
 
 vi.mock('@/hooks/useSession')

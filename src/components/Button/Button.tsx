@@ -62,8 +62,8 @@ const Button: FC<Props> = ({
   isLoading = false,
   size = 'default',
   variant = 'primary',
-  prefix,
-  suffix,
+  prefix = undefined,
+  suffix = undefined,
   ...rest
 }) => (
   <button

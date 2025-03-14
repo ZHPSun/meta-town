@@ -1,11 +1,11 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import login from '@/db/login'
 import useSession from '@/hooks/useSession'
 import navigate from '@/utils/navigate'
 import Form, { getServerErrorMessage } from './Form'
-import login from './_utils/login'
 
-vi.mock('./_utils/login')
+vi.mock('@/db/login')
 const loginMock = vi.mocked(login)
 
 vi.mock('@/hooks/useSession')

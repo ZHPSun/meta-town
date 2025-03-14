@@ -1,8 +1,8 @@
 import { FC, FormEvent, useState } from 'react'
 import Button from '@/components/Button'
+import createUser from '@/db/createUser'
 import useSession from '@/hooks/useSession'
 import useUser from '@/hooks/useUser'
-import createUser from './_utils/createUser'
 
 const Form: FC = () => {
   const { mutate } = useUser()

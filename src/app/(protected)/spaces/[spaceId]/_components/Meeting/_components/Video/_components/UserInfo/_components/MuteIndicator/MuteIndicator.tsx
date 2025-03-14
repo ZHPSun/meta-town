@@ -5,7 +5,7 @@ interface Props {
   isMuted?: boolean
 }
 
-const MuteIndicator: FC<Props> = ({ isMuted }) => {
+const MuteIndicator: FC<Props> = ({ isMuted = false }) => {
   if (!isMuted) {
     return null
   }

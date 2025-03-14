@@ -1,9 +1,9 @@
 'use client'
 
 import { FC, useEffect } from 'react'
+import signOut from '@/db/signOut'
 import useSession from '@/hooks/useSession'
 import navigate from '@/utils/navigate'
-import signOut from './_utils/signOut'
 
 const SignOut: FC = () => {
   const { mutate } = useSession(true)

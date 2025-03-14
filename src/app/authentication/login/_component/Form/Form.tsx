@@ -6,9 +6,9 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import Button from '@/components/Button'
 import TextField from '@/components/TextField'
+import login from '@/db/login'
 import useSession from '@/hooks/useSession'
 import navigate from '@/utils/navigate'
-import login from './_utils/login'
 
 const schema = z.object({
   email: z.string().nonempty('Please enter your email address'),

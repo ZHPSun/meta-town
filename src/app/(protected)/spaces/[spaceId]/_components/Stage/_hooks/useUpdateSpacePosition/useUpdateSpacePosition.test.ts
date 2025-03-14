@@ -2,8 +2,8 @@ import { renderHook } from '@testing-library/react'
 import { useParams } from 'next/navigation'
 import { act } from 'react'
 import useUser from '@/hooks/useUser'
+import updateSpacePosition from '@/db/updateSpacePosition'
 import { Coordinates } from '../../_components/Placement'
-import updateSpacePosition from './_utils/updateSpacePosition'
 import useUpdateSpacePosition from './useUpdateSpacePosition'
 
 vi.mock('@/hooks/useUser')
@@ -12,7 +12,7 @@ const useUserMock = vi.mocked(useUser)
 vi.mock('next/navigation')
 const mockParamsMock = vi.mocked(useParams)
 
-vi.mock('./_utils/updateSpacePosition')
+vi.mock('@/db/updateSpacePosition')
 const updateSpacePositionMock = vi.mocked(updateSpacePosition)
 
 describe('useUpdateSpacePosition', () => {

@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import useUser from '@/hooks/useUser'
-import createSpace from './_components/Form/_utils/createSpace'
+import createSpace from '@/db/createSpace'
 import CreateSpace from './CreateSpace'
 
 vi.mock('@/hooks/useUser')
 const useUserMock = vi.mocked(useUser)
 
-vi.mock('./_components/Form/_utils/createSpace')
+vi.mock('@/db/createSpace')
 const createSpaceMock = vi.mocked(createSpace)
 
 describe('CreateSpace', () => {

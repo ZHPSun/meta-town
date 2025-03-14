@@ -22,7 +22,7 @@ interface Props {
   ref?: Ref<HTMLDivElement>
 }
 
-const Placement: FC<Props> = ({ coordinates, children, ref }) => (
+const Placement: FC<Props> = ({ coordinates, children, ref = null }) => (
   <div
     aria-label={`Placement: ${coordinates.x}, ${coordinates.y}`}
     className="absolute"

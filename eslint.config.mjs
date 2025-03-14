@@ -52,6 +52,10 @@ const eslintConfig = [
           html: true,
         },
       ],
+      'react/require-default-props': [
+        'error',
+        { functions: 'defaultArguments' },
+      ],
     },
   }),
   ...tseslintConfig(

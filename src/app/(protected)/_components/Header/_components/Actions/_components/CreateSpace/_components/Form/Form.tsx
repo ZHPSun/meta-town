@@ -1,11 +1,11 @@
-import React, { FC, useState, FormEvent } from 'react'
+import { FC, FormEvent, useState } from 'react'
 import Button from '@/components/Button'
-import useUser from '@/hooks/useUser'
 import TextField from '@/components/TextField'
-import createSpace from './_utils/createSpace'
+import createSpace from '@/db/createSpace'
+import useUser from '@/hooks/useUser'
 
 interface Props {
-  onCreated?: () => void
+  onCreated: () => void
 }
 
 const Form: FC<Props> = ({ onCreated }) => {
@@ -33,7 +33,7 @@ const Form: FC<Props> = ({ onCreated }) => {
     setIsLoading(true)
     await createSpace(data)
     setIsLoading(false)
-    onCreated?.()
+    onCreated()
   }
 
   return (

@@ -1,8 +1,8 @@
 import { useParams } from 'next/navigation'
 import { useEffect, useRef } from 'react'
+import updateSpacePosition from '@/db/updateSpacePosition'
 import useUser from '@/hooks/useUser'
 import { type Coordinates } from '../../_components/Placement'
-import updateSpacePosition from './_utils/updateSpacePosition'
 
 const useUpdateSpacePosition = (characterCoordinates: Coordinates): void => {
   const { data: user } = useUser()

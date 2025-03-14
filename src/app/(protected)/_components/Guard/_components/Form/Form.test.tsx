@@ -1,9 +1,9 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import createUser from '@/db/createUser'
 import useSession from '@/hooks/useSession'
 import useUser from '@/hooks/useUser'
 import Form from './Form'
-import createUser from './_utils/createUser'
 
 vi.mock('@/hooks/useSession')
 const useSessionMock = vi.mocked(useSession)
@@ -11,7 +11,7 @@ const useSessionMock = vi.mocked(useSession)
 vi.mock('@/hooks/useUser')
 const useUserMock = vi.mocked(useUser)
 
-vi.mock('./_utils/createUser')
+vi.mock('@/db/createUser')
 const createUserMock = vi.mocked(createUser)
 
 describe('Form', () => {

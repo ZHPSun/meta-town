@@ -6,10 +6,10 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import Button from '@/components/Button'
 import TextField from '@/components/TextField'
+import signUp from '@/db/signUp'
 import useSession from '@/hooks/useSession'
 import navigate from '@/utils/navigate'
 import Conditions from './_components/Conditions'
-import signUp from './_utils/signUp'
 
 const schema = z
   .object({
