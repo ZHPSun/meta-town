@@ -17,8 +17,13 @@ export const ICON_SIZE = {
   large: 28,
 } as const
 
+interface IconConfig {
+  name: IconName
+  label: string
+}
+
 interface Props extends Omit<ComponentProps<typeof Button>, 'children'> {
-  icon: IconName
+  icon: IconName | IconConfig
   label: string
   circle?: boolean
   tooltip?: {
@@ -35,22 +40,31 @@ const IconButton: FC<Props> = ({
   circle = false,
   tooltip = undefined,
   ...rest
-}) => (
-  <Tooltip text={label} position={tooltip?.position}>
-    <Button
-      size={size}
-      variant={variant}
-      className={clsx(
-        'inline-flex items-center justify-center !px-0',
-        className,
-        circle ? '!rounded-full' : '!rounded-2xl',
-        SIZE[size]
-      )}
-      {...rest}
-    >
-      <DynamicIcon size={ICON_SIZE[size]} name={icon} aria-label={label} />
-    </Button>
-  </Tooltip>
-)
+}) => {
+  const { name: iconName, label: ariaLabel } =
+    typeof icon === 'string' ? { name: icon, label } : icon
+
+  return (
+    <Tooltip text={label} position={tooltip?.position}>
+      <Button
+        size={size}
+        variant={variant}
+        className={clsx(
+          'inline-flex items-center justify-center !px-0',
+          className,
+          circle ? '!rounded-full' : '!rounded-2xl',
+          SIZE[size]
+        )}
+        {...rest}
+      >
+        <DynamicIcon
+          size={ICON_SIZE[size]}
+          name={iconName}
+          aria-label={ariaLabel}
+        />
+      </Button>
+    </Tooltip>
+  )
+}
 
 export default IconButton

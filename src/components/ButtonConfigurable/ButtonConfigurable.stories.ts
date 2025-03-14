@@ -1,7 +1,10 @@
 import { type Meta, type StoryObj } from '@storybook/react'
+import { type ComponentProps } from 'react'
 import ButtonConfigurable from './ButtonConfigurable'
 
-const meta = {
+type ButtonConfigurableProps = ComponentProps<typeof ButtonConfigurable>
+
+const meta: Meta<ButtonConfigurableProps> = {
   title: 'Components/ButtonConfigurable',
   component: ButtonConfigurable,
   tags: ['autodocs'],
@@ -15,11 +18,11 @@ const meta = {
       options: ['small', 'default', 'large'],
     },
   },
-} satisfies Meta<typeof ButtonConfigurable>
+}
 
 export default meta
 
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<ButtonConfigurableProps>
 
 export const Default: Story = {
   args: {

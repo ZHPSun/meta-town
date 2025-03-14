@@ -138,4 +138,17 @@ describe('IconButton', () => {
       )
     }
   )
+
+  test('renders icon from config object with custom label', async () => {
+    render(
+      <IconButton
+        icon={{ name: 'beer', label: 'Custom Icon Label' }}
+        label="Beer"
+      />
+    )
+
+    expect(
+      await screen.findByRole('button', { name: 'Custom Icon Label' })
+    ).toBeInTheDocument()
+  })
 })

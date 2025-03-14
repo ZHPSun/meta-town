@@ -5,11 +5,27 @@ const meta = {
   title: 'Components/IconButton',
   component: IconButton,
   tags: ['autodocs'],
+  argTypes: {
+    icon: {
+      options: ['iconName', 'iconConfig'],
+      mapping: {
+        iconName: 'beer',
+        iconConfig: { name: 'trash', label: 'Custom Icon Label' },
+      },
+      control: {
+        type: 'select',
+        labels: {
+          iconName: 'Beer (Name)',
+          iconConfig: 'trash (Config)',
+        },
+      },
+    },
+  },
 } satisfies Meta<typeof IconButton>
 
 export default meta
 
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof IconButton>
 
 export const Default: Story = {
   args: {
