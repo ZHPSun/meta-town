@@ -3,13 +3,18 @@ import Preview from './_components/Preview'
 import Info from './_components/Info'
 import Participants from './_components/Participants'
 
-const SpacePreview: FC = () => (
+interface Props {
+  name: string
+  spaceId: string
+}
+
+const SpacePreview: FC<Props> = ({ name, spaceId }) => (
   <div className="w-1/4 p-6">
     <div className="relative">
-      <Preview />
+      <Preview spaceId={spaceId} />
       <Participants count={0} />
     </div>
-    <Info name="Space Name" time="4 days ago" />
+    <Info name={name} time="4 days ago" />
   </div>
 )
 
