@@ -1,6 +1,6 @@
 import useSWR, { SWRResponse } from 'swr'
+import getSpaces from '@/db/getSpaces'
 import useUser from '@/hooks/useUser'
-import getSpaces from './utils/getSpaces'
 
 type spaces = Awaited<ReturnType<typeof getSpaces>>
 

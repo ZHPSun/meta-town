@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react'
 import useSWR from 'swr'
+import getSession from '@/db/getSession'
 import navigate from '@/utils/navigate'
 import useSession from './useSession'
-import getSession from './utils/getSession'
 
 vi.mock('swr')
 const useSWRMock = vi.mocked(useSWR)

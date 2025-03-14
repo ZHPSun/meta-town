@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react'
 import useSWR from 'swr'
+import getSpaces from '@/db/getSpaces'
 import useUser from '@/hooks/useUser'
 import useSpaces from './useSpaces'
-import getSpaces from './utils/getSpaces'
 
 vi.mock('swr')
 const useSWRMock = vi.mocked(useSWR)
