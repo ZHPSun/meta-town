@@ -267,6 +267,29 @@ describe('Stage', () => {
     ).toBeInTheDocument()
   })
 
+  test('renders configuration buttons on config coordinates', async () => {
+    useUserMock.mockReturnValue({
+      data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
+    } as unknown as ReturnType<typeof useUser>)
+
+    mockParamsMock.mockReturnValue({
+      spaceId: 'SPACE_ID',
+    })
+
+    const user = userEvent.setup()
+
+    render(<Stage onConfigurationClose={vi.fn()} isConfigurationOpen />)
+
+    await user.click(await screen.findByRole('button', { name: 'wall' }))
+    await user.hover(screen.getByRole('gridcell', { name: '1, 1' }))
+
+    expect(
+      within(screen.getByLabelText('Placement: 1, 1')).getByRole('button', {
+        name: 'Wall',
+      })
+    ).toBeInTheDocument()
+  })
+
   test('configures walls', async () => {
     useUserMock.mockReturnValue({
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
@@ -280,16 +303,19 @@ describe('Stage', () => {
 
     render(<Stage onConfigurationClose={vi.fn()} isConfigurationOpen />)
 
-    expect(screen.getAllByLabelText('Wall')).toHaveLength(WALLS.length)
-
     await user.click(await screen.findByRole('button', { name: 'wall' }))
-    await user.click(screen.getByRole('button', { name: '1, 1' }))
+    await user.hover(screen.getByRole('gridcell', { name: '1, 1' }))
+
+    await user.click(
+      within(screen.getByLabelText('Placement: 1, 1')).getByRole('button', {
+        name: 'Wall',
+      })
+    )
+
+    await user.click(await screen.findByRole('button', { name: 'Close' }))
 
     expect(screen.getAllByLabelText('Wall')).toHaveLength(WALLS.length + 1)
     expect(screen.getByLabelText('Placement: 1, 1')).toBeInTheDocument()
-    expect(
-      within(screen.getByLabelText('Placement: 1, 1')).getByLabelText('Wall')
-    ).toBeInTheDocument()
   })
 
   test('calls onConfigurationClose when configuration close button is clicked', async () => {

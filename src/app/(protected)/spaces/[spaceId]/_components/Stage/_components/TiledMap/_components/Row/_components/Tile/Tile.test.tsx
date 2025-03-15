@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import Tile from './Tile'
 
 describe('Tile', () => {
@@ -8,19 +9,15 @@ describe('Tile', () => {
     expect(screen.getByRole('gridcell', { name: '3, 4' })).toBeInTheDocument()
   })
 
-  test('renders button with onEdit', () => {
-    render(<Tile x={3} y={4} onEdit={vi.fn()} />)
+  test('calls onMouseOver when hover', async () => {
+    const onMouseOver = vi.fn()
 
-    expect(screen.getByRole('button', { name: '3, 4' })).toBeInTheDocument()
-  })
+    const user = userEvent.setup()
 
-  test('calls onEdit when clicked button', () => {
-    const onEdit = vi.fn()
+    render(<Tile x={3} y={4} onMouseOver={onMouseOver} />)
 
-    render(<Tile x={3} y={4} onEdit={onEdit} />)
+    await user.hover(screen.getByRole('gridcell', { name: '3, 4' }))
 
-    screen.getByRole('button', { name: '3, 4' }).click()
-
-    expect(onEdit).toHaveBeenCalledWith(3, 4)
+    expect(onMouseOver).toHaveBeenCalledWith(3, 4)
   })
 })

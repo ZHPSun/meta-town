@@ -6,17 +6,22 @@ interface Props {
     rows: number
     columns: number
   }
-  onEdit?: (x: number, y: number) => void
+  onMouseOver?: (x: number, y: number) => void
 }
 
-const TiledMap: FC<Props> = ({ dimensions, onEdit = undefined }) => (
+const TiledMap: FC<Props> = ({ dimensions, onMouseOver = undefined }) => (
   <div
     role="grid"
     aria-label="Tiled Map"
     className="w-max border border-gray-400 bg-white"
   >
     {Array.from({ length: dimensions.rows }).map((_, i) => (
-      <Row onEdit={onEdit} key={i} y={i} columns={dimensions.columns} />
+      <Row
+        onMouseOver={onMouseOver}
+        key={i}
+        y={i}
+        columns={dimensions.columns}
+      />
     ))}
   </div>
 )

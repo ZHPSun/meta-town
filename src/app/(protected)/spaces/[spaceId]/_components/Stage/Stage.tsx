@@ -10,11 +10,11 @@ import Placement, { type Coordinates } from './_components/Placement'
 import TiledMap from './_components/TiledMap'
 import Wall from './_components/Wall'
 import useCenterCharacter from './_hooks/useCenterCharacter'
+import useConfig from './_hooks/useConfig'
 import useMovement from './_hooks/useMovement'
 import useUpdateSpacePosition from './_hooks/useUpdateSpacePosition'
 import useZoom from './_hooks/useZoom'
 import { DIMENSIONS } from './consts'
-import useConfig from './_hooks/useConfig'
 
 export const INITIAL_COORDINATES: Coordinates = {
   x: 0,
@@ -39,8 +39,18 @@ const Stage: FC<Props> = ({
   onConfigurationClose,
   isConfigurationOpen = false,
 }) => {
-  const characterCoordinates = useMovement(INITIAL_COORDINATES, [...WALLS])
+  const {
+    config,
+    data,
+    coordinatesConfig,
+    handleCoordinates,
+    handleEdit,
+    handleConfig,
+  } = useConfig({
+    walls: WALLS,
+  })
 
+  const characterCoordinates = useMovement(INITIAL_COORDINATES, [...data.walls])
   const { zoom, zoomIn, zoomOut } = useZoom()
 
   const { stageRef, characterRef } = useCenterCharacter(
@@ -51,10 +61,6 @@ const Stage: FC<Props> = ({
   useUpdateSpacePosition(characterCoordinates)
 
   const { data: user } = useUser()
-
-  const { config, data, handleEdit, handleConfig } = useConfig({
-    walls: WALLS,
-  })
 
   const { walls } = data
 
@@ -97,10 +103,26 @@ const Stage: FC<Props> = ({
               </Placement>
             ))}
 
-            <TiledMap
-              onEdit={config ? handleEdit : undefined}
-              dimensions={DIMENSIONS}
-            />
+            {coordinatesConfig && (
+              <Placement
+                coordinates={{
+                  x: coordinatesConfig.x,
+                  y: coordinatesConfig.y,
+                  direction: 'N',
+                }}
+              >
+                <button
+                  onClick={() =>
+                    handleEdit(coordinatesConfig.x, coordinatesConfig.y)
+                  }
+                  className="opacity-25"
+                >
+                  {{ walls: <Wall /> }[coordinatesConfig.config]}
+                </button>
+              </Placement>
+            )}
+
+            <TiledMap onMouseOver={handleCoordinates} dimensions={DIMENSIONS} />
           </div>
         </div>
         <div className="absolute bottom-8 right-4 space-x-2 text-white">
@@ -124,7 +146,10 @@ const Stage: FC<Props> = ({
         <Configuration
           config={config}
           onConfig={handleConfig}
-          onClose={onConfigurationClose}
+          onClose={() => {
+            handleConfig(null)
+            onConfigurationClose()
+          }}
         />
       )}
     </Fragment>

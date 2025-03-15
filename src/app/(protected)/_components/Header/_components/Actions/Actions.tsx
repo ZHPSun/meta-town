@@ -29,15 +29,13 @@ const Actions: FC = () => (
     >
       <VerticalList>
         <VerticalList.Item>
-          <Button variant="secondary">English</Button>
+          <Button variant="naked">English</Button>
         </VerticalList.Item>
-        <VerticalList.Divider />
         <VerticalList.Item>
-          <Button variant="secondary">Chinese</Button>
+          <Button variant="naked">Chinese</Button>
         </VerticalList.Item>
-        <VerticalList.Divider />
         <VerticalList.Item>
-          <Button variant="secondary">日本語</Button>
+          <Button variant="naked">日本語</Button>
         </VerticalList.Item>
       </VerticalList>
     </Dropdown>

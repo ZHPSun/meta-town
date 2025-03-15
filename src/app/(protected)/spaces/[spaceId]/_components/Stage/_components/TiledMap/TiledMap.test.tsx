@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import TiledMap from './TiledMap'
 
 describe('TiledMap', () => {
@@ -14,11 +15,19 @@ describe('TiledMap', () => {
     expect(screen.getAllByRole('row')).toHaveLength(2)
   })
 
-  test('passes onEdit to rows', () => {
-    const onEdit = vi.fn()
+  test('passes onMouseOver to rows', async () => {
+    const onMouseOver = vi.fn()
+    const user = userEvent.setup()
 
-    render(<TiledMap dimensions={{ rows: 2, columns: 2 }} onEdit={onEdit} />)
+    render(
+      <TiledMap
+        dimensions={{ rows: 2, columns: 2 }}
+        onMouseOver={onMouseOver}
+      />
+    )
 
-    expect(screen.getAllByRole('button')).toHaveLength(4)
+    await user.hover(screen.getByRole('gridcell', { name: '0, 0' }))
+
+    expect(onMouseOver).toHaveBeenCalledWith(0, 0)
   })
 })

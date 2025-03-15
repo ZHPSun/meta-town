@@ -62,4 +62,51 @@ describe('useConfig', () => {
 
     expect(result.current.data.walls).toEqual(walls)
   })
+
+  test('returns coordinatesConfig with config and handled coordinates', () => {
+    const { result } = renderHook(() => useConfig({ walls: [] }))
+
+    act(() => {
+      result.current.handleConfig('walls')
+    })
+
+    act(() => {
+      result.current.handleCoordinates(1, 1)
+    })
+
+    expect(result.current.coordinatesConfig).toEqual({
+      x: 1,
+      y: 1,
+      direction: 'N',
+      config: 'walls',
+    })
+  })
+
+  test('returns null coordinatesConfig when configuration mode is disabled', () => {
+    const { result } = renderHook(() => useConfig({ walls: [] }))
+
+    act(() => {
+      result.current.handleCoordinates(1, 1)
+    })
+
+    expect(result.current.coordinatesConfig).toBeNull()
+  })
+
+  test('returns null coordinatesConfig on configuration changed', () => {
+    const { result } = renderHook(() => useConfig({ walls: [] }))
+
+    act(() => {
+      result.current.handleConfig('walls')
+    })
+
+    act(() => {
+      result.current.handleCoordinates(1, 1)
+    })
+
+    act(() => {
+      result.current.handleConfig('walls')
+    })
+
+    expect(result.current.coordinatesConfig).toBeNull()
+  })
 })
