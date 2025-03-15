@@ -29,7 +29,7 @@ const Meeting: FC = () => {
           onClick={() => setView('map')}
         />
         <IconButton
-          label="Meeting view"
+          label="Grid meeting view"
           icon="grip"
           variant={view === 'meeting' ? 'secondary' : 'naked'}
           size="small"

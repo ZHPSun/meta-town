@@ -12,6 +12,7 @@ const Space: FC = () => {
   const [sideWindow, setSideWindow] = useState<'chat' | 'participants' | null>(
     null
   )
+  const [isShowMeeting, setIsShowMeeting] = useState(false)
 
   const [isStageConfigurationOpen, setIsStageConfigurationOpen] =
     useState(false)
@@ -19,14 +20,20 @@ const Space: FC = () => {
   return (
     <div>
       <div className="flex h-screen flex-col">
-        <Header onEditSpace={() => setIsStageConfigurationOpen(true)} />
+        <Header
+          onEditSpace={() => setIsStageConfigurationOpen(true)}
+          onMeetingViewClick={() =>
+            setIsShowMeeting((previousIsShowMeeting) => !previousIsShowMeeting)
+          }
+          isShowMeeting={isShowMeeting}
+        />
 
         <main className="relative flex-1 overflow-hidden">
           <Stage
             onConfigurationClose={() => setIsStageConfigurationOpen(false)}
             isConfigurationOpen={isStageConfigurationOpen}
           />
-          <Meeting />
+          {isShowMeeting && <Meeting />}
           {sideWindow === 'chat' && (
             <ChatSideWindow onClose={() => setSideWindow(null)} />
           )}

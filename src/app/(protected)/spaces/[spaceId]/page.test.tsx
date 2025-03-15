@@ -36,6 +36,75 @@ describe('Space', () => {
     ).toBeInTheDocument()
   })
 
+  test('does not render meeting view initially', () => {
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+    } as unknown as ReturnType<typeof useUser>)
+
+    mockParamsMock.mockReturnValue({
+      spaceId: 'SPACE_ID',
+    })
+    render(<Space />)
+
+    expect(
+      screen.queryByRole('presentation', { name: 'Meeting' })
+    ).not.toBeInTheDocument()
+  })
+
+  test('renders the meeting view when meeting view button is clicked', async () => {
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+    } as unknown as ReturnType<typeof useUser>)
+
+    mockParamsMock.mockReturnValue({
+      spaceId: 'SPACE_ID',
+    })
+
+    const user = userEvent.setup()
+
+    render(<Space />)
+
+    await user.click(screen.getByRole('button', { name: 'Meeting view' }))
+
+    expect(
+      screen.getByRole('presentation', { name: 'Meeting' })
+    ).toBeInTheDocument()
+  })
+
+  test('closes meeting view when meeting view button is clicked if meeting view already opened', async () => {
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+    } as unknown as ReturnType<typeof useUser>)
+
+    mockParamsMock.mockReturnValue({
+      spaceId: 'SPACE_ID',
+    })
+
+    const user = userEvent.setup()
+
+    render(<Space />)
+
+    await user.click(screen.getByRole('button', { name: 'Meeting view' }))
+
+    await user.click(screen.getByRole('button', { name: 'Meeting view' }))
+
+    expect(
+      screen.queryByRole('presentation', { name: 'Meeting' })
+    ).not.toBeInTheDocument()
+  })
+
   test('renders Stage', () => {
     useUserMock.mockReturnValue({
       data: {
@@ -208,23 +277,6 @@ describe('Space', () => {
     expect(
       screen.queryByRole('region', { name: 'Participants Side Window' })
     ).not.toBeInTheDocument()
-  })
-
-  test('renders Meeting', () => {
-    useUserMock.mockReturnValue({
-      data: {
-        id: 'ID',
-        displayName: 'John Doe',
-        avatar: 'dog',
-      },
-    } as unknown as ReturnType<typeof useUser>)
-
-    mockParamsMock.mockReturnValue({
-      spaceId: 'SPACE_ID',
-    })
-    render(<Space />)
-
-    expect(screen.getByRole('region', { name: 'Map View' })).toBeInTheDocument()
   })
 
   test('renders stage configuration', async () => {

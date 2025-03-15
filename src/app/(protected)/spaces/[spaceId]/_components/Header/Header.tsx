@@ -7,10 +7,16 @@ import VerticalList from '@/components/VerticalList'
 
 interface Props {
   onEditSpace: () => void
+  onMeetingViewClick: () => void
+  isShowMeeting?: boolean
 }
 
-const Header: FC<Props> = ({ onEditSpace }) => (
-  <div className="flex justify-between border-b border-neutral-200 px-6 py-2">
+const Header: FC<Props> = ({
+  onMeetingViewClick,
+  isShowMeeting = false,
+  onEditSpace,
+}) => (
+  <header className="flex justify-between border-b border-neutral-200 px-6 py-2">
     <div className="flex gap-1">
       <IconButton
         size="small"
@@ -42,7 +48,12 @@ const Header: FC<Props> = ({ onEditSpace }) => (
     </div>
 
     <div className="flex gap-1">
-      <Button size="small" variant="secondary" prefix={{ icon: 'layout-grid' }}>
+      <Button
+        size="small"
+        variant={isShowMeeting ? 'secondary' : 'naked'}
+        prefix={{ icon: 'layout-grid' }}
+        onClick={onMeetingViewClick}
+      >
         Meeting view
       </Button>
 
@@ -72,7 +83,7 @@ const Header: FC<Props> = ({ onEditSpace }) => (
         </VerticalList>
       </Dropdown>
     </div>
-  </div>
+  </header>
 )
 
 export default Header

@@ -15,7 +15,7 @@ describe('Meeting', () => {
     render(<Meeting />)
 
     expect(
-      await screen.findByRole('button', { name: 'Meeting view' })
+      await screen.findByRole('button', { name: 'Grid meeting view' })
     ).toBeInTheDocument()
   })
 
@@ -37,7 +37,7 @@ describe('Meeting', () => {
     render(<Meeting />)
 
     await user.click(
-      await screen.findByRole('button', { name: 'Meeting view' })
+      await screen.findByRole('button', { name: 'Grid meeting view' })
     )
 
     expect(
@@ -58,13 +58,13 @@ describe('Meeting', () => {
     render(<Meeting />)
 
     await user.click(
-      await screen.findByRole('button', { name: 'Meeting view' })
+      await screen.findByRole('button', { name: 'Grid meeting view' })
     )
 
     await user.click(await screen.findByRole('button', { name: 'Map view' }))
     expect(screen.getByRole('region', { name: 'Map View' })).toBeInTheDocument()
     expect(
-      screen.queryByRole('region', { name: 'Meeting View' })
+      screen.queryByRole('region', { name: 'Grid meeting view' })
     ).not.toBeInTheDocument()
   })
 })
