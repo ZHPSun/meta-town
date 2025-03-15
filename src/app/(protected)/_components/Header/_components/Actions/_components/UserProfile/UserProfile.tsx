@@ -3,11 +3,10 @@
 import { FC, useState } from 'react'
 import Button from '@/components/Button'
 import Dropdown from '@/components/Dropdown'
-import Modal from '@/components/Modal'
+import ProfileFormModal from '@/app/(protected)/_components/ProfileFormModal'
 import VerticalList from '@/components/VerticalList'
 import useSession from '@/hooks/useSession'
 import useUser from '@/hooks/useUser'
-import Form from './_components/Form'
 import SignOut from './_components/SignOut'
 
 const UserProfile: FC = () => {
@@ -52,12 +51,10 @@ const UserProfile: FC = () => {
         </VerticalList>
       </Dropdown>
       {isEditModalOpen && (
-        <Modal
+        <ProfileFormModal
           title="Edit Your Profile"
           onClose={() => setIsEditModalOpen(false)}
-        >
-          <Form />
-        </Modal>
+        />
       )}
     </div>
   )

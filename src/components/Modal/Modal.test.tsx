@@ -37,9 +37,8 @@ describe('Modal', () => {
   })
 
   test('calls onClose when close button is clicked', async () => {
-    const onClose = vi.fn()
-
     const user = userEvent.setup()
+    const onClose = vi.fn()
 
     render(
       <Modal onClose={onClose} title="Test Title">
@@ -61,5 +60,13 @@ describe('Modal', () => {
       </Modal>
     )
     expect(container).toBeEmptyDOMElement()
+  })
+
+  test('renders Modal without Close button when onClose is not given', () => {
+    render(<Modal title="Test Title">Test</Modal>)
+
+    expect(
+      screen.queryByRole('button', { name: 'Close' })
+    ).not.toBeInTheDocument()
   })
 })

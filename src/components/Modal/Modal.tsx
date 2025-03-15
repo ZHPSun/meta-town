@@ -4,12 +4,12 @@ import Overlay from './_components/Overlay'
 import Header from './_components/Header'
 
 interface Props {
-  onClose: () => void
+  onClose?: () => void
   children: ReactNode
   title: string
 }
 
-const Modal: FC<Props> = ({ onClose, children, title }) => {
+const Modal: FC<Props> = ({ onClose = undefined, children, title }) => {
   const portalRoot = document.getElementById('modal-root')
 
   if (!portalRoot) {

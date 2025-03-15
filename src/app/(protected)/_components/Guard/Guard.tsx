@@ -4,7 +4,7 @@ import { FC, ReactNode } from 'react'
 import useSession from '@/hooks/useSession'
 import useUser from '@/hooks/useUser'
 import GlobalLoading from '@/components/GlobalLoading'
-import Form from './_components/Form'
+import ProfileFormModal from '../ProfileFormModal'
 
 interface Props {
   children: ReactNode
@@ -24,11 +24,7 @@ const CreateUserGuard: FC<Props> = ({ children }) => {
 
   return (
     <div>
-      {!user && (
-        <div className="px-12 py-6">
-          <Form />
-        </div>
-      )}
+      {!user && <ProfileFormModal title="Create user" />}
       {children}
     </div>
   )
