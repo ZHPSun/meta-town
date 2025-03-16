@@ -3,6 +3,7 @@ words:
   - autoincrement
   - dbgenerated
   - Metaverse
+  - plpgsql
   - supabase
 flagWords: null
 suggestWords: null
