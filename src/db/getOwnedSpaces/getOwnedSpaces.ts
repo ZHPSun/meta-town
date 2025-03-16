@@ -3,7 +3,7 @@ import createSupabaseClient, { Tables } from '@/utils/createSupabaseClient'
 
 type Spaces = CamelCaseKeys<Pick<Tables<'spaces'>, 'id' | 'name'>>[]
 
-const getSpaces = async ([, ownerId]: [
+const getOwnedSpaces = async ([, ownerId]: [
   string,
   string,
 ]): Promise<Spaces | null> => {
@@ -22,4 +22,4 @@ const getSpaces = async ([, ownerId]: [
   return camelcaseKeys(spaces)
 }
 
-export default getSpaces
+export default getOwnedSpaces

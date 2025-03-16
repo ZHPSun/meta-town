@@ -1,15 +1,15 @@
 import { renderHook } from '@testing-library/react'
 import useSWR from 'swr'
-import getSpaces from '@/db/getSpaces'
+import getOwnedSpaces from '@/db/getOwnedSpaces'
 import useUser from '@/hooks/useUser'
-import useSpaces from './useSpaces'
+import useOwnedSpaces from './useOwnedSpaces'
 
 vi.mock('swr')
 const useSWRMock = vi.mocked(useSWR)
 vi.mock('@/hooks/useUser')
 const useUserMock = vi.mocked(useUser)
 
-describe('useSpaces', () => {
+describe('useOwnedSpaces', () => {
   afterEach(() => {
     vi.resetAllMocks()
   })
@@ -20,9 +20,9 @@ describe('useSpaces', () => {
       isLoading: false,
     } as unknown as ReturnType<typeof useUser>)
 
-    renderHook(() => useSpaces())
+    renderHook(() => useOwnedSpaces())
 
-    expect(useSWRMock).toHaveBeenCalledWith(null, getSpaces)
+    expect(useSWRMock).toHaveBeenCalledWith(null, getOwnedSpaces)
   })
 
   test('calls useSWR with key and fetcher', () => {
@@ -35,9 +35,12 @@ describe('useSpaces', () => {
       isLoading: false,
     } as unknown as ReturnType<typeof useUser>)
 
-    renderHook(() => useSpaces())
+    renderHook(() => useOwnedSpaces())
 
-    expect(useSWRMock).toHaveBeenCalledWith(['spaces', user.id], getSpaces)
+    expect(useSWRMock).toHaveBeenCalledWith(
+      ['owned-spaces', user.id],
+      getOwnedSpaces
+    )
   })
 
   test('returns result from useSWR', () => {
@@ -60,7 +63,7 @@ describe('useSpaces', () => {
       isLoading: false,
     } as unknown as ReturnType<typeof useSWR>)
 
-    const { result } = renderHook(() => useSpaces())
+    const { result } = renderHook(() => useOwnedSpaces())
 
     expect(result.current).toEqual({
       data,

@@ -1,11 +1,11 @@
 'use client'
 import { FC } from 'react'
 import { Loader } from 'lucide-react'
-import useSpaces from '@/hooks/useSpaces'
+import useOwnedSpaces from '@/hooks/useOwnedSpaces'
 import SpacePreview from './_components/SpacePreview'
 
 const Spaces: FC = () => {
-  const { data: spaces, isLoading } = useSpaces()
+  const { data: ownedSpaces, isLoading } = useOwnedSpaces()
   if (isLoading)
     return (
       <Loader className="animate-spine" role="status" aria-label="Loading" />
@@ -13,7 +13,7 @@ const Spaces: FC = () => {
 
   return (
     <div className="flex flex-wrap" role="group" aria-label="Spaces">
-      {spaces?.map((space) => (
+      {ownedSpaces?.map((space) => (
         <SpacePreview key={space.id} name={space.name} spaceId={space.id} />
       ))}
     </div>

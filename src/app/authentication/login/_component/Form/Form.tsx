@@ -80,7 +80,7 @@ const Form: FC = () => {
       {serverError && (
         <p className="text-rose-500">{getServerErrorMessage(serverError)}</p>
       )}
-      <Button className="w-full" isLoading={isSubmitting}>
+      <Button className="w-full" type="submit" isLoading={isSubmitting}>
         Login
       </Button>
     </form>

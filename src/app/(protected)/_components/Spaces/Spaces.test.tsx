@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react'
-import useSpaces from '@/hooks/useSpaces'
+import useOwnedSpaces from '@/hooks/useOwnedSpaces'
 import Spaces from './Spaces'
 
-vi.mock('@/hooks/useSpaces')
-const useSpacesMock = vi.mocked(useSpaces)
+vi.mock('@/hooks/useOwnedSpaces')
+const useOwnedSpacesMock = vi.mocked(useOwnedSpaces)
 
 describe('Spaces', () => {
   afterAll(() => {
@@ -11,13 +11,13 @@ describe('Spaces', () => {
   })
 
   test('renders Spaces', () => {
-    useSpacesMock.mockReturnValue({
+    useOwnedSpacesMock.mockReturnValue({
       isLoading: false,
       data: [
         { id: '1', name: 'Space 1' },
         { id: '2', name: 'Space 2' },
       ],
-    } as unknown as ReturnType<typeof useSpaces>)
+    } as unknown as ReturnType<typeof useOwnedSpaces>)
 
     render(<Spaces />)
 
@@ -29,9 +29,9 @@ describe('Spaces', () => {
   })
 
   test('renders Loading', () => {
-    useSpacesMock.mockReturnValue({
+    useOwnedSpacesMock.mockReturnValue({
       isLoading: true,
-    } as unknown as ReturnType<typeof useSpaces>)
+    } as unknown as ReturnType<typeof useOwnedSpaces>)
 
     render(<Spaces />)
     expect(screen.getByRole('status', { name: 'Loading' })).toBeInTheDocument()

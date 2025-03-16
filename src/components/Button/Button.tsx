@@ -62,6 +62,7 @@ const Button: FC<Props> = ({
   isLoading = false,
   size = 'default',
   variant = 'primary',
+  type = 'button',
   prefix = undefined,
   suffix = undefined,
   ...rest
@@ -75,6 +76,7 @@ const Button: FC<Props> = ({
       className
     )}
     disabled={isLoading}
+    type={type}
     {...rest}
   >
     {isLoading ? (

@@ -1,11 +1,11 @@
 import camelcaseKeys from 'camelcase-keys'
 import createSupabaseClient from '@/utils/createSupabaseClient'
-import getSpaces from './getSpaces'
+import getOwnedSpaces from './getOwnedSpaces'
 
 vi.mock('@/utils/createSupabaseClient')
 const createSupabaseClientMock = vi.mocked(createSupabaseClient)
 
-describe('getSpaces', () => {
+describe('getOwnedSpaces', () => {
   afterEach(() => {
     vi.resetAllMocks()
   })
@@ -30,7 +30,7 @@ describe('getSpaces', () => {
 
     createSupabaseClientMock.mockReturnValue(supabaseClient)
 
-    const spaces = await getSpaces(['spaces', OWNER_ID])
+    const spaces = await getOwnedSpaces(['spaces', OWNER_ID])
 
     expect(supabaseClient.from).toHaveBeenCalledWith('spaces')
 
@@ -61,7 +61,7 @@ describe('getSpaces', () => {
 
     createSupabaseClientMock.mockReturnValue(supabaseClient)
 
-    const spaces = await getSpaces(['spaces', OWNER_ID])
+    const spaces = await getOwnedSpaces(['spaces', OWNER_ID])
 
     expect(supabaseClient.from).toHaveBeenCalledWith('spaces')
 

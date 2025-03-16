@@ -112,7 +112,7 @@ const Form: FC = () => {
         <p className="text-rose-500">{getServerErrorMessage(serverError)}</p>
       )}
 
-      <Button className="w-full" isLoading={isSubmitting}>
+      <Button className="w-full" type="submit" isLoading={isSubmitting}>
         Join Meta Town
       </Button>
     </form>

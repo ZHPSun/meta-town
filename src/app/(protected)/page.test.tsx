@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import useUser from '@/hooks/useUser'
 import useSession from '@/hooks/useSession'
-import useSpaces from '@/hooks/useSpaces'
+import useOwnedSpaces from '@/hooks/useOwnedSpaces'
 import Home from './page'
 
 vi.mock('@/hooks/useUser')
@@ -10,8 +10,8 @@ const useUserMock = vi.mocked(useUser)
 vi.mock('@/hooks/useSession')
 const useSessionMock = vi.mocked(useSession)
 
-vi.mock('@/hooks/useSpaces')
-const useSpacesMock = vi.mocked(useSpaces)
+vi.mock('@/hooks/useOwnedSpaces')
+const useOwnedSpacesMock = vi.mocked(useOwnedSpaces)
 
 describe('Home', () => {
   test('renders Header', () => {
@@ -31,7 +31,7 @@ describe('Home', () => {
       isLoading: false,
     } as unknown as ReturnType<typeof useSession>)
 
-    useSpacesMock.mockReturnValue({
+    useOwnedSpacesMock.mockReturnValue({
       data: [
         {
           id: 'Space ID',
@@ -39,14 +39,14 @@ describe('Home', () => {
         },
       ],
       isLoading: false,
-    } as unknown as ReturnType<typeof useSpaces>)
+    } as unknown as ReturnType<typeof useOwnedSpaces>)
     render(<Home />)
 
     expect(screen.getByRole('link', { name: 'Meta Town' })).toBeInTheDocument()
   })
 
   test('renders Filter', () => {
-    useSpacesMock.mockReturnValue({
+    useOwnedSpacesMock.mockReturnValue({
       data: [
         {
           id: 'Space ID',
@@ -54,7 +54,7 @@ describe('Home', () => {
         },
       ],
       isLoading: false,
-    } as unknown as ReturnType<typeof useSpaces>)
+    } as unknown as ReturnType<typeof useOwnedSpaces>)
 
     render(<Home />)
 
@@ -64,7 +64,7 @@ describe('Home', () => {
   })
 
   test('renders Spaces', () => {
-    useSpacesMock.mockReturnValue({
+    useOwnedSpacesMock.mockReturnValue({
       data: [
         {
           id: 'Space ID',
@@ -72,7 +72,7 @@ describe('Home', () => {
         },
       ],
       isLoading: false,
-    } as unknown as ReturnType<typeof useSpaces>)
+    } as unknown as ReturnType<typeof useOwnedSpaces>)
 
     render(<Home />)
     expect(screen.getByRole('group', { name: 'Spaces' })).toBeInTheDocument()
