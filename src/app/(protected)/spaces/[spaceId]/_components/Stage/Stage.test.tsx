@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { useParams } from 'next/navigation'
 import { act } from 'react'
 import useUser from '@/hooks/useUser'
-import updateSpacePosition from '@/db/updateSpacePosition'
+import upsertSpacePosition from '@/db/upsertSpacePosition'
 import * as consts from './consts'
 import Stage, { INITIAL_COORDINATES, WALLS } from './Stage'
 
@@ -27,7 +27,7 @@ const useUserMock = vi.mocked(useUser)
 vi.mock('next/navigation')
 const mockParamsMock = vi.mocked(useParams)
 
-vi.mock('@/db/updateSpacePosition')
+vi.mock('@/db/upsertSpacePosition')
 
 describe('Stage', () => {
   afterEach(() => {
@@ -226,7 +226,7 @@ describe('Stage', () => {
 
     await act(() => vi.advanceTimersByTime(200))
 
-    expect(updateSpacePosition).toHaveBeenCalledWith({
+    expect(upsertSpacePosition).toHaveBeenCalledWith({
       userId: 'USER_ID',
       spaceId,
       coordinates: { x: 0, y: 1, direction: 'S' },

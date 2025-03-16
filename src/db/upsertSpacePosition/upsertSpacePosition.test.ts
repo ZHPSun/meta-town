@@ -1,10 +1,10 @@
 import createSupabaseClient from '@/utils/createSupabaseClient'
-import updateSpacePosition from './updateSpacePosition'
+import upsertSpacePosition from './upsertSpacePosition'
 
 vi.mock('@/utils/createSupabaseClient')
 const createSupabaseClientMock = vi.mocked(createSupabaseClient)
 
-describe('updateSpacePosition', () => {
+describe('upsertSpacePosition', () => {
   test('calls supabase upsert with data', async () => {
     const data = {
       userId: 'USER_ID',
@@ -20,7 +20,7 @@ describe('updateSpacePosition', () => {
 
     createSupabaseClientMock.mockReturnValue(supabaseClient)
 
-    await updateSpacePosition(data)
+    await upsertSpacePosition(data)
 
     expect(supabaseClient.from).toHaveBeenCalledWith('user_space_positions')
     expect(

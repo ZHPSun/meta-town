@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react'
 import { useParams } from 'next/navigation'
 import { act } from 'react'
 import useUser from '@/hooks/useUser'
-import updateSpacePosition from '@/db/updateSpacePosition'
+import upsertSpacePosition from '@/db/upsertSpacePosition'
 import { Coordinates } from '../../_components/Placement'
 import useUpdateSpacePosition from './useUpdateSpacePosition'
 
@@ -12,8 +12,8 @@ const useUserMock = vi.mocked(useUser)
 vi.mock('next/navigation')
 const mockParamsMock = vi.mocked(useParams)
 
-vi.mock('@/db/updateSpacePosition')
-const updateSpacePositionMock = vi.mocked(updateSpacePosition)
+vi.mock('@/db/upsertSpacePosition')
+const upsertSpacePositionMock = vi.mocked(upsertSpacePosition)
 
 describe('useUpdateSpacePosition', () => {
   beforeEach(() => {
@@ -25,7 +25,7 @@ describe('useUpdateSpacePosition', () => {
     vi.useRealTimers()
   })
 
-  test('does not call updateSpacePosition if user is not moving', async () => {
+  test('does not call upsertSpacePosition if user is not moving', async () => {
     const coordinates = { x: 0, y: 0, direction: 'S' } as const
     const userId = 'USER_ID'
     const spaceId = 'SPACE_ID'
@@ -42,10 +42,10 @@ describe('useUpdateSpacePosition', () => {
 
     await act(() => vi.advanceTimersByTime(200))
 
-    expect(updateSpacePosition).not.toHaveBeenCalled()
+    expect(upsertSpacePosition).not.toHaveBeenCalled()
   })
 
-  test('does not call updateSpacePosition if there is no user', async () => {
+  test('does not call upsertSpacePosition if there is no user', async () => {
     const coordinates = { x: 0, y: 0, direction: 'S' } as const
     const spaceId = 'SPACE_ID'
 
@@ -59,10 +59,10 @@ describe('useUpdateSpacePosition', () => {
 
     await act(() => vi.advanceTimersByTime(200))
 
-    expect(updateSpacePosition).not.toBeCalled()
+    expect(upsertSpacePosition).not.toBeCalled()
   })
 
-  test('calls updateSpacePosition if the coordinates change', async () => {
+  test('calls upsertSpacePosition if the coordinates change', async () => {
     const coordinates: Coordinates = { x: 0, y: 0, direction: 'S' }
     const userId = 'USER_ID'
     const spaceId = 'SPACE_ID'
@@ -84,15 +84,15 @@ describe('useUpdateSpacePosition', () => {
 
     await act(() => vi.advanceTimersByTime(200))
 
-    expect(updateSpacePosition).not.toHaveBeenCalled()
+    expect(upsertSpacePosition).not.toHaveBeenCalled()
 
     const newCoordinates: Coordinates = { x: 1, y: 1, direction: 'N' }
     rerender({ coordinates: newCoordinates })
 
     await act(() => vi.advanceTimersByTime(200))
 
-    expect(updateSpacePosition).toBeCalledTimes(1)
-    expect(updateSpacePosition).toBeCalledWith({
+    expect(upsertSpacePosition).toBeCalledTimes(1)
+    expect(upsertSpacePosition).toBeCalledWith({
       userId,
       spaceId,
       coordinates: newCoordinates,
@@ -112,7 +112,7 @@ describe('useUpdateSpacePosition', () => {
       spaceId,
     })
 
-    updateSpacePositionMock.mockImplementation(async () => {
+    upsertSpacePositionMock.mockImplementation(async () => {
       await new Promise((resolve) => setTimeout(resolve, 1000))
     })
 
@@ -128,8 +128,8 @@ describe('useUpdateSpacePosition', () => {
 
     await act(() => vi.advanceTimersByTime(200))
 
-    expect(updateSpacePosition).toBeCalledTimes(1)
-    expect(updateSpacePosition).toBeCalledWith({
+    expect(upsertSpacePosition).toBeCalledTimes(1)
+    expect(upsertSpacePosition).toBeCalledWith({
       userId,
       spaceId,
       coordinates: coordinates1st,
@@ -145,9 +145,9 @@ describe('useUpdateSpacePosition', () => {
     await act(() => vi.advanceTimersByTime(200))
     await act(() => vi.advanceTimersByTime(200))
 
-    expect(updateSpacePosition).toBeCalledTimes(2)
+    expect(upsertSpacePosition).toBeCalledTimes(2)
 
-    expect(updateSpacePosition).toBeCalledWith({
+    expect(upsertSpacePosition).toBeCalledWith({
       userId,
       spaceId,
       coordinates: coordinates2nd,

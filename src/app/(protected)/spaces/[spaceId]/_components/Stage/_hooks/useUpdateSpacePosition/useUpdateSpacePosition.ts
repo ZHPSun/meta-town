@@ -1,6 +1,6 @@
 import { useParams } from 'next/navigation'
 import { useEffect, useRef } from 'react'
-import updateSpacePosition from '@/db/updateSpacePosition'
+import updateSpacePosition from '@/db/upsertSpacePosition'
 import useUser from '@/hooks/useUser'
 import { type Coordinates } from '../../_components/Placement'
 

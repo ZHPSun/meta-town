@@ -7,7 +7,7 @@ interface Data {
   coordinates: Coordinates
 }
 
-const updateSpacePosition = async (data: Data): Promise<void> => {
+const upsertSpacePosition = async (data: Data): Promise<void> => {
   const supabaseClient = createSupabaseClient()
 
   const { coordinates } = data
@@ -26,4 +26,4 @@ const updateSpacePosition = async (data: Data): Promise<void> => {
   )
 }
 
-export default updateSpacePosition
+export default upsertSpacePosition
