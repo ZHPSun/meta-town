@@ -2,7 +2,7 @@ import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import useUser from '@/hooks/useUser'
 import useSession from '@/hooks/useSession'
-import createUser from '@/db/createUser'
+import upsertUser from '@/db/upsertUser'
 import UserProfile from './UserProfile'
 
 vi.mock('@/hooks/useUser')
@@ -11,8 +11,8 @@ const useUserMock = vi.mocked(useUser)
 vi.mock('@/hooks/useSession')
 const useSessionMock = vi.mocked(useSession)
 
-vi.mock('@/db/createUser')
-const createUserMock = vi.mocked(createUser)
+vi.mock('@/db/upsertUser')
+const upsertUserMock = vi.mocked(upsertUser)
 
 afterEach(() => {
   vi.resetAllMocks()
@@ -239,7 +239,7 @@ describe('UserProfile', () => {
       isLoading: false,
     } as unknown as ReturnType<typeof useSession>)
 
-    createUserMock.mockImplementation(
+    upsertUserMock.mockImplementation(
       () => new Promise((resolve) => setTimeout(resolve, 1000))
     )
 

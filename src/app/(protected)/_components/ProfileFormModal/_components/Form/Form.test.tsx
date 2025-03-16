@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import useSession from '@/hooks/useSession'
 import useUser from '@/hooks/useUser'
-import createUser from '@/db/createUser'
+import upsertUser from '@/db/upsertUser'
 import Form from './Form'
 
 vi.mock('@/hooks/useSession')
@@ -11,8 +11,8 @@ const useSessionMock = vi.mocked(useSession)
 vi.mock('@/hooks/useUser')
 const useUserMock = vi.mocked(useUser)
 
-vi.mock('@/db/createUser')
-const createUserMock = vi.mocked(createUser)
+vi.mock('@/db/upsertUser')
+const upsertUserMock = vi.mocked(upsertUser)
 
 describe('Form', () => {
   afterEach(() => {
@@ -101,7 +101,7 @@ describe('Form', () => {
     expect(container).toBeEmptyDOMElement()
   })
 
-  test('calls createUser on form submit', async () => {
+  test('calls upsertUser on form submit', async () => {
     const mutate = vi.fn()
     const session = { user: { id: 'AUTH_ID' } }
 
@@ -113,7 +113,7 @@ describe('Form', () => {
       mutate,
     } as unknown as ReturnType<typeof useUser>)
 
-    createUserMock.mockImplementation(
+    upsertUserMock.mockImplementation(
       () => new Promise((resolve) => setTimeout(resolve, 1000))
     )
 
@@ -139,7 +139,7 @@ describe('Form', () => {
 
     expect(screen.getByRole('button', { name: 'Loading' })).toBeDisabled()
 
-    expect(createUser).toHaveBeenCalledWith({
+    expect(upsertUser).toHaveBeenCalledWith({
       displayName: 'John Doe',
       avatar: 'bird',
       authId: session.user.id,

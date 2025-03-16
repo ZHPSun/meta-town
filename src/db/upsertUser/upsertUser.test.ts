@@ -1,15 +1,15 @@
 import createSupabaseClient from '@/utils/createSupabaseClient'
-import createUser from './createUser'
+import upsertUser from './upsertUser'
 
 vi.mock('@/utils/createSupabaseClient')
 const createSupabaseClientMock = vi.mocked(createSupabaseClient)
 
-describe('createUser', () => {
+describe('upsertUser', () => {
   afterEach(() => {
     vi.resetAllMocks()
   })
 
-  test('creates a new user', async () => {
+  test('calls the supabase upsert with data', async () => {
     const data = {
       displayName: 'John Doe',
       avatar: 'dog',
@@ -18,19 +18,23 @@ describe('createUser', () => {
 
     const supabaseClient = {
       from: vi.fn().mockReturnValue({
-        insert: vi.fn(),
+        upsert: vi.fn(),
       }),
     } as unknown as ReturnType<typeof createSupabaseClient>
 
     createSupabaseClientMock.mockReturnValue(supabaseClient)
 
-    await createUser(data)
+    await upsertUser(data)
 
     expect(supabaseClient.from).toHaveBeenCalledWith('users')
-    expect(supabaseClient.from('users').insert).toHaveBeenCalledWith({
-      display_name: data.displayName,
-      avatar: data.avatar,
-      auth_id: data.authId,
-    })
+
+    expect(supabaseClient.from('users').upsert).toHaveBeenCalledWith(
+      {
+        display_name: data.displayName,
+        avatar: data.avatar,
+        auth_id: data.authId,
+      },
+      { onConflict: 'auth_id' }
+    )
   })
 })

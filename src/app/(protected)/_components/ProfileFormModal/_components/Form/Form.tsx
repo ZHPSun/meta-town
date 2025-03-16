@@ -6,7 +6,7 @@ import Button from '@/components/Button'
 import useSession from '@/hooks/useSession'
 import useUser from '@/hooks/useUser'
 import TextField from '@/components/TextField'
-import createUser from '@/db/createUser'
+import upsertUser from '@/db/upsertUser'
 import AvatarPicker from './_components/AvatarPicker'
 
 export interface Avatar {
@@ -58,7 +58,7 @@ const Form: FC<Props> = ({ onCreated = undefined }) => {
   }
 
   const onSubmit = async (data: Schema): Promise<void> => {
-    await createUser({
+    await upsertUser({
       displayName: data.text,
       avatar: data.avatar.animal,
       authId: session.user.id,
