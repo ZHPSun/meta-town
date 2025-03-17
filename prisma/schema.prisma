@@ -31,7 +31,8 @@ model Space {
   users           User[]          @relation("users_joined_spaces")
   users_positions UserSpacePosition[]
   users_presences UserSpacePresence[]
-
+  stage_config    StageConfig?
+  
   @@map("spaces")
 }
 
@@ -79,4 +80,18 @@ model UserSpacePresence {
 
   @@unique([user_id, space_id])
   @@map("user_space_presences")
+}
+
+model StageConfig {
+  id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid()
+  space_id String @unique @db.Uuid()
+
+  rows     Int
+  columns  Int
+  walls    Json?
+  entry    Json?
+
+  space Space @relation(fields: [space_id], references: [id])
+
+  @@map("stage_configs")
 }
