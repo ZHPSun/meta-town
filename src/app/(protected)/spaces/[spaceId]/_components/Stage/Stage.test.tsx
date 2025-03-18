@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { useParams } from 'next/navigation'
 import { act } from 'react'
 import useUser from '@/hooks/useUser'
+import useOnlineUsers from '@/hooks/useOnlineUsers'
 import upsertSpacePosition from '@/db/upsertSpacePosition'
 import * as consts from './consts'
 import Stage, { INITIAL_COORDINATES, WALLS } from './Stage'
@@ -24,6 +25,9 @@ vi.mock('./consts', async (importOriginal) => {
 vi.mock('@/hooks/useUser')
 const useUserMock = vi.mocked(useUser)
 
+vi.mock('@/hooks/useOnlineUsers')
+const useOnlineUsersMock = vi.mocked(useOnlineUsers)
+
 vi.mock('next/navigation')
 const mockParamsMock = vi.mocked(useParams)
 
@@ -43,6 +47,10 @@ describe('Stage', () => {
       spaceId: 'SPACE_ID',
     })
 
+    useOnlineUsersMock.mockReturnValue({
+      data: null,
+    } as unknown as ReturnType<typeof useOnlineUsers>)
+
     const { container } = render(<Stage onConfigurationClose={vi.fn()} />)
 
     expect(container).toBeEmptyDOMElement()
@@ -56,6 +64,10 @@ describe('Stage', () => {
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
+
+    useOnlineUsersMock.mockReturnValue({
+      data: null,
+    } as unknown as ReturnType<typeof useOnlineUsers>)
 
     render(<Stage onConfigurationClose={vi.fn()} />)
 
@@ -71,6 +83,10 @@ describe('Stage', () => {
       spaceId: 'SPACE_ID',
     })
 
+    useOnlineUsersMock.mockReturnValue({
+      data: null,
+    } as unknown as ReturnType<typeof useOnlineUsers>)
+
     render(<Stage onConfigurationClose={vi.fn()} />)
 
     expect(screen.getAllByLabelText('Wall')).toHaveLength(WALLS.length)
@@ -84,6 +100,10 @@ describe('Stage', () => {
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
+
+    useOnlineUsersMock.mockReturnValue({
+      data: null,
+    } as unknown as ReturnType<typeof useOnlineUsers>)
 
     render(<Stage onConfigurationClose={vi.fn()} />)
 
@@ -100,6 +120,10 @@ describe('Stage', () => {
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
+
+    useOnlineUsersMock.mockReturnValue({
+      data: null,
+    } as unknown as ReturnType<typeof useOnlineUsers>)
 
     const user = userEvent.setup()
     render(<Stage onConfigurationClose={vi.fn()} />)
@@ -121,6 +145,10 @@ describe('Stage', () => {
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
+
+    useOnlineUsersMock.mockReturnValue({
+      data: null,
+    } as unknown as ReturnType<typeof useOnlineUsers>)
 
     render(<Stage onConfigurationClose={vi.fn()} />)
 
@@ -154,6 +182,10 @@ describe('Stage', () => {
       spaceId: 'SPACE_ID',
     })
 
+    useOnlineUsersMock.mockReturnValue({
+      data: null,
+    } as unknown as ReturnType<typeof useOnlineUsers>)
+
     const user = userEvent.setup()
 
     render(<Stage onConfigurationClose={vi.fn()} />)
@@ -174,6 +206,10 @@ describe('Stage', () => {
       spaceId: 'SPACE_ID',
     })
 
+    useOnlineUsersMock.mockReturnValue({
+      data: null,
+    } as unknown as ReturnType<typeof useOnlineUsers>)
+
     const user = userEvent.setup()
 
     render(<Stage onConfigurationClose={vi.fn()} />)
@@ -185,7 +221,7 @@ describe('Stage', () => {
     ).toBe('0.9')
   })
 
-  test('renders OtherCharacter', () => {
+  test('renders other characters', () => {
     useUserMock.mockReturnValue({
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
     } as unknown as ReturnType<typeof useUser>)
@@ -194,13 +230,23 @@ describe('Stage', () => {
       spaceId: 'SPACE_ID',
     })
 
+    useOnlineUsersMock.mockReturnValue({
+      data: [
+        { id: '1', displayName: 'Alice', avatar: 'bird' },
+        { id: '2', displayName: 'Bob', avatar: 'dog' },
+        { id: '3', displayName: 'Charlie', avatar: 'cat' },
+      ],
+    } as unknown as ReturnType<typeof useOnlineUsers>)
+
     render(<Stage onConfigurationClose={vi.fn()} />)
 
-    expect(screen.getByLabelText('Placement: 20, 20')).toHaveStyle({
-      top: `${20 * TILE_SIZE}px`,
-      left: `${20 * TILE_SIZE}px`,
-      transform: 'rotate(0deg)',
-    })
+    expect(screen.getByLabelText('Placement: 6, 6')).toBeInTheDocument()
+
+    expect(screen.getByLabelText('Placement: 6, 7')).toBeInTheDocument()
+
+    expect(screen.getByLabelText('Placement: 9, 9')).toBeInTheDocument()
+
+    expect(screen.getAllByLabelText('OtherCharacter')).toHaveLength(3)
   })
 
   test('update space position with the character coordinates on every 200ms', async () => {
@@ -216,6 +262,10 @@ describe('Stage', () => {
     mockParamsMock.mockReturnValue({
       spaceId,
     })
+
+    useOnlineUsersMock.mockReturnValue({
+      data: null,
+    } as unknown as ReturnType<typeof useOnlineUsers>)
 
     const user = userEvent.setup({
       advanceTimers: vi.advanceTimersByTime,
@@ -244,6 +294,10 @@ describe('Stage', () => {
       spaceId: 'SPACE_ID',
     })
 
+    useOnlineUsersMock.mockReturnValue({
+      data: null,
+    } as unknown as ReturnType<typeof useOnlineUsers>)
+
     render(<Stage onConfigurationClose={vi.fn()} />)
 
     expect(
@@ -260,6 +314,10 @@ describe('Stage', () => {
       spaceId: 'SPACE_ID',
     })
 
+    useOnlineUsersMock.mockReturnValue({
+      data: null,
+    } as unknown as ReturnType<typeof useOnlineUsers>)
+
     render(<Stage onConfigurationClose={vi.fn()} isConfigurationOpen />)
 
     expect(
@@ -275,6 +333,10 @@ describe('Stage', () => {
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
+
+    useOnlineUsersMock.mockReturnValue({
+      data: null,
+    } as unknown as ReturnType<typeof useOnlineUsers>)
 
     const user = userEvent.setup()
 
@@ -298,6 +360,10 @@ describe('Stage', () => {
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
+
+    useOnlineUsersMock.mockReturnValue({
+      data: null,
+    } as unknown as ReturnType<typeof useOnlineUsers>)
 
     const user = userEvent.setup()
 
@@ -326,6 +392,10 @@ describe('Stage', () => {
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
+
+    useOnlineUsersMock.mockReturnValue({
+      data: null,
+    } as unknown as ReturnType<typeof useOnlineUsers>)
 
     const onConfigurationClose = vi.fn()
     const user = userEvent.setup()

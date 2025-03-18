@@ -1,8 +1,10 @@
 'use client'
 
 import { FC, Fragment } from 'react'
+import { useParams } from 'next/navigation'
 import IconButton from '@/components/IconButton'
 import useUser from '@/hooks/useUser'
+import useOnlineUsers from '@/hooks/useOnlineUsers'
 import Character from './_components/Character'
 import Configuration from './_components/Configuration'
 import OtherCharacter from './_components/OtherCharacter'
@@ -28,6 +30,13 @@ export const WALLS: Coordinates[] = [
   { x: 12, y: 12, direction: 'N' },
   { x: 13, y: 13, direction: 'N' },
   { x: 14, y: 13, direction: 'N' },
+] as const
+
+const USER_SPACE_POSITIONS: Coordinates[] = [
+  { x: 6, y: 6, direction: 'N' },
+  { x: 6, y: 7, direction: 'E' },
+  { x: 9, y: 9, direction: 'S' },
+  { x: 12, y: 10, direction: 'W' },
 ] as const
 
 interface Props {
@@ -62,6 +71,10 @@ const Stage: FC<Props> = ({
 
   const { data: user } = useUser()
 
+  const { spaceId } = useParams<{ spaceId: string }>()
+
+  const { data: onlineUsers } = useOnlineUsers(spaceId)
+
   const { walls } = data
 
   if (!user) {
@@ -90,9 +103,17 @@ const Stage: FC<Props> = ({
               <Character avatar={user.avatar} />
             </Placement>
 
-            <Placement coordinates={{ x: 20, y: 20, direction: 'N' }}>
-              <OtherCharacter />
-            </Placement>
+            {onlineUsers?.map(
+              (onlineUser, index) =>
+                USER_SPACE_POSITIONS[index] && (
+                  <Placement
+                    key={onlineUser.id}
+                    coordinates={USER_SPACE_POSITIONS[index]}
+                  >
+                    <OtherCharacter />
+                  </Placement>
+                )
+            )}
 
             {walls.map((wallCoordinates) => (
               <Placement
