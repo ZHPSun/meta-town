@@ -1,6 +1,7 @@
 'use client'
 
 import { FC, useState } from 'react'
+import useSyncSpacePresence from './_hooks/useSyncSpacePresence'
 import ChatSideWindow from './_components/ChatSideWindow'
 import Footer from './_components/Footer'
 import Header from './_components/Header'
@@ -9,6 +10,8 @@ import ParticipantsSideWindow from './_components/ParticipantsSideWindow'
 import Stage from './_components/Stage'
 
 const Space: FC = () => {
+  useSyncSpacePresence()
+
   const [sideWindow, setSideWindow] = useState<'chat' | 'participants' | null>(
     null
   )

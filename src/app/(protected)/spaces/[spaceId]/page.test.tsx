@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { useParams } from 'next/navigation'
 import useUser from '@/hooks/useUser'
 import { VARIANT } from '@/components/Button'
+import useSyncSpacePresence from './_hooks/useSyncSpacePresence'
 import Space from './page'
 
 vi.mock('@/hooks/useUser')
@@ -10,6 +11,8 @@ const useUserMock = vi.mocked(useUser)
 
 vi.mock('next/navigation')
 const mockParamsMock = vi.mocked(useParams)
+
+vi.mock('./_hooks/useSyncSpacePresence')
 
 describe('Space', () => {
   afterEach(() => {
@@ -29,11 +32,33 @@ describe('Space', () => {
       spaceId: 'SPACE_ID',
     })
 
+    useSyncSpacePresence()
+
     render(<Space />)
 
     expect(
       screen.getByRole('button', { name: 'All-Hands' })
     ).toBeInTheDocument()
+  })
+
+  test('calls useSyncSpacePresence hook when rendering Space page', () => {
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+    } as unknown as ReturnType<typeof useUser>)
+
+    mockParamsMock.mockReturnValue({
+      spaceId: 'SPACE_ID',
+    })
+
+    useSyncSpacePresence()
+
+    render(<Space />)
+
+    expect(useSyncSpacePresence).toHaveBeenCalled()
   })
 
   test('does not render meeting view initially', () => {
@@ -48,6 +73,9 @@ describe('Space', () => {
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
+
+    useSyncSpacePresence()
+
     render(<Space />)
 
     expect(
@@ -67,6 +95,8 @@ describe('Space', () => {
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
+
+    useSyncSpacePresence()
 
     const user = userEvent.setup()
 
@@ -91,6 +121,8 @@ describe('Space', () => {
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
+
+    useSyncSpacePresence()
 
     const user = userEvent.setup()
 
@@ -117,6 +149,9 @@ describe('Space', () => {
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
+
+    useSyncSpacePresence()
+
     render(<Space />)
 
     expect(screen.getByRole('grid', { name: 'Tiled Map' })).toBeInTheDocument()
@@ -134,6 +169,9 @@ describe('Space', () => {
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
+
+    useSyncSpacePresence()
+
     render(<Space />)
 
     expect(
@@ -153,6 +191,9 @@ describe('Space', () => {
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
+
+    useSyncSpacePresence()
+
     const user = userEvent.setup()
 
     render(<Space />)
@@ -192,6 +233,8 @@ describe('Space', () => {
     })
     const user = userEvent.setup()
 
+    useSyncSpacePresence()
+
     render(<Space />)
 
     await user.click(await screen.findByRole('button', { name: 'Chat' }))
@@ -219,6 +262,9 @@ describe('Space', () => {
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
+
+    useSyncSpacePresence()
+
     const user = userEvent.setup()
 
     render(<Space />)
@@ -260,6 +306,9 @@ describe('Space', () => {
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
+
+    useSyncSpacePresence()
+
     const user = userEvent.setup()
 
     render(<Space />)
@@ -291,6 +340,9 @@ describe('Space', () => {
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
+
+    useSyncSpacePresence()
+
     const user = userEvent.setup()
 
     render(<Space />)
