@@ -1,15 +1,22 @@
 'use client'
 
+import { useParams } from 'next/navigation'
 import { FC, useState } from 'react'
-import useSyncSpacePresence from './_hooks/useSyncSpacePresence'
+import GlobalLoading from '@/components/GlobalLoading'
+import useSpace from '@/hooks/useSpace'
 import ChatSideWindow from './_components/ChatSideWindow'
 import Footer from './_components/Footer'
 import Header from './_components/Header'
 import Meeting from './_components/Meeting'
 import ParticipantsSideWindow from './_components/ParticipantsSideWindow'
 import Stage from './_components/Stage'
+import useSyncSpacePresence from './_hooks/useSyncSpacePresence'
 
 const Space: FC = () => {
+  const { spaceId } = useParams<{ spaceId: string }>()
+
+  const { data: space, isLoading } = useSpace(spaceId)
+
   useSyncSpacePresence()
 
   const [sideWindow, setSideWindow] = useState<'chat' | 'participants' | null>(
@@ -20,10 +27,19 @@ const Space: FC = () => {
   const [isStageConfigurationOpen, setIsStageConfigurationOpen] =
     useState(false)
 
+  if (isLoading) {
+    return <GlobalLoading />
+  }
+
+  if (!space) {
+    return <div>Space not found</div>
+  }
+
   return (
     <div>
       <div className="flex h-screen flex-col">
         <Header
+          space={space}
           onEditSpace={() => setIsStageConfigurationOpen(true)}
           onMeetingViewClick={() =>
             setIsShowMeeting((previousIsShowMeeting) => !previousIsShowMeeting)

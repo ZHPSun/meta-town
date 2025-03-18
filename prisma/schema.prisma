@@ -12,8 +12,8 @@ model User {
   avatar       String
   created_at   DateTime @default(now())
 
-  owned_spaces     Space[]         @relation("user_owned_spaces")
-  joined_spaces    Space[]         @relation("users_joined_spaces")
+  owned_spaces     Space[]             @relation("user_owned_spaces")
+  joined_spaces    Space[]             @relation("users_joined_spaces")
   spaces_positions UserSpacePosition[]
   spaces_presences UserSpacePresence[]
 
@@ -27,12 +27,12 @@ model Space {
   name       String
   created_at DateTime @default(now())
 
-  owner           User            @relation("user_owned_spaces", fields: [owner_id], references: [id])
-  users           User[]          @relation("users_joined_spaces")
+  owner           User                @relation("user_owned_spaces", fields: [owner_id], references: [id])
+  users           User[]              @relation("users_joined_spaces")
   users_positions UserSpacePosition[]
   users_presences UserSpacePresence[]
   stage_config    StageConfig?
-  
+
   @@map("spaces")
 }
 
@@ -48,12 +48,11 @@ model UserSpacePosition {
   user_id  String @db.Uuid()
   space_id String @db.Uuid()
 
-
   x          Int?
   y          Int?
   direction  Direction?
   created_at DateTime   @default(now())
-  updated_at  DateTime   @default(now()) @updatedAt
+  updated_at DateTime   @default(now()) @updatedAt
 
   user  User  @relation(fields: [user_id], references: [id])
   space Space @relation(fields: [space_id], references: [id])
@@ -86,10 +85,10 @@ model StageConfig {
   id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid()
   space_id String @unique @db.Uuid()
 
-  rows     Int
-  columns  Int
-  walls    Json?
-  entry    Json?
+  rows    Int
+  columns Int
+  walls   Json?
+  entry   Json?
 
   space Space @relation(fields: [space_id], references: [id])
 

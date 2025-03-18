@@ -5,13 +5,20 @@ import Tooltip from '@/components/Tooltip'
 import Dropdown from '@/components/Dropdown'
 import VerticalList from '@/components/VerticalList'
 
+interface Space {
+  id: string
+  name: string
+}
+
 interface Props {
+  space: Space
   onEditSpace: () => void
   onMeetingViewClick: () => void
   isShowMeeting?: boolean
 }
 
 const Header: FC<Props> = ({
+  space,
   onMeetingViewClick,
   isShowMeeting = false,
   onEditSpace,
@@ -42,7 +49,7 @@ const Header: FC<Props> = ({
           prefix={{ icon: 'sparkles' }}
           suffix={{ icon: 'chevron-down' }}
         >
-          All-Hands
+          {space.name}
         </Button>
       </Tooltip>
     </div>

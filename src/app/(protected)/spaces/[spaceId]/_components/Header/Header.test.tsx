@@ -9,7 +9,13 @@ describe('Header', () => {
   })
 
   test('renders copy link button', async () => {
-    render(<Header onMeetingViewClick={vi.fn()} onEditSpace={vi.fn()} />)
+    render(
+      <Header
+        space={{ id: 'SPACE_ID', name: 'All-Hands' }}
+        onMeetingViewClick={vi.fn()}
+        onEditSpace={vi.fn()}
+      />
+    )
 
     expect(
       await screen.findByRole('button', { name: 'Copy invite link' })
@@ -17,7 +23,13 @@ describe('Header', () => {
   })
 
   test('renders lock meeting area button', async () => {
-    render(<Header onMeetingViewClick={vi.fn()} onEditSpace={vi.fn()} />)
+    render(
+      <Header
+        space={{ id: 'SPACE_ID', name: 'All-Hands' }}
+        onMeetingViewClick={vi.fn()}
+        onEditSpace={vi.fn()}
+      />
+    )
 
     expect(
       await screen.findByRole('button', { name: 'Lock meeting area' })
@@ -25,7 +37,13 @@ describe('Header', () => {
   })
 
   test('renders all-hands button', () => {
-    render(<Header onMeetingViewClick={vi.fn()} onEditSpace={vi.fn()} />)
+    render(
+      <Header
+        space={{ id: 'SPACE_ID', name: 'All-Hands' }}
+        onMeetingViewClick={vi.fn()}
+        onEditSpace={vi.fn()}
+      />
+    )
 
     expect(
       screen.getByRole('button', { name: 'All-Hands' })
@@ -33,7 +51,13 @@ describe('Header', () => {
   })
 
   test('renders meeting view button', () => {
-    render(<Header onMeetingViewClick={vi.fn()} onEditSpace={vi.fn()} />)
+    render(
+      <Header
+        space={{ id: 'SPACE_ID', name: 'All-Hands' }}
+        onMeetingViewClick={vi.fn()}
+        onEditSpace={vi.fn()}
+      />
+    )
 
     expect(
       screen.getByRole('button', { name: 'Meeting view' })
@@ -45,14 +69,24 @@ describe('Header', () => {
     const user = userEvent.setup()
 
     render(
-      <Header onMeetingViewClick={onMeetingViewClick} onEditSpace={vi.fn()} />
+      <Header
+        space={{ id: 'SPACE_ID', name: 'All-Hands' }}
+        onMeetingViewClick={onMeetingViewClick}
+        onEditSpace={vi.fn()}
+      />
     )
     await user.click(screen.getByRole('button', { name: 'Meeting view' }))
     expect(onMeetingViewClick).toHaveBeenCalled()
   })
 
   test('renders meeting view button with naked variant without isShowMeeting', async () => {
-    render(<Header onMeetingViewClick={vi.fn()} onEditSpace={vi.fn()} />)
+    render(
+      <Header
+        space={{ id: 'SPACE_ID', name: 'All-Hands' }}
+        onMeetingViewClick={vi.fn()}
+        onEditSpace={vi.fn()}
+      />
+    )
 
     expect(
       await screen.findByRole('button', { name: 'Meeting view' })
@@ -64,6 +98,7 @@ describe('Header', () => {
 
     render(
       <Header
+        space={{ id: 'SPACE_ID', name: 'All-Hands' }}
         onMeetingViewClick={vi.fn()}
         onEditSpace={vi.fn()}
         isShowMeeting
@@ -82,7 +117,13 @@ describe('Header', () => {
 
     const user = userEvent.setup()
 
-    render(<Header onMeetingViewClick={vi.fn()} onEditSpace={onEditSpace} />)
+    render(
+      <Header
+        space={{ id: 'SPACE_ID', name: 'All-Hands' }}
+        onMeetingViewClick={vi.fn()}
+        onEditSpace={onEditSpace}
+      />
+    )
 
     expect(
       await screen.findByRole('button', { name: 'More options' })

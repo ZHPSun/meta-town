@@ -1,12 +1,16 @@
 import { useParams } from 'next/navigation'
 import { useEffect, useRef } from 'react'
 import updateSpacePosition from '@/db/upsertSpacePosition'
+import useSpace from '@/hooks/useSpace'
 import useUser from '@/hooks/useUser'
 import { type Coordinates } from '../../_components/Placement'
 
 const useUpdateSpacePosition = (characterCoordinates: Coordinates): void => {
   const { data: user } = useUser()
+
   const { spaceId } = useParams<{ spaceId: string }>()
+  const { data: space } = useSpace(spaceId)
+
   const lastUpdatedRef = useRef(characterCoordinates)
 
   useEffect(() => {
@@ -14,15 +18,15 @@ const useUpdateSpacePosition = (characterCoordinates: Coordinates): void => {
   }, [characterCoordinates])
 
   useEffect(() => {
+    if (!user?.id || !space?.id) {
+      return
+    }
+
     let coordinates = lastUpdatedRef.current
     let isProcessing = false
 
     const interval = setInterval(() => {
       const handleUpdateSpacePosition = async (): Promise<void> => {
-        if (!user?.id) {
-          return
-        }
-
         if (coordinates === lastUpdatedRef.current || isProcessing) {
           return
         }
@@ -32,7 +36,7 @@ const useUpdateSpacePosition = (characterCoordinates: Coordinates): void => {
 
         await updateSpacePosition({
           userId: user.id,
-          spaceId,
+          spaceId: space.id,
           coordinates,
         })
 
@@ -45,7 +49,7 @@ const useUpdateSpacePosition = (characterCoordinates: Coordinates): void => {
     return (): void => {
       clearInterval(interval)
     }
-  }, [user?.id, spaceId])
+  }, [user?.id, space?.id])
 }
 
 export default useUpdateSpacePosition

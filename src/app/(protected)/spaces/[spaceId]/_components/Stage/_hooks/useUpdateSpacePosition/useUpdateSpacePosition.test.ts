@@ -3,11 +3,15 @@ import { useParams } from 'next/navigation'
 import { act } from 'react'
 import useUser from '@/hooks/useUser'
 import upsertSpacePosition from '@/db/upsertSpacePosition'
+import useSpace from '@/hooks/useSpace'
 import { Coordinates } from '../../_components/Placement'
 import useUpdateSpacePosition from './useUpdateSpacePosition'
 
 vi.mock('@/hooks/useUser')
 const useUserMock = vi.mocked(useUser)
+
+vi.mock('@/hooks/useSpace')
+const useSpaceMock = vi.mocked(useSpace)
 
 vi.mock('next/navigation')
 const mockParamsMock = vi.mocked(useParams)
@@ -38,6 +42,10 @@ describe('useUpdateSpacePosition', () => {
       spaceId,
     })
 
+    useSpaceMock.mockReturnValue({
+      data: { id: spaceId },
+    } as unknown as ReturnType<typeof useSpace>)
+
     renderHook(() => useUpdateSpacePosition(coordinates))
 
     await act(() => vi.advanceTimersByTime(200))
@@ -54,6 +62,33 @@ describe('useUpdateSpacePosition', () => {
     mockParamsMock.mockReturnValue({
       spaceId,
     })
+
+    useSpaceMock.mockReturnValue({
+      data: { id: spaceId },
+    } as unknown as ReturnType<typeof useSpace>)
+
+    renderHook(() => useUpdateSpacePosition(coordinates))
+
+    await act(() => vi.advanceTimersByTime(200))
+
+    expect(upsertSpacePosition).not.toBeCalled()
+  })
+
+  test('does not call upsertSpacePosition if there is no space', async () => {
+    const coordinates = { x: 0, y: 0, direction: 'S' } as const
+    const userId = 'USER_ID'
+
+    useUserMock.mockReturnValue({
+      data: { id: userId },
+    } as unknown as ReturnType<typeof useUser>)
+
+    mockParamsMock.mockReturnValue({
+      spaceId: 'SPACE_ID',
+    })
+
+    useSpaceMock.mockReturnValue({
+      data: null,
+    } as unknown as ReturnType<typeof useSpace>)
 
     renderHook(() => useUpdateSpacePosition(coordinates))
 
@@ -74,6 +109,10 @@ describe('useUpdateSpacePosition', () => {
     mockParamsMock.mockReturnValue({
       spaceId,
     })
+
+    useSpaceMock.mockReturnValue({
+      data: { id: spaceId },
+    } as unknown as ReturnType<typeof useSpace>)
 
     const { rerender } = renderHook(
       ({ coordinates }) => useUpdateSpacePosition(coordinates),
@@ -99,6 +138,49 @@ describe('useUpdateSpacePosition', () => {
     })
   })
 
+  test('calls upsertSpacePosition with space id', async () => {
+    const coordinates: Coordinates = { x: 0, y: 0, direction: 'S' }
+    const userId = 'USER_ID'
+    const spaceId = 'SPACE_ID'
+
+    const space = {
+      id: 'SPACE_UUID',
+    }
+
+    useUserMock.mockReturnValue({
+      data: { id: userId },
+    } as unknown as ReturnType<typeof useUser>)
+
+    mockParamsMock.mockReturnValue({
+      spaceId,
+    })
+
+    useSpaceMock.mockReturnValue({
+      data: space,
+    } as unknown as ReturnType<typeof useSpace>)
+
+    const { rerender } = renderHook(
+      ({ coordinates }) => useUpdateSpacePosition(coordinates),
+      {
+        initialProps: { coordinates },
+      }
+    )
+
+    expect(useSpace).toBeCalledWith(spaceId)
+
+    const newCoordinates: Coordinates = { x: 1, y: 1, direction: 'N' }
+    rerender({ coordinates: newCoordinates })
+
+    await act(() => vi.advanceTimersByTime(200))
+
+    expect(upsertSpacePosition).toBeCalledTimes(1)
+    expect(upsertSpacePosition).toBeCalledWith({
+      userId,
+      spaceId: space.id,
+      coordinates: newCoordinates,
+    })
+  })
+
   test('calls only once if the coordinates changed but update is still in process', async () => {
     const coordinates: Coordinates = { x: 0, y: 0, direction: 'S' }
     const userId = 'USER_ID'
@@ -111,6 +193,10 @@ describe('useUpdateSpacePosition', () => {
     mockParamsMock.mockReturnValue({
       spaceId,
     })
+
+    useSpaceMock.mockReturnValue({
+      data: { id: spaceId },
+    } as unknown as ReturnType<typeof useSpace>)
 
     upsertSpacePositionMock.mockImplementation(async () => {
       await new Promise((resolve) => setTimeout(resolve, 1000))

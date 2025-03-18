@@ -1,10 +1,14 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useParams } from 'next/navigation'
-import useUser from '@/hooks/useUser'
 import { VARIANT } from '@/components/Button'
+import useSpace from '@/hooks/useSpace'
+import useUser from '@/hooks/useUser'
 import useSyncSpacePresence from './_hooks/useSyncSpacePresence'
 import Space from './page'
+
+vi.mock('@/hooks/useSpace')
+const useSpaceMock = vi.mocked(useSpace)
 
 vi.mock('@/hooks/useUser')
 const useUserMock = vi.mocked(useUser)
@@ -17,6 +21,79 @@ vi.mock('./_hooks/useSyncSpacePresence')
 describe('Space', () => {
   afterEach(() => {
     vi.resetAllMocks()
+  })
+
+  test('renders loading when useSpace is loading', () => {
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+    } as unknown as ReturnType<typeof useUser>)
+
+    mockParamsMock.mockReturnValue({
+      spaceId: 'SPACE_ID',
+    })
+
+    useSpaceMock.mockReturnValue({
+      isLoading: true,
+      data: null,
+    } as unknown as ReturnType<typeof useSpace>)
+
+    render(<Space />)
+
+    expect(
+      screen.getByText('Please wait, we are syncing the metaverse...')
+    ).toBeInTheDocument()
+  })
+
+  test('renders not found when useSpace returns null', () => {
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+    } as unknown as ReturnType<typeof useUser>)
+
+    mockParamsMock.mockReturnValue({
+      spaceId: 'SPACE_ID',
+    })
+
+    useSpaceMock.mockReturnValue({
+      isLoading: false,
+      data: null,
+    } as unknown as ReturnType<typeof useSpace>)
+
+    render(<Space />)
+
+    expect(screen.getByText('Space not found')).toBeInTheDocument()
+  })
+
+  test('calls useSpace with spaceId from params', () => {
+    const spaceId = 'SPACE_ID'
+
+    useUserMock.mockReturnValue({
+      data: {
+        id: 'ID',
+        displayName: 'John Doe',
+        avatar: 'dog',
+      },
+    } as unknown as ReturnType<typeof useUser>)
+
+    mockParamsMock.mockReturnValue({
+      spaceId,
+    })
+
+    useSpaceMock.mockReturnValue({
+      isLoading: false,
+      data: {},
+    } as unknown as ReturnType<typeof useSpace>)
+
+    render(<Space />)
+
+    expect(useSpace).toHaveBeenCalledWith(spaceId)
   })
 
   test('renders Header', () => {
@@ -32,7 +109,10 @@ describe('Space', () => {
       spaceId: 'SPACE_ID',
     })
 
-    useSyncSpacePresence()
+    useSpaceMock.mockReturnValue({
+      isLoading: false,
+      data: { id: 'SPACE_ID', name: 'All-Hands' },
+    } as unknown as ReturnType<typeof useSpace>)
 
     render(<Space />)
 
@@ -54,7 +134,10 @@ describe('Space', () => {
       spaceId: 'SPACE_ID',
     })
 
-    useSyncSpacePresence()
+    useSpaceMock.mockReturnValue({
+      isLoading: false,
+      data: { id: 'SPACE_ID', name: 'All-Hands' },
+    } as unknown as ReturnType<typeof useSpace>)
 
     render(<Space />)
 
@@ -74,7 +157,10 @@ describe('Space', () => {
       spaceId: 'SPACE_ID',
     })
 
-    useSyncSpacePresence()
+    useSpaceMock.mockReturnValue({
+      isLoading: false,
+      data: { id: 'SPACE_ID', name: 'All-Hands' },
+    } as unknown as ReturnType<typeof useSpace>)
 
     render(<Space />)
 
@@ -96,7 +182,10 @@ describe('Space', () => {
       spaceId: 'SPACE_ID',
     })
 
-    useSyncSpacePresence()
+    useSpaceMock.mockReturnValue({
+      isLoading: false,
+      data: { id: 'SPACE_ID', name: 'All-Hands' },
+    } as unknown as ReturnType<typeof useSpace>)
 
     const user = userEvent.setup()
 
@@ -122,7 +211,10 @@ describe('Space', () => {
       spaceId: 'SPACE_ID',
     })
 
-    useSyncSpacePresence()
+    useSpaceMock.mockReturnValue({
+      isLoading: false,
+      data: { id: 'SPACE_ID', name: 'All-Hands' },
+    } as unknown as ReturnType<typeof useSpace>)
 
     const user = userEvent.setup()
 
@@ -150,7 +242,10 @@ describe('Space', () => {
       spaceId: 'SPACE_ID',
     })
 
-    useSyncSpacePresence()
+    useSpaceMock.mockReturnValue({
+      isLoading: false,
+      data: { id: 'SPACE_ID', name: 'All-Hands' },
+    } as unknown as ReturnType<typeof useSpace>)
 
     render(<Space />)
 
@@ -170,7 +265,10 @@ describe('Space', () => {
       spaceId: 'SPACE_ID',
     })
 
-    useSyncSpacePresence()
+    useSpaceMock.mockReturnValue({
+      isLoading: false,
+      data: { id: 'SPACE_ID', name: 'All-Hands' },
+    } as unknown as ReturnType<typeof useSpace>)
 
     render(<Space />)
 
@@ -192,7 +290,10 @@ describe('Space', () => {
       spaceId: 'SPACE_ID',
     })
 
-    useSyncSpacePresence()
+    useSpaceMock.mockReturnValue({
+      isLoading: false,
+      data: { id: 'SPACE_ID', name: 'All-Hands' },
+    } as unknown as ReturnType<typeof useSpace>)
 
     const user = userEvent.setup()
 
@@ -231,9 +332,13 @@ describe('Space', () => {
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
-    const user = userEvent.setup()
 
-    useSyncSpacePresence()
+    useSpaceMock.mockReturnValue({
+      isLoading: false,
+      data: { id: 'SPACE_ID', name: 'All-Hands' },
+    } as unknown as ReturnType<typeof useSpace>)
+
+    const user = userEvent.setup()
 
     render(<Space />)
 
@@ -263,7 +368,10 @@ describe('Space', () => {
       spaceId: 'SPACE_ID',
     })
 
-    useSyncSpacePresence()
+    useSpaceMock.mockReturnValue({
+      isLoading: false,
+      data: { id: 'SPACE_ID', name: 'All-Hands' },
+    } as unknown as ReturnType<typeof useSpace>)
 
     const user = userEvent.setup()
 
@@ -307,7 +415,10 @@ describe('Space', () => {
       spaceId: 'SPACE_ID',
     })
 
-    useSyncSpacePresence()
+    useSpaceMock.mockReturnValue({
+      isLoading: false,
+      data: { id: 'SPACE_ID', name: 'All-Hands' },
+    } as unknown as ReturnType<typeof useSpace>)
 
     const user = userEvent.setup()
 
@@ -341,7 +452,10 @@ describe('Space', () => {
       spaceId: 'SPACE_ID',
     })
 
-    useSyncSpacePresence()
+    useSpaceMock.mockReturnValue({
+      isLoading: false,
+      data: { id: 'SPACE_ID', name: 'All-Hands' },
+    } as unknown as ReturnType<typeof useSpace>)
 
     const user = userEvent.setup()
 

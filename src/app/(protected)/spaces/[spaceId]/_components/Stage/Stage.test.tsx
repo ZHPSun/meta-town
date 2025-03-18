@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { useParams } from 'next/navigation'
 import { act } from 'react'
 import useUser from '@/hooks/useUser'
+import useSpace from '@/hooks/useSpace'
 import useOnlineUsers from '@/hooks/useOnlineUsers'
 import upsertSpacePosition from '@/db/upsertSpacePosition'
 import * as consts from './consts'
@@ -25,11 +26,14 @@ vi.mock('./consts', async (importOriginal) => {
 vi.mock('@/hooks/useUser')
 const useUserMock = vi.mocked(useUser)
 
+vi.mock('@/hooks/useSpace')
+const useSpaceMock = vi.mocked(useSpace)
+
 vi.mock('@/hooks/useOnlineUsers')
 const useOnlineUsersMock = vi.mocked(useOnlineUsers)
 
 vi.mock('next/navigation')
-const mockParamsMock = vi.mocked(useParams)
+const useParamsMock = vi.mocked(useParams)
 
 vi.mock('@/db/upsertSpacePosition')
 
@@ -43,12 +47,16 @@ describe('Stage', () => {
       data: null,
     } as unknown as ReturnType<typeof useUser>)
 
-    mockParamsMock.mockReturnValue({
+    useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
 
+    useSpaceMock.mockReturnValue({
+      data: { id: 'SPACE_ID' },
+    } as unknown as ReturnType<typeof useSpace>)
+
     useOnlineUsersMock.mockReturnValue({
-      data: null,
+      data: [],
     } as unknown as ReturnType<typeof useOnlineUsers>)
 
     const { container } = render(<Stage onConfigurationClose={vi.fn()} />)
@@ -61,12 +69,16 @@ describe('Stage', () => {
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
     } as unknown as ReturnType<typeof useUser>)
 
-    mockParamsMock.mockReturnValue({
+    useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
 
+    useSpaceMock.mockReturnValue({
+      data: { id: 'SPACE_ID' },
+    } as unknown as ReturnType<typeof useSpace>)
+
     useOnlineUsersMock.mockReturnValue({
-      data: null,
+      data: [],
     } as unknown as ReturnType<typeof useOnlineUsers>)
 
     render(<Stage onConfigurationClose={vi.fn()} />)
@@ -79,12 +91,16 @@ describe('Stage', () => {
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
     } as unknown as ReturnType<typeof useUser>)
 
-    mockParamsMock.mockReturnValue({
+    useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
 
+    useSpaceMock.mockReturnValue({
+      data: { id: 'SPACE_ID' },
+    } as unknown as ReturnType<typeof useSpace>)
+
     useOnlineUsersMock.mockReturnValue({
-      data: null,
+      data: [],
     } as unknown as ReturnType<typeof useOnlineUsers>)
 
     render(<Stage onConfigurationClose={vi.fn()} />)
@@ -97,12 +113,16 @@ describe('Stage', () => {
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
     } as unknown as ReturnType<typeof useUser>)
 
-    mockParamsMock.mockReturnValue({
+    useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
 
+    useSpaceMock.mockReturnValue({
+      data: { id: 'SPACE_ID' },
+    } as unknown as ReturnType<typeof useSpace>)
+
     useOnlineUsersMock.mockReturnValue({
-      data: null,
+      data: [],
     } as unknown as ReturnType<typeof useOnlineUsers>)
 
     render(<Stage onConfigurationClose={vi.fn()} />)
@@ -117,12 +137,16 @@ describe('Stage', () => {
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
     } as unknown as ReturnType<typeof useUser>)
 
-    mockParamsMock.mockReturnValue({
+    useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
 
+    useSpaceMock.mockReturnValue({
+      data: { id: 'SPACE_ID' },
+    } as unknown as ReturnType<typeof useSpace>)
+
     useOnlineUsersMock.mockReturnValue({
-      data: null,
+      data: [],
     } as unknown as ReturnType<typeof useOnlineUsers>)
 
     const user = userEvent.setup()
@@ -142,12 +166,16 @@ describe('Stage', () => {
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
     } as unknown as ReturnType<typeof useUser>)
 
-    mockParamsMock.mockReturnValue({
+    useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
 
+    useSpaceMock.mockReturnValue({
+      data: { id: 'SPACE_ID' },
+    } as unknown as ReturnType<typeof useSpace>)
+
     useOnlineUsersMock.mockReturnValue({
-      data: null,
+      data: [],
     } as unknown as ReturnType<typeof useOnlineUsers>)
 
     render(<Stage onConfigurationClose={vi.fn()} />)
@@ -178,12 +206,16 @@ describe('Stage', () => {
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
     } as unknown as ReturnType<typeof useUser>)
 
-    mockParamsMock.mockReturnValue({
+    useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
 
+    useSpaceMock.mockReturnValue({
+      data: { id: 'SPACE_ID' },
+    } as unknown as ReturnType<typeof useSpace>)
+
     useOnlineUsersMock.mockReturnValue({
-      data: null,
+      data: [],
     } as unknown as ReturnType<typeof useOnlineUsers>)
 
     const user = userEvent.setup()
@@ -202,12 +234,16 @@ describe('Stage', () => {
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
     } as unknown as ReturnType<typeof useUser>)
 
-    mockParamsMock.mockReturnValue({
+    useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
 
+    useSpaceMock.mockReturnValue({
+      data: { id: 'SPACE_ID' },
+    } as unknown as ReturnType<typeof useSpace>)
+
     useOnlineUsersMock.mockReturnValue({
-      data: null,
+      data: [],
     } as unknown as ReturnType<typeof useOnlineUsers>)
 
     const user = userEvent.setup()
@@ -226,9 +262,13 @@ describe('Stage', () => {
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
     } as unknown as ReturnType<typeof useUser>)
 
-    mockParamsMock.mockReturnValue({
+    useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
+
+    useSpaceMock.mockReturnValue({
+      data: { id: 'SPACE_ID' },
+    } as unknown as ReturnType<typeof useSpace>)
 
     useOnlineUsersMock.mockReturnValue({
       data: [
@@ -259,12 +299,20 @@ describe('Stage', () => {
       data: { id: userId },
     } as unknown as ReturnType<typeof useUser>)
 
-    mockParamsMock.mockReturnValue({
+    useParamsMock.mockReturnValue({
       spaceId,
     })
 
+    useSpaceMock.mockReturnValue({
+      data: { id: 'SPACE_ID' },
+    } as unknown as ReturnType<typeof useSpace>)
+
+    useSpaceMock.mockReturnValue({
+      data: { id: spaceId },
+    } as unknown as ReturnType<typeof useSpace>)
+
     useOnlineUsersMock.mockReturnValue({
-      data: null,
+      data: [],
     } as unknown as ReturnType<typeof useOnlineUsers>)
 
     const user = userEvent.setup({
@@ -290,12 +338,16 @@ describe('Stage', () => {
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
     } as unknown as ReturnType<typeof useUser>)
 
-    mockParamsMock.mockReturnValue({
+    useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
 
+    useSpaceMock.mockReturnValue({
+      data: { id: 'SPACE_ID' },
+    } as unknown as ReturnType<typeof useSpace>)
+
     useOnlineUsersMock.mockReturnValue({
-      data: null,
+      data: [],
     } as unknown as ReturnType<typeof useOnlineUsers>)
 
     render(<Stage onConfigurationClose={vi.fn()} />)
@@ -310,12 +362,16 @@ describe('Stage', () => {
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
     } as unknown as ReturnType<typeof useUser>)
 
-    mockParamsMock.mockReturnValue({
+    useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
 
+    useSpaceMock.mockReturnValue({
+      data: { id: 'SPACE_ID' },
+    } as unknown as ReturnType<typeof useSpace>)
+
     useOnlineUsersMock.mockReturnValue({
-      data: null,
+      data: [],
     } as unknown as ReturnType<typeof useOnlineUsers>)
 
     render(<Stage onConfigurationClose={vi.fn()} isConfigurationOpen />)
@@ -330,12 +386,16 @@ describe('Stage', () => {
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
     } as unknown as ReturnType<typeof useUser>)
 
-    mockParamsMock.mockReturnValue({
+    useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
 
+    useSpaceMock.mockReturnValue({
+      data: { id: 'SPACE_ID' },
+    } as unknown as ReturnType<typeof useSpace>)
+
     useOnlineUsersMock.mockReturnValue({
-      data: null,
+      data: [],
     } as unknown as ReturnType<typeof useOnlineUsers>)
 
     const user = userEvent.setup()
@@ -357,12 +417,16 @@ describe('Stage', () => {
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
     } as unknown as ReturnType<typeof useUser>)
 
-    mockParamsMock.mockReturnValue({
+    useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
 
+    useSpaceMock.mockReturnValue({
+      data: { id: 'SPACE_ID' },
+    } as unknown as ReturnType<typeof useSpace>)
+
     useOnlineUsersMock.mockReturnValue({
-      data: null,
+      data: [],
     } as unknown as ReturnType<typeof useOnlineUsers>)
 
     const user = userEvent.setup()
@@ -389,12 +453,16 @@ describe('Stage', () => {
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
     } as unknown as ReturnType<typeof useUser>)
 
-    mockParamsMock.mockReturnValue({
+    useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
     })
 
+    useSpaceMock.mockReturnValue({
+      data: { id: 'SPACE_ID' },
+    } as unknown as ReturnType<typeof useSpace>)
+
     useOnlineUsersMock.mockReturnValue({
-      data: null,
+      data: [],
     } as unknown as ReturnType<typeof useOnlineUsers>)
 
     const onConfigurationClose = vi.fn()

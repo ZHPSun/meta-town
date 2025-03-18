@@ -1,10 +1,11 @@
 'use client'
 
-import { FC, Fragment } from 'react'
 import { useParams } from 'next/navigation'
+import { FC, Fragment } from 'react'
 import IconButton from '@/components/IconButton'
-import useUser from '@/hooks/useUser'
 import useOnlineUsers from '@/hooks/useOnlineUsers'
+import useSpace from '@/hooks/useSpace'
+import useUser from '@/hooks/useUser'
 import Character from './_components/Character'
 import Configuration from './_components/Configuration'
 import OtherCharacter from './_components/OtherCharacter'
@@ -72,8 +73,9 @@ const Stage: FC<Props> = ({
   const { data: user } = useUser()
 
   const { spaceId } = useParams<{ spaceId: string }>()
+  const { data: space } = useSpace(spaceId)
 
-  const { data: onlineUsers } = useOnlineUsers(spaceId)
+  const { data: onlineUsers } = useOnlineUsers(space?.id)
 
   const { walls } = data
 

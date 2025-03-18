@@ -11,6 +11,12 @@ describe('useOnlineUsers', () => {
     vi.resetAllMocks()
   })
 
+  test('calls useSWR with a falsy key if spaceId is not provided', () => {
+    renderHook(() => useOnlineUsers())
+
+    expect(useSWRMock).toHaveBeenCalledWith(undefined, getOnlineUsers)
+  })
+
   test('calls useSWR with key and fetcher', () => {
     const spaceId = 'SPACE_ID'
 
