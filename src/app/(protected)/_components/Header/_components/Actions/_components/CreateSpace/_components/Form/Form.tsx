@@ -6,6 +6,7 @@ import Button from '@/components/Button'
 import TextField from '@/components/TextField'
 import createSpace from '@/db/createSpace'
 import useUser from '@/hooks/useUser'
+import useOwnedSpaces from '@/hooks/useOwnedSpaces'
 
 interface Props {
   onCreated: () => void
@@ -25,12 +26,15 @@ const Form: FC<Props> = ({ onCreated }) => {
   } = useForm<Schema>({ resolver: zodResolver(schema) })
   const { data: user } = useUser()
 
+  const { mutate } = useOwnedSpaces()
+
   if (!user) {
     return
   }
 
   const onSubmit: SubmitHandler<Schema> = async (data): Promise<void> => {
     await createSpace({ name: data.spaceName, ownerId: String(user.id) })
+    await mutate()
     onCreated()
   }
 
