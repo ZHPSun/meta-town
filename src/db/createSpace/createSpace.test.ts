@@ -5,6 +5,10 @@ vi.mock('@/utils/createSupabaseClient')
 const createSupabaseClientMock = vi.mocked(createSupabaseClient)
 
 describe('CreateSpace', () => {
+  afterEach(() => {
+    vi.resetAllMocks()
+  })
+
   test('creates a new space', async () => {
     const data = { name: 'Space', ownerId: 'OWNER_ID' }
 
