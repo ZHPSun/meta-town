@@ -77,6 +77,8 @@ describe('useSyncSpacePresence', () => {
 
     const { unmount } = renderHook(() => useSyncSpacePresence())
 
+    expect(useSpace).toBeCalledWith(spaceId)
+
     expect(upsertSpacePresence).toBeCalledWith({
       userId,
       spaceId: space.id,

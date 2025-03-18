@@ -258,16 +258,22 @@ describe('Stage', () => {
   })
 
   test('renders other characters', () => {
+    const spaceId = 'SPACE_ID'
+
+    const space = {
+      id: 'SPACE_UUID',
+    }
+
     useUserMock.mockReturnValue({
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
     } as unknown as ReturnType<typeof useUser>)
 
     useParamsMock.mockReturnValue({
-      spaceId: 'SPACE_ID',
+      spaceId,
     })
 
     useSpaceMock.mockReturnValue({
-      data: { id: 'SPACE_ID' },
+      data: space,
     } as unknown as ReturnType<typeof useSpace>)
 
     useOnlineUsersMock.mockReturnValue({
@@ -279,6 +285,9 @@ describe('Stage', () => {
     } as unknown as ReturnType<typeof useOnlineUsers>)
 
     render(<Stage onConfigurationClose={vi.fn()} />)
+
+    expect(useSpaceMock).toHaveBeenCalledWith(spaceId)
+    expect(useOnlineUsersMock).toHaveBeenCalledWith(space.id)
 
     expect(screen.getByLabelText('Placement: 6, 6')).toBeInTheDocument()
 
