@@ -22,6 +22,30 @@ describe('Header', () => {
     ).toBeInTheDocument()
   })
 
+  test('copies share link to clipboard', async () => {
+    const user = userEvent.setup()
+
+    const writeTextMock = vi
+      .spyOn(navigator.clipboard, 'writeText')
+      .mockResolvedValueOnce(undefined)
+
+    render(
+      <Header
+        space={{ id: 'SPACE_ID', name: 'All-Hands' }}
+        onMeetingViewClick={vi.fn()}
+        onEditSpace={vi.fn()}
+      />
+    )
+
+    await user.click(
+      await screen.findByRole('button', { name: 'Copy invite link' })
+    )
+
+    expect(writeTextMock).toHaveBeenCalledWith(
+      `${window.location.host}/space/SPACE_ID/join`
+    )
+  })
+
   test('renders lock meeting area button', async () => {
     render(
       <Header

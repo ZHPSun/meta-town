@@ -1,8 +1,8 @@
 import { FC } from 'react'
 import Button from '@/components/Button'
+import Dropdown from '@/components/Dropdown'
 import IconButton from '@/components/IconButton'
 import Tooltip from '@/components/Tooltip'
-import Dropdown from '@/components/Dropdown'
 import VerticalList from '@/components/VerticalList'
 
 interface Space {
@@ -31,6 +31,11 @@ const Header: FC<Props> = ({
         icon="link"
         label="Copy invite link"
         tooltip={{ position: 'bottom-left' }}
+        onClick={() =>
+          void navigator.clipboard.writeText(
+            `${window.location.host}/space/${space.id}/join`
+          )
+        }
       />
 
       <IconButton
