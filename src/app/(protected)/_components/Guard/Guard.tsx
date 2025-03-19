@@ -2,7 +2,7 @@
 
 import { FC, ReactNode } from 'react'
 import useSession from '@/hooks/useSession'
-import useUser from '@/hooks/useUser'
+import useSessionUser from '@/hooks/useSessionUser'
 import GlobalLoading from '@/components/GlobalLoading'
 import ProfileFormModal from '../ProfileFormModal'
 
@@ -11,7 +11,7 @@ interface Props {
 }
 
 const CreateUserGuard: FC<Props> = ({ children }) => {
-  const { data: user, isLoading: isUserLoading } = useUser()
+  const { data: user, isLoading: isUserLoading } = useSessionUser()
   const { data: session, isLoading: isSessionLoading } = useSession()
 
   if (isUserLoading || isSessionLoading) {

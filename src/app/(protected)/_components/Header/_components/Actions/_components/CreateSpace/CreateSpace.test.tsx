@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import useUser from '@/hooks/useUser'
+import useSessionUser from '@/hooks/useSessionUser'
 import createSpace from '@/db/createSpace'
 import CreateSpace from './CreateSpace'
 
-vi.mock('@/hooks/useUser')
-const useUserMock = vi.mocked(useUser)
+vi.mock('@/hooks/useSessionUser')
+const useSessionUserMock = vi.mocked(useSessionUser)
 
 vi.mock('@/db/createSpace')
 const createSpaceMock = vi.mocked(createSpace)
@@ -28,9 +28,9 @@ describe('CreateSpace', () => {
   })
 
   test('triggers modal when button is clicked', async () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: 'AUTH_ID' },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     render(<CreateSpace />)
 
@@ -40,9 +40,9 @@ describe('CreateSpace', () => {
   })
 
   test('triggers then close the modal when button is clicked', async () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: 'AUTH_ID' },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     render(<CreateSpace />)
 
@@ -55,9 +55,9 @@ describe('CreateSpace', () => {
 
   test('closes modal when form submit successful', async () => {
     const AUTH_ID = 'AUTH_ID'
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: AUTH_ID },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
     createSpaceMock.mockResolvedValue(undefined)
     const user = userEvent.setup()
 

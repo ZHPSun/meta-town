@@ -1,15 +1,15 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import createSpace from '@/db/createSpace'
-import useUser from '@/hooks/useUser'
+import useSessionUser from '@/hooks/useSessionUser'
 import useOwnedSpaces from '@/hooks/useOwnedSpaces'
 import Form from './Form'
 
 vi.mock('@/db/createSpace')
 const createSpaceMock = vi.mocked(createSpace)
 
-vi.mock('@/hooks/useUser')
-const useUserMock = vi.mocked(useUser)
+vi.mock('@/hooks/useSessionUser')
+const useSessionUserMock = vi.mocked(useSessionUser)
 
 vi.mock('@/hooks/useOwnedSpaces')
 const useOwnedSpacesMock = vi.mocked(useOwnedSpaces)
@@ -20,9 +20,9 @@ describe('Form', () => {
   })
 
   test('renders Form', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: 'AUTH_ID' },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useOwnedSpacesMock.mockReturnValue({
       mutate: vi.fn(),
@@ -38,9 +38,9 @@ describe('Form', () => {
   })
 
   test('does not call createSpace while space name is empty', async () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: 'AUTH_ID' },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useOwnedSpacesMock.mockReturnValue({
       mutate: vi.fn(),
@@ -55,9 +55,9 @@ describe('Form', () => {
   })
 
   test('shows error message while space name is empty', async () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: 'AUTH_ID' },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useOwnedSpacesMock.mockReturnValue({
       mutate: vi.fn(),
@@ -72,9 +72,9 @@ describe('Form', () => {
   })
 
   test('renders nothing when user is null', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: null,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useOwnedSpacesMock.mockReturnValue({
       mutate: vi.fn(),
@@ -89,9 +89,9 @@ describe('Form', () => {
     const AUTH_ID = 'AUTH_ID'
     const mutate = vi.fn()
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: AUTH_ID },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useOwnedSpacesMock.mockReturnValue({
       mutate,
@@ -114,9 +114,9 @@ describe('Form', () => {
   })
 
   test('renders loading spinner when createSpace is in progress', async () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: 'AUTH_ID' },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useOwnedSpacesMock.mockReturnValue({
       mutate: vi.fn(),
@@ -144,9 +144,9 @@ describe('Form', () => {
 
   test('calls onCreated on form submit', async () => {
     const AUTH_ID = 'AUTH_ID'
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: AUTH_ID },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useOwnedSpacesMock.mockReturnValue({
       mutate: vi.fn(),

@@ -6,11 +6,11 @@ import Dropdown from '@/components/Dropdown'
 import ProfileFormModal from '@/app/(protected)/_components/ProfileFormModal'
 import VerticalList from '@/components/VerticalList'
 import useSession from '@/hooks/useSession'
-import useUser from '@/hooks/useUser'
+import useSessionUser from '@/hooks/useSessionUser'
 import SignOut from './_components/SignOut'
 
 const UserProfile: FC = () => {
-  const { data: user } = useUser()
+  const { data: user } = useSessionUser()
   const { data: session } = useSession()
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
 

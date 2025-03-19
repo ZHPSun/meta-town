@@ -1,13 +1,13 @@
 import { renderHook } from '@testing-library/react'
 import useSWR from 'swr'
 import getOwnedSpaces from '@/db/getOwnedSpaces'
-import useUser from '@/hooks/useUser'
+import useSessionUser from '@/hooks/useSessionUser'
 import useOwnedSpaces from './useOwnedSpaces'
 
 vi.mock('swr')
 const useSWRMock = vi.mocked(useSWR)
-vi.mock('@/hooks/useUser')
-const useUserMock = vi.mocked(useUser)
+vi.mock('@/hooks/useSessionUser')
+const useSessionUserMock = vi.mocked(useSessionUser)
 
 describe('useOwnedSpaces', () => {
   afterEach(() => {
@@ -15,10 +15,10 @@ describe('useOwnedSpaces', () => {
   })
 
   test('calls useSWR with null key if user is false', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: false,
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     renderHook(() => useOwnedSpaces())
 
@@ -30,10 +30,10 @@ describe('useOwnedSpaces', () => {
       id: 'userId',
     }
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: user,
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     renderHook(() => useOwnedSpaces())
 
@@ -53,10 +53,10 @@ describe('useOwnedSpaces', () => {
       name: 'Space Name',
     }
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: user,
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useSWRMock.mockReturnValue({
       data,

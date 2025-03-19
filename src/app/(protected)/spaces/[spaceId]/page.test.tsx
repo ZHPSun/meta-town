@@ -3,15 +3,15 @@ import userEvent from '@testing-library/user-event'
 import { useParams } from 'next/navigation'
 import { VARIANT } from '@/components/Button'
 import useSpace from '@/hooks/useSpace'
-import useUser from '@/hooks/useUser'
+import useSessionUser from '@/hooks/useSessionUser'
 import useSyncSpacePresence from './_hooks/useSyncSpacePresence'
 import Space from './page'
 
 vi.mock('@/hooks/useSpace')
 const useSpaceMock = vi.mocked(useSpace)
 
-vi.mock('@/hooks/useUser')
-const useUserMock = vi.mocked(useUser)
+vi.mock('@/hooks/useSessionUser')
+const useSessionUserMock = vi.mocked(useSessionUser)
 
 vi.mock('next/navigation')
 const mockParamsMock = vi.mocked(useParams)
@@ -24,13 +24,13 @@ describe('Space', () => {
   })
 
   test('renders loading when useSpace is loading', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {
         id: 'ID',
         displayName: 'John Doe',
         avatar: 'dog',
       },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
@@ -49,13 +49,13 @@ describe('Space', () => {
   })
 
   test('renders not found when useSpace returns null', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {
         id: 'ID',
         displayName: 'John Doe',
         avatar: 'dog',
       },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
@@ -74,13 +74,13 @@ describe('Space', () => {
   test('calls useSpace with spaceId from params', () => {
     const spaceId = 'SPACE_ID'
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {
         id: 'ID',
         displayName: 'John Doe',
         avatar: 'dog',
       },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     mockParamsMock.mockReturnValue({
       spaceId,
@@ -97,13 +97,13 @@ describe('Space', () => {
   })
 
   test('renders Header', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {
         id: 'ID',
         displayName: 'John Doe',
         avatar: 'dog',
       },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
@@ -122,13 +122,13 @@ describe('Space', () => {
   })
 
   test('calls useSyncSpacePresence hook when rendering Space page', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {
         id: 'ID',
         displayName: 'John Doe',
         avatar: 'dog',
       },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
@@ -145,13 +145,13 @@ describe('Space', () => {
   })
 
   test('does not render meeting view initially', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {
         id: 'ID',
         displayName: 'John Doe',
         avatar: 'dog',
       },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
@@ -170,13 +170,13 @@ describe('Space', () => {
   })
 
   test('renders the meeting view when meeting view button is clicked', async () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {
         id: 'ID',
         displayName: 'John Doe',
         avatar: 'dog',
       },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
@@ -199,13 +199,13 @@ describe('Space', () => {
   })
 
   test('closes meeting view when meeting view button is clicked if meeting view already opened', async () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {
         id: 'ID',
         displayName: 'John Doe',
         avatar: 'dog',
       },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
@@ -230,13 +230,13 @@ describe('Space', () => {
   })
 
   test('renders Stage', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {
         id: 'ID',
         displayName: 'John Doe',
         avatar: 'dog',
       },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
@@ -253,13 +253,13 @@ describe('Space', () => {
   })
 
   test('renders Footer', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {
         id: 'ID',
         displayName: 'John Doe',
         avatar: 'dog',
       },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
@@ -278,13 +278,13 @@ describe('Space', () => {
   })
 
   test('toggles ChatSideWindow', async () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {
         id: 'ID',
         displayName: 'John Doe',
         avatar: 'dog',
       },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
@@ -321,13 +321,13 @@ describe('Space', () => {
   })
 
   test('closes ChatSideWindow on click side window close button', async () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {
         id: 'ID',
         displayName: 'John Doe',
         avatar: 'dog',
       },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
@@ -356,13 +356,13 @@ describe('Space', () => {
   })
 
   test('toggles ParticipantsSideWindow', async () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {
         id: 'ID',
         displayName: 'John Doe',
         avatar: 'dog',
       },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
@@ -403,13 +403,13 @@ describe('Space', () => {
   })
 
   test('closes ParticipantsSideWindow on click side window close button', async () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {
         id: 'ID',
         displayName: 'John Doe',
         avatar: 'dog',
       },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
@@ -440,13 +440,13 @@ describe('Space', () => {
   })
 
   test('renders stage configuration', async () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {
         id: 'ID',
         displayName: 'John Doe',
         avatar: 'dog',
       },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',

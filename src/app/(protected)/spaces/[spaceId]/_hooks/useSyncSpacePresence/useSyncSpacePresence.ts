@@ -2,10 +2,10 @@ import { useParams } from 'next/navigation'
 import { useEffect } from 'react'
 import upsertSpacePresence from '@/db/upsertSpacePresence'
 import useSpace from '@/hooks/useSpace'
-import useUser from '@/hooks/useUser'
+import useSessionUser from '@/hooks/useSessionUser'
 
 const useSyncSpacePresence = (): void => {
-  const { data: user } = useUser()
+  const { data: user } = useSessionUser()
 
   const { spaceId } = useParams<{ spaceId: string }>()
   const { data: space } = useSpace(spaceId)

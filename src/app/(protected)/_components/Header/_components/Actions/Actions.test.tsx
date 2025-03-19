@@ -1,25 +1,25 @@
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import useUser from '@/hooks/useUser'
+import useSessionUser from '@/hooks/useSessionUser'
 import useSession from '@/hooks/useSession'
 import Actions from './Actions'
 
-vi.mock('@/hooks/useUser')
-const useUserMock = vi.mocked(useUser)
+vi.mock('@/hooks/useSessionUser')
+const useSessionUserMock = vi.mocked(useSessionUser)
 
 vi.mock('@/hooks/useSession')
 const useSessionMock = vi.mocked(useSession)
 
 describe('Actions', () => {
   test('renders users button', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {
         id: 'ID',
         displayName: 'John Doe',
         avatar: 'dog',
       },
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useSessionMock.mockReturnValue({
       data: {

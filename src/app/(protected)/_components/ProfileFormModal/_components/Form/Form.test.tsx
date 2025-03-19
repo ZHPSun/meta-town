@@ -1,15 +1,15 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import useSession from '@/hooks/useSession'
-import useUser from '@/hooks/useUser'
+import useSessionUser from '@/hooks/useSessionUser'
 import upsertUser from '@/db/upsertUser'
 import Form from './Form'
 
 vi.mock('@/hooks/useSession')
 const useSessionMock = vi.mocked(useSession)
 
-vi.mock('@/hooks/useUser')
-const useUserMock = vi.mocked(useUser)
+vi.mock('@/hooks/useSessionUser')
+const useSessionUserMock = vi.mocked(useSessionUser)
 
 vi.mock('@/db/upsertUser')
 const upsertUserMock = vi.mocked(upsertUser)
@@ -20,9 +20,9 @@ describe('Form', () => {
   })
 
   test('renders display name text box', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useSessionMock.mockReturnValue({
       data: {},
@@ -37,9 +37,9 @@ describe('Form', () => {
   })
 
   test('renders AvatarPicker', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useSessionMock.mockReturnValue({
       data: {},
@@ -52,9 +52,9 @@ describe('Form', () => {
   })
 
   test('renders form with create user button when user is not created', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useSessionMock.mockReturnValue({
       data: {},
@@ -69,10 +69,10 @@ describe('Form', () => {
   })
 
   test('renders form with save changes button when user is created', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {},
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useSessionMock.mockReturnValue({
       data: {},
@@ -87,9 +87,9 @@ describe('Form', () => {
   })
 
   test('renders null if session is null', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useSessionMock.mockReturnValue({
       data: null,
@@ -109,9 +109,9 @@ describe('Form', () => {
       data: session,
     } as unknown as ReturnType<typeof useSession>)
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       mutate,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     upsertUserMock.mockImplementation(
       () => new Promise((resolve) => setTimeout(resolve, 1000))
@@ -162,9 +162,9 @@ describe('Form', () => {
       isLoading: false,
     } as unknown as ReturnType<typeof useSession>)
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     const user = userEvent.setup()
 
@@ -185,9 +185,9 @@ describe('Form', () => {
       isLoading: false,
     } as unknown as ReturnType<typeof useSession>)
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     const user = userEvent.setup()
 
@@ -210,9 +210,9 @@ describe('Form', () => {
       isLoading: false,
     } as unknown as ReturnType<typeof useSession>)
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     const user = userEvent.setup()
 
@@ -229,11 +229,11 @@ describe('Form', () => {
     const session = { user: { id: 'AUTH_ID' } }
     const onCreated = vi.fn()
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {},
       mutate: vi.fn(),
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useSessionMock.mockReturnValue({
       data: session,

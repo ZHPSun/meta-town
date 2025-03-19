@@ -2,11 +2,11 @@ import { renderHook } from '@testing-library/react'
 import { useParams } from 'next/navigation'
 import upsertSpacePresence from '@/db/upsertSpacePresence'
 import useSpace from '@/hooks/useSpace'
-import useUser from '@/hooks/useUser'
+import useSessionUser from '@/hooks/useSessionUser'
 import useSyncSpacePresence from './useSyncSpacePresence'
 
-vi.mock('@/hooks/useUser')
-const useUserMock = vi.mocked(useUser)
+vi.mock('@/hooks/useSessionUser')
+const useSessionUserMock = vi.mocked(useSessionUser)
 
 vi.mock('@/hooks/useSpace')
 const useSpaceMock = vi.mocked(useSpace)
@@ -24,7 +24,9 @@ describe('useSyncSpacePresence', () => {
   test('does not call upsertSpacePresence if there is no user', () => {
     const spaceId = 'SPACE_ID'
 
-    useUserMock.mockReturnValue({} as unknown as ReturnType<typeof useUser>)
+    useSessionUserMock.mockReturnValue(
+      {} as unknown as ReturnType<typeof useSessionUser>
+    )
 
     mockParamsMock.mockReturnValue({
       spaceId,
@@ -42,9 +44,9 @@ describe('useSyncSpacePresence', () => {
   test('does not call upsertSpacePresence if there is no space', () => {
     const userId = 'USER_ID'
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: userId },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     mockParamsMock.mockReturnValue({})
 
@@ -63,9 +65,9 @@ describe('useSyncSpacePresence', () => {
       id: 'SPACE_UUID',
     }
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: userId },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     mockParamsMock.mockReturnValue({
       spaceId,
@@ -98,9 +100,9 @@ describe('useSyncSpacePresence', () => {
     const userId = 'USER_ID'
     const spaceId = 'SPACE_ID'
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: userId },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     mockParamsMock.mockReturnValue({
       spaceId,
@@ -123,9 +125,9 @@ describe('useSyncSpacePresence', () => {
     const userId = 'USER_ID'
     const spaceId = 'SPACE_ID'
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: userId },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     mockParamsMock.mockReturnValue({
       spaceId,

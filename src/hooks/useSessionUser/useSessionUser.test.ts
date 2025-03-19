@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react'
 import useSWR from 'swr'
+import getUser from '@/db/getSessionUser'
 import useSession from '@/hooks/useSession'
-import useUser from './useUser'
-import getUser from './utils/getUser'
+import useSessionUser from './useSessionUser'
 
 vi.mock('swr')
 const useSWRMock = vi.mocked(useSWR)
@@ -10,7 +10,7 @@ const useSWRMock = vi.mocked(useSWR)
 vi.mock('@/hooks/useSession')
 const useSessionMock = vi.mocked(useSession)
 
-describe('useUser', () => {
+describe('useSessionUser', () => {
   afterEach(() => {
     vi.resetAllMocks()
   })
@@ -21,7 +21,7 @@ describe('useUser', () => {
       isLoading: false,
     } as unknown as ReturnType<typeof useSession>)
 
-    renderHook(() => useUser())
+    renderHook(() => useSessionUser())
 
     expect(useSWRMock).toHaveBeenCalledWith(null, getUser)
   })
@@ -38,9 +38,12 @@ describe('useUser', () => {
       isLoading: false,
     } as unknown as ReturnType<typeof useSession>)
 
-    renderHook(() => useUser())
+    renderHook(() => useSessionUser())
 
-    expect(useSWRMock).toHaveBeenCalledWith(['user', session.user.id], getUser)
+    expect(useSWRMock).toHaveBeenCalledWith(
+      ['session-user', session.user.id],
+      getUser
+    )
   })
 
   test('returns result from useSWR', () => {
@@ -66,7 +69,7 @@ describe('useUser', () => {
       isLoading: false,
     } as unknown as ReturnType<typeof useSWR>)
 
-    const { result } = renderHook(() => useUser())
+    const { result } = renderHook(() => useSessionUser())
 
     expect(result.current).toEqual({
       data,

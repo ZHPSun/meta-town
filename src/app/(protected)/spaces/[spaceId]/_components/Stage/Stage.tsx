@@ -5,7 +5,7 @@ import { FC, Fragment } from 'react'
 import IconButton from '@/components/IconButton'
 import useOnlineUsers from '@/hooks/useOnlineUsers'
 import useSpace from '@/hooks/useSpace'
-import useUser from '@/hooks/useUser'
+import useSessionUser from '@/hooks/useSessionUser'
 import Character from './_components/Character'
 import Configuration from './_components/Configuration'
 import OtherCharacter from './_components/OtherCharacter'
@@ -70,7 +70,7 @@ const Stage: FC<Props> = ({
 
   useUpdateSpacePosition(characterCoordinates)
 
-  const { data: user } = useUser()
+  const { data: user } = useSessionUser()
 
   const { spaceId } = useParams<{ spaceId: string }>()
   const { data: space } = useSpace(spaceId)

@@ -1,12 +1,12 @@
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import useUser from '@/hooks/useUser'
+import useSessionUser from '@/hooks/useSessionUser'
 import useSession from '@/hooks/useSession'
 import upsertUser from '@/db/upsertUser'
 import UserProfile from './UserProfile'
 
-vi.mock('@/hooks/useUser')
-const useUserMock = vi.mocked(useUser)
+vi.mock('@/hooks/useSessionUser')
+const useSessionUserMock = vi.mocked(useSessionUser)
 
 vi.mock('@/hooks/useSession')
 const useSessionMock = vi.mocked(useSession)
@@ -20,14 +20,14 @@ afterEach(() => {
 
 describe('UserProfile', () => {
   test('renders user profile button', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {
         id: 'ID',
         displayName: 'John Doe',
         avatar: 'dog',
       },
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useSessionMock.mockReturnValue({
       data: {
@@ -42,14 +42,14 @@ describe('UserProfile', () => {
   })
 
   test('renders dropdown menu when user profile button is clicked', async () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {
         id: 'ID',
         displayName: 'John Doe',
         avatar: 'dog',
       },
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useSessionMock.mockReturnValue({
       data: {
@@ -78,14 +78,14 @@ describe('UserProfile', () => {
   })
 
   test('does not render edit profile modal initially', async () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {
         id: 'ID',
         displayName: 'John Doe',
         avatar: 'dog',
       },
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useSessionMock.mockReturnValue({
       data: {
@@ -106,14 +106,14 @@ describe('UserProfile', () => {
   })
 
   test('opens edit profile modal when button is clicked', async () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {
         id: 'ID',
         displayName: 'John Doe',
         avatar: 'dog',
       },
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useSessionMock.mockReturnValue({
       data: {
@@ -135,14 +135,14 @@ describe('UserProfile', () => {
   })
 
   test('closes edit profile modal when close button is clicked', async () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {
         id: 'ID',
         displayName: 'John Doe',
         avatar: 'dog',
       },
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useSessionMock.mockReturnValue({
       data: {
@@ -164,14 +164,14 @@ describe('UserProfile', () => {
   })
 
   test('renders user display name', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {
         id: 'ID',
         displayName: 'John Doe',
         avatar: 'dog',
       },
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useSessionMock.mockReturnValue({
       data: {
@@ -186,10 +186,10 @@ describe('UserProfile', () => {
   })
 
   test('renders session user email when user is null', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: null,
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useSessionMock.mockReturnValue({
       data: {
@@ -206,10 +206,10 @@ describe('UserProfile', () => {
   })
 
   test('renders nothing when session is null', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: null,
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useSessionMock.mockReturnValue({
       data: null,
@@ -222,7 +222,7 @@ describe('UserProfile', () => {
   })
 
   test('closes edit profile modal after submission', async () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {
         id: 'ID',
         displayName: 'John Doe',
@@ -230,7 +230,7 @@ describe('UserProfile', () => {
       },
       isLoading: false,
       mutate: vi.fn(),
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useSessionMock.mockReturnValue({
       data: {

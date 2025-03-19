@@ -2,11 +2,11 @@ import { useParams } from 'next/navigation'
 import { useEffect, useRef } from 'react'
 import updateSpacePosition from '@/db/upsertSpacePosition'
 import useSpace from '@/hooks/useSpace'
-import useUser from '@/hooks/useUser'
+import useSessionUser from '@/hooks/useSessionUser'
 import { type Coordinates } from '../../_components/Placement'
 
 const useUpdateSpacePosition = (characterCoordinates: Coordinates): void => {
-  const { data: user } = useUser()
+  const { data: user } = useSessionUser()
 
   const { spaceId } = useParams<{ spaceId: string }>()
   const { data: space } = useSpace(spaceId)

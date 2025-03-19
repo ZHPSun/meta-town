@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react'
 import useSession from '@/hooks/useSession'
-import useUser from '@/hooks/useUser'
+import useSessionUser from '@/hooks/useSessionUser'
 import ProtectedLayout from './layout'
 
 vi.mock('@/hooks/useSession')
 const useSessionMock = vi.mocked(useSession)
 
-vi.mock('@/hooks/useUser')
-const useUserMock = vi.mocked(useUser)
+vi.mock('@/hooks/useSessionUser')
+const useSessionUserMock = vi.mocked(useSessionUser)
 
 describe('ProtectedLayout', () => {
   afterEach(() => {
@@ -20,15 +20,15 @@ describe('ProtectedLayout', () => {
       isLoading: false,
     } as unknown as ReturnType<typeof useSession>)
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {},
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     render(<ProtectedLayout>Hello world</ProtectedLayout>)
 
     expect(useSession).toHaveBeenCalled()
-    expect(useUser).toHaveBeenCalled()
+    expect(useSessionUser).toHaveBeenCalled()
   })
 
   test('passes children to Guard', () => {
@@ -37,10 +37,10 @@ describe('ProtectedLayout', () => {
       isLoading: false,
     } as unknown as ReturnType<typeof useSession>)
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {},
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     render(<ProtectedLayout>Hello world</ProtectedLayout>)
 

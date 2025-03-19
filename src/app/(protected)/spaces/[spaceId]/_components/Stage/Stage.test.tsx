@@ -2,7 +2,7 @@ import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useParams } from 'next/navigation'
 import { act } from 'react'
-import useUser from '@/hooks/useUser'
+import useSessionUser from '@/hooks/useSessionUser'
 import useSpace from '@/hooks/useSpace'
 import useOnlineUsers from '@/hooks/useOnlineUsers'
 import upsertSpacePosition from '@/db/upsertSpacePosition'
@@ -23,8 +23,8 @@ vi.mock('./consts', async (importOriginal) => {
   }
 })
 
-vi.mock('@/hooks/useUser')
-const useUserMock = vi.mocked(useUser)
+vi.mock('@/hooks/useSessionUser')
+const useSessionUserMock = vi.mocked(useSessionUser)
 
 vi.mock('@/hooks/useSpace')
 const useSpaceMock = vi.mocked(useSpace)
@@ -43,9 +43,9 @@ describe('Stage', () => {
   })
 
   test('does not render stage if there is no user', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: null,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
@@ -65,9 +65,9 @@ describe('Stage', () => {
   })
 
   test('renders Placement and Character', async () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
@@ -87,9 +87,9 @@ describe('Stage', () => {
   })
 
   test('renders walls', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
@@ -109,9 +109,9 @@ describe('Stage', () => {
   })
 
   test('renders TiledMap', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
@@ -133,9 +133,9 @@ describe('Stage', () => {
   })
 
   test('moves character', async () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
@@ -162,9 +162,9 @@ describe('Stage', () => {
   })
 
   test('useCenterCharacter change the style successfully', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
@@ -202,9 +202,9 @@ describe('Stage', () => {
   })
 
   test('zooms in', async () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
@@ -230,9 +230,9 @@ describe('Stage', () => {
   })
 
   test('zooms out', async () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
@@ -264,9 +264,9 @@ describe('Stage', () => {
       id: 'SPACE_UUID',
     }
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useParamsMock.mockReturnValue({
       spaceId,
@@ -304,9 +304,9 @@ describe('Stage', () => {
     const userId = 'USER_ID'
     const spaceId = 'SPACE_ID'
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: userId },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useParamsMock.mockReturnValue({
       spaceId,
@@ -343,9 +343,9 @@ describe('Stage', () => {
   })
 
   test('does not render configuration by default', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
@@ -367,9 +367,9 @@ describe('Stage', () => {
   })
 
   test('renders configuration when isConfigurationOpen is true', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
@@ -391,9 +391,9 @@ describe('Stage', () => {
   })
 
   test('renders configuration buttons on config coordinates', async () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
@@ -422,9 +422,9 @@ describe('Stage', () => {
   })
 
   test('configures walls', async () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
@@ -458,9 +458,9 @@ describe('Stage', () => {
   })
 
   test('calls onConfigurationClose when configuration close button is clicked', async () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: 'USER_ID', displayName: 'John Doe', avatar: 'dog' },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',

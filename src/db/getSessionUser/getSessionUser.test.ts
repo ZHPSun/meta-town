@@ -1,11 +1,11 @@
 import camelcaseKeys from 'camelcase-keys'
 import createSupabaseClient from '@/utils/createSupabaseClient'
-import getUser from './getUser'
+import getSessionUser from './getSessionUser'
 
 vi.mock('@/utils/createSupabaseClient')
 const createSupabaseClientMock = vi.mocked(createSupabaseClient)
 
-describe('getUser', () => {
+describe('getSessionUser', () => {
   afterEach(() => {
     vi.resetAllMocks()
   })
@@ -31,7 +31,7 @@ describe('getUser', () => {
 
     createSupabaseClientMock.mockReturnValue(supabaseClient)
 
-    const user = await getUser(['user', AUTH_ID])
+    const user = await getSessionUser(['user', AUTH_ID])
 
     expect(supabaseClient.from).toHaveBeenCalledWith('users')
 
@@ -66,7 +66,7 @@ describe('getUser', () => {
 
     createSupabaseClientMock.mockReturnValue(supabaseClient)
 
-    const user = await getUser(['user', AUTH_ID])
+    const user = await getSessionUser(['user', AUTH_ID])
 
     expect(supabaseClient.from).toHaveBeenCalledWith('users')
 

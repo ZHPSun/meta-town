@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, Controller } from 'react-hook-form'
 import Button from '@/components/Button'
 import useSession from '@/hooks/useSession'
-import useUser from '@/hooks/useUser'
+import useSessionUser from '@/hooks/useSessionUser'
 import TextField from '@/components/TextField'
 import upsertUser from '@/db/upsertUser'
 import AvatarPicker from './_components/AvatarPicker'
@@ -34,7 +34,7 @@ const schema = z.object({
 type Schema = z.infer<typeof schema>
 
 const Form: FC<Props> = ({ onCreated = undefined }) => {
-  const { data: user, mutate } = useUser()
+  const { data: user, mutate } = useSessionUser()
   const { data: session } = useSession()
 
   const {

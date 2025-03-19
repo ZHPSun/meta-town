@@ -1,14 +1,14 @@
 import { renderHook } from '@testing-library/react'
 import { useParams } from 'next/navigation'
 import { act } from 'react'
-import useUser from '@/hooks/useUser'
+import useSessionUser from '@/hooks/useSessionUser'
 import upsertSpacePosition from '@/db/upsertSpacePosition'
 import useSpace from '@/hooks/useSpace'
 import { Coordinates } from '../../_components/Placement'
 import useUpdateSpacePosition from './useUpdateSpacePosition'
 
-vi.mock('@/hooks/useUser')
-const useUserMock = vi.mocked(useUser)
+vi.mock('@/hooks/useSessionUser')
+const useSessionUserMock = vi.mocked(useSessionUser)
 
 vi.mock('@/hooks/useSpace')
 const useSpaceMock = vi.mocked(useSpace)
@@ -34,9 +34,9 @@ describe('useUpdateSpacePosition', () => {
     const userId = 'USER_ID'
     const spaceId = 'SPACE_ID'
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: userId },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     mockParamsMock.mockReturnValue({
       spaceId,
@@ -57,7 +57,9 @@ describe('useUpdateSpacePosition', () => {
     const coordinates = { x: 0, y: 0, direction: 'S' } as const
     const spaceId = 'SPACE_ID'
 
-    useUserMock.mockReturnValue({} as unknown as ReturnType<typeof useUser>)
+    useSessionUserMock.mockReturnValue(
+      {} as unknown as ReturnType<typeof useSessionUser>
+    )
 
     mockParamsMock.mockReturnValue({
       spaceId,
@@ -78,9 +80,9 @@ describe('useUpdateSpacePosition', () => {
     const coordinates = { x: 0, y: 0, direction: 'S' } as const
     const userId = 'USER_ID'
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: userId },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     mockParamsMock.mockReturnValue({
       spaceId: 'SPACE_ID',
@@ -102,9 +104,9 @@ describe('useUpdateSpacePosition', () => {
     const userId = 'USER_ID'
     const spaceId = 'SPACE_ID'
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: userId },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     mockParamsMock.mockReturnValue({
       spaceId,
@@ -147,9 +149,9 @@ describe('useUpdateSpacePosition', () => {
       id: 'SPACE_UUID',
     }
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: userId },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     mockParamsMock.mockReturnValue({
       spaceId,
@@ -186,9 +188,9 @@ describe('useUpdateSpacePosition', () => {
     const userId = 'USER_ID'
     const spaceId = 'SPACE_ID'
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: { id: userId },
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     mockParamsMock.mockReturnValue({
       spaceId,

@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react'
 import useSession from '@/hooks/useSession'
-import useUser from '@/hooks/useUser'
+import useSessionUser from '@/hooks/useSessionUser'
 import ProfileFormModal from './ProfileFormModal'
 
 vi.mock('@/hooks/useSession')
 const useSessionMock = vi.mocked(useSession)
 
-vi.mock('@/hooks/useUser')
-const useUserMock = vi.mocked(useUser)
+vi.mock('@/hooks/useSessionUser')
+const useSessionUserMock = vi.mocked(useSessionUser)
 
 describe('ProfileFormModal', () => {
   afterEach(() => {
@@ -15,9 +15,9 @@ describe('ProfileFormModal', () => {
   })
 
   test('renders Modal', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useSessionMock.mockReturnValue({
       data: {},
@@ -32,9 +32,9 @@ describe('ProfileFormModal', () => {
   })
 
   test('renders Form', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useSessionMock.mockReturnValue({
       data: {},
@@ -51,10 +51,10 @@ describe('ProfileFormModal', () => {
   test('renders the Close button if the onClose prop is given', () => {
     const onClose = vi.fn()
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {},
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useSessionMock.mockReturnValue({
       data: {},
@@ -67,10 +67,10 @@ describe('ProfileFormModal', () => {
   })
 
   test('does not render the Close button if the onClose prop is not given', () => {
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {},
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     useSessionMock.mockReturnValue({
       data: {},

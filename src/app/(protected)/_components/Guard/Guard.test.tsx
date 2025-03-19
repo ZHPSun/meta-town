@@ -1,34 +1,34 @@
 import { render, screen } from '@testing-library/react'
 import useSession from '@/hooks/useSession'
-import useUser from '@/hooks/useUser'
+import useSessionUser from '@/hooks/useSessionUser'
 import Guard from './Guard'
 
 vi.mock('@/hooks/useSession')
 const useSessionMock = vi.mocked(useSession)
 
-vi.mock('@/hooks/useUser')
-const useUserMock = vi.mocked(useUser)
+vi.mock('@/hooks/useSessionUser')
+const useSessionUserMock = vi.mocked(useSessionUser)
 
 describe('Guard', () => {
   afterEach(() => {
     vi.resetAllMocks()
   })
 
-  test('calls useSession and useUser', () => {
+  test('calls useSession and useSessionUser', () => {
     useSessionMock.mockReturnValue({
       data: {},
       isLoading: false,
     } as unknown as ReturnType<typeof useSession>)
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {},
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     render(<Guard>Hello world</Guard>)
 
     expect(useSessionMock).toHaveBeenCalled()
-    expect(useUserMock).toHaveBeenCalled()
+    expect(useSessionUserMock).toHaveBeenCalled()
   })
 
   test('renders loading when useSession is loading', () => {
@@ -37,10 +37,10 @@ describe('Guard', () => {
       isLoading: true,
     } as unknown as ReturnType<typeof useSession>)
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {},
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     render(<Guard>Hello world</Guard>)
 
@@ -49,16 +49,16 @@ describe('Guard', () => {
     ).toBeInTheDocument()
   })
 
-  test('renders loading when useUser is loading', () => {
+  test('renders loading when useSessionUser is loading', () => {
     useSessionMock.mockReturnValue({
       data: {},
       isLoading: false,
     } as unknown as ReturnType<typeof useSession>)
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: null,
       isLoading: true,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     render(<Guard>Hello world</Guard>)
 
@@ -73,10 +73,10 @@ describe('Guard', () => {
       isLoading: false,
     } as unknown as ReturnType<typeof useSession>)
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: null,
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     const { container } = render(<Guard>Hello world</Guard>)
 
@@ -89,10 +89,10 @@ describe('Guard', () => {
       isLoading: false,
     } as unknown as ReturnType<typeof useSession>)
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: null,
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     render(<Guard>Hello world</Guard>)
 
@@ -108,10 +108,10 @@ describe('Guard', () => {
       isLoading: false,
     } as unknown as ReturnType<typeof useSession>)
 
-    useUserMock.mockReturnValue({
+    useSessionUserMock.mockReturnValue({
       data: {},
       isLoading: false,
-    } as unknown as ReturnType<typeof useUser>)
+    } as unknown as ReturnType<typeof useSessionUser>)
 
     render(<Guard>Hello world</Guard>)
 

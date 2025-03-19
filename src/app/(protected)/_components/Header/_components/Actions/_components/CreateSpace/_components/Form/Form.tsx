@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import Button from '@/components/Button'
 import TextField from '@/components/TextField'
 import createSpace from '@/db/createSpace'
-import useUser from '@/hooks/useUser'
+import useSessionUser from '@/hooks/useSessionUser'
 import useOwnedSpaces from '@/hooks/useOwnedSpaces'
 
 interface Props {
@@ -24,7 +24,7 @@ const Form: FC<Props> = ({ onCreated }) => {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<Schema>({ resolver: zodResolver(schema) })
-  const { data: user } = useUser()
+  const { data: user } = useSessionUser()
 
   const { mutate } = useOwnedSpaces()
 
