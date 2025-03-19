@@ -5,6 +5,7 @@ import { includeIgnoreFile } from '@eslint/compat'
 import { FlatCompat } from '@eslint/eslintrc'
 import eslint from '@eslint/js'
 import stylistic from '@stylistic/eslint-plugin'
+import pluginPromise from 'eslint-plugin-promise'
 import pluginRegex from 'eslint-plugin-regex'
 import testingLibrary from 'eslint-plugin-testing-library'
 import vitest from 'eslint-plugin-vitest'
@@ -93,6 +94,12 @@ const eslintConfig = [
       extends: [tseslintConfigs.disableTypeChecked],
     }
   ),
+  pluginPromise.configs['flat/recommended'],
+  {
+    rules: {
+      'promise/prefer-await-to-then': 'error',
+    },
+  },
   {
     plugins: {
       '@stylistic': stylistic,

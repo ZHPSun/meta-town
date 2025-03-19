@@ -31,16 +31,14 @@ const useMedia = (
     constraints.audio = options.mic
   }
 
-  const requestMediaStream = (): void => {
-    window.navigator.mediaDevices
-      .getUserMedia(constraints)
-      .then(setMediaStream)
-      .catch(() => setMediaStream(null))
+  const requestMediaStream = async (): Promise<void> => {
+    const stream = await window.navigator.mediaDevices.getUserMedia(constraints)
+    setMediaStream(stream)
   }
 
   const toggleMediaStream = (): void => {
     if (!mediaStream) {
-      requestMediaStream()
+      void requestMediaStream()
     } else {
       mediaStream.getTracks().forEach((track) => track.stop())
       setMediaStream(null)
